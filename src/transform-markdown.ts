@@ -7,9 +7,7 @@ import { transformAst } from "./transform-ast.ts";
 
 export async function transformMarkdown(markdown: string): Promise<string> {
   const oldAst: Nodes = markdownToAst(markdown);
-
   const newAst: Nodes = transformAst(oldAst);
-  console.error(JSON.stringify(newAst, null, 2));
 
   return await formatCode(
     "md",
