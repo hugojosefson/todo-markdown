@@ -74,7 +74,7 @@
       "children": [
         {
           "type": "text",
-          "value": "Example",
+          "value": "Ex",
           "position": {
             "start": {
               "line": 5,
@@ -83,8 +83,57 @@
             },
             "end": {
               "line": 5,
+              "column": 6,
+              "offset": 92
+            }
+          }
+        },
+        {
+          "type": "emphasis",
+          "children": [
+            {
+              "type": "text",
+              "value": "amp",
+              "position": {
+                "start": {
+                  "line": 5,
+                  "column": 7,
+                  "offset": 93
+                },
+                "end": {
+                  "line": 5,
+                  "column": 10,
+                  "offset": 96
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 5,
+              "column": 6,
+              "offset": 92
+            },
+            "end": {
+              "line": 5,
               "column": 11,
               "offset": 97
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": "le",
+          "position": {
+            "start": {
+              "line": 5,
+              "column": 11,
+              "offset": 97
+            },
+            "end": {
+              "line": 5,
+              "column": 13,
+              "offset": 99
             }
           }
         }
@@ -97,8 +146,8 @@
         },
         "end": {
           "line": 5,
-          "column": 11,
-          "offset": 97
+          "column": 13,
+          "offset": 99
         }
       }
     },
@@ -113,12 +162,12 @@
             "start": {
               "line": 7,
               "column": 5,
-              "offset": 103
+              "offset": 105
             },
             "end": {
               "line": 7,
               "column": 19,
-              "offset": 117
+              "offset": 119
             }
           }
         }
@@ -127,12 +176,12 @@
         "start": {
           "line": 7,
           "column": 1,
-          "offset": 99
+          "offset": 101
         },
         "end": {
           "line": 7,
           "column": 19,
-          "offset": 117
+          "offset": 119
         }
       }
     },
@@ -145,12 +194,12 @@
         "start": {
           "line": 9,
           "column": 1,
-          "offset": 119
+          "offset": 121
         },
         "end": {
           "line": 28,
           "column": 4,
-          "offset": 378
+          "offset": 380
         }
       }
     },
@@ -165,12 +214,12 @@
             "start": {
               "line": 30,
               "column": 5,
-              "offset": 384
+              "offset": 386
             },
             "end": {
               "line": 30,
               "column": 20,
-              "offset": 399
+              "offset": 401
             }
           }
         }
@@ -179,12 +228,12 @@
         "start": {
           "line": 30,
           "column": 1,
-          "offset": 380
+          "offset": 382
         },
         "end": {
           "line": 30,
           "column": 20,
-          "offset": 399
+          "offset": 401
         }
       }
     },
@@ -197,12 +246,12 @@
         "start": {
           "line": 32,
           "column": 1,
-          "offset": 401
+          "offset": 403
         },
         "end": {
           "line": 51,
           "column": 4,
-          "offset": 667
+          "offset": 669
         }
       }
     },
@@ -217,12 +266,12 @@
             "start": {
               "line": 53,
               "column": 4,
-              "offset": 672
+              "offset": 674
             },
             "end": {
               "line": 53,
               "column": 12,
-              "offset": 680
+              "offset": 682
             }
           }
         }
@@ -231,12 +280,12 @@
         "start": {
           "line": 53,
           "column": 1,
-          "offset": 669
+          "offset": 671
         },
         "end": {
           "line": 53,
           "column": 12,
-          "offset": 680
+          "offset": 682
         }
       }
     },
@@ -261,12 +310,12 @@
                     "start": {
                       "line": 55,
                       "column": 8,
-                      "offset": 689
+                      "offset": 691
                     },
                     "end": {
                       "line": 55,
                       "column": 30,
-                      "offset": 711
+                      "offset": 713
                     }
                   }
                 }
@@ -275,12 +324,12 @@
                 "start": {
                   "line": 55,
                   "column": 8,
-                  "offset": 689
+                  "offset": 691
                 },
                 "end": {
                   "line": 55,
                   "column": 30,
-                  "offset": 711
+                  "offset": 713
                 }
               }
             }
@@ -289,12 +338,12 @@
             "start": {
               "line": 55,
               "column": 1,
-              "offset": 682
+              "offset": 684
             },
             "end": {
               "line": 55,
               "column": 30,
-              "offset": 711
+              "offset": 713
             }
           }
         },
@@ -313,12 +362,12 @@
                     "start": {
                       "line": 56,
                       "column": 8,
-                      "offset": 719
+                      "offset": 721
                     },
                     "end": {
                       "line": 56,
                       "column": 57,
-                      "offset": 768
+                      "offset": 770
                     }
                   }
                 }
@@ -327,225 +376,205 @@
                 "start": {
                   "line": 56,
                   "column": 8,
-                  "offset": 719
+                  "offset": 721
                 },
                 "end": {
                   "line": 56,
                   "column": 57,
-                  "offset": 768
+                  "offset": 770
                 }
               }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 56,
-              "column": 1,
-              "offset": 712
             },
-            "end": {
-              "line": 56,
-              "column": 57,
-              "offset": 768
-            }
-          }
-        }
-      ],
-      "position": {
-        "start": {
-          "line": 55,
-          "column": 1,
-          "offset": 682
-        },
-        "end": {
-          "line": 56,
-          "column": 57,
-          "offset": 768
-        }
-      }
-    },
-    {
-      "type": "list",
-      "ordered": false,
-      "start": null,
-      "spread": false,
-      "children": [
-        {
-          "type": "listItem",
-          "spread": false,
-          "checked": false,
-          "children": [
             {
-              "type": "paragraph",
+              "type": "list",
+              "ordered": false,
+              "start": null,
+              "spread": false,
               "children": [
                 {
-                  "type": "text",
-                  "value": "unordered lists / task lists",
+                  "type": "listItem",
+                  "spread": false,
+                  "checked": false,
+                  "children": [
+                    {
+                      "type": "paragraph",
+                      "children": [
+                        {
+                          "type": "text",
+                          "value": "unordered lists / task lists",
+                          "position": {
+                            "start": {
+                              "line": 57,
+                              "column": 10,
+                              "offset": 780
+                            },
+                            "end": {
+                              "line": 57,
+                              "column": 38,
+                              "offset": 808
+                            }
+                          }
+                        }
+                      ],
+                      "position": {
+                        "start": {
+                          "line": 57,
+                          "column": 10,
+                          "offset": 780
+                        },
+                        "end": {
+                          "line": 57,
+                          "column": 38,
+                          "offset": 808
+                        }
+                      }
+                    }
+                  ],
+                  "position": {
+                    "start": {
+                      "line": 57,
+                      "column": 4,
+                      "offset": 774
+                    },
+                    "end": {
+                      "line": 57,
+                      "column": 38,
+                      "offset": 808
+                    }
+                  }
+                },
+                {
+                  "type": "listItem",
+                  "spread": false,
+                  "checked": false,
+                  "children": [
+                    {
+                      "type": "paragraph",
+                      "children": [
+                        {
+                          "type": "text",
+                          "value": "ordered lists",
+                          "position": {
+                            "start": {
+                              "line": 58,
+                              "column": 10,
+                              "offset": 818
+                            },
+                            "end": {
+                              "line": 58,
+                              "column": 23,
+                              "offset": 831
+                            }
+                          }
+                        }
+                      ],
+                      "position": {
+                        "start": {
+                          "line": 58,
+                          "column": 10,
+                          "offset": 818
+                        },
+                        "end": {
+                          "line": 58,
+                          "column": 23,
+                          "offset": 831
+                        }
+                      }
+                    }
+                  ],
                   "position": {
                     "start": {
                       "line": 58,
-                      "column": 7,
-                      "offset": 776
+                      "column": 4,
+                      "offset": 812
                     },
                     "end": {
                       "line": 58,
-                      "column": 35,
-                      "offset": 804
-                    }
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 58,
-                  "column": 7,
-                  "offset": 776
-                },
-                "end": {
-                  "line": 58,
-                  "column": 35,
-                  "offset": 804
-                }
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 58,
-              "column": 1,
-              "offset": 770
-            },
-            "end": {
-              "line": 58,
-              "column": 35,
-              "offset": 804
-            }
-          }
-        },
-        {
-          "type": "listItem",
-          "spread": false,
-          "checked": false,
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "type": "text",
-                  "value": "ordered lists",
-                  "position": {
-                    "start": {
-                      "line": 59,
-                      "column": 7,
-                      "offset": 811
-                    },
-                    "end": {
-                      "line": 59,
-                      "column": 20,
-                      "offset": 824
-                    }
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 59,
-                  "column": 7,
-                  "offset": 811
-                },
-                "end": {
-                  "line": 59,
-                  "column": 20,
-                  "offset": 824
-                }
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 59,
-              "column": 1,
-              "offset": 805
-            },
-            "end": {
-              "line": 59,
-              "column": 20,
-              "offset": 824
-            }
-          }
-        },
-        {
-          "type": "listItem",
-          "spread": false,
-          "checked": false,
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "type": "text",
-                  "value": "headings",
-                  "position": {
-                    "start": {
-                      "line": 60,
-                      "column": 7,
+                      "column": 23,
                       "offset": 831
+                    }
+                  }
+                },
+                {
+                  "type": "listItem",
+                  "spread": false,
+                  "checked": false,
+                  "children": [
+                    {
+                      "type": "paragraph",
+                      "children": [
+                        {
+                          "type": "text",
+                          "value": "headings",
+                          "position": {
+                            "start": {
+                              "line": 59,
+                              "column": 10,
+                              "offset": 841
+                            },
+                            "end": {
+                              "line": 59,
+                              "column": 18,
+                              "offset": 849
+                            }
+                          }
+                        }
+                      ],
+                      "position": {
+                        "start": {
+                          "line": 59,
+                          "column": 10,
+                          "offset": 841
+                        },
+                        "end": {
+                          "line": 59,
+                          "column": 18,
+                          "offset": 849
+                        }
+                      }
+                    }
+                  ],
+                  "position": {
+                    "start": {
+                      "line": 59,
+                      "column": 4,
+                      "offset": 835
                     },
                     "end": {
-                      "line": 60,
-                      "column": 15,
-                      "offset": 839
+                      "line": 59,
+                      "column": 18,
+                      "offset": 849
                     }
                   }
                 }
               ],
               "position": {
                 "start": {
-                  "line": 60,
-                  "column": 7,
-                  "offset": 831
+                  "line": 57,
+                  "column": 4,
+                  "offset": 774
                 },
                 "end": {
-                  "line": 60,
-                  "column": 15,
-                  "offset": 839
+                  "line": 59,
+                  "column": 18,
+                  "offset": 849
                 }
               }
             }
           ],
           "position": {
             "start": {
-              "line": 60,
+              "line": 56,
               "column": 1,
-              "offset": 825
+              "offset": 714
             },
             "end": {
-              "line": 60,
-              "column": 15,
-              "offset": 839
+              "line": 59,
+              "column": 18,
+              "offset": 849
             }
           }
-        }
-      ],
-      "position": {
-        "start": {
-          "line": 58,
-          "column": 1,
-          "offset": 770
         },
-        "end": {
-          "line": 60,
-          "column": 15,
-          "offset": 839
-        }
-      }
-    },
-    {
-      "type": "list",
-      "ordered": true,
-      "start": 1,
-      "spread": false,
-      "children": [
         {
           "type": "listItem",
           "spread": false,
@@ -559,14 +588,14 @@
                   "value": "In each eligible place, identifies task identifiers based on regex, ex\n",
                   "position": {
                     "start": {
-                      "line": 62,
+                      "line": 60,
                       "column": 8,
-                      "offset": 848
+                      "offset": 857
                     },
                     "end": {
-                      "line": 63,
+                      "line": 61,
                       "column": 1,
-                      "offset": 919
+                      "offset": 928
                     }
                   }
                 },
@@ -575,14 +604,14 @@
                   "value": "/\\bTODO-\\d+\\b/",
                   "position": {
                     "start": {
-                      "line": 63,
+                      "line": 61,
                       "column": 8,
-                      "offset": 926
+                      "offset": 935
                     },
                     "end": {
-                      "line": 63,
+                      "line": 61,
                       "column": 24,
-                      "offset": 942
+                      "offset": 951
                     }
                   }
                 },
@@ -591,42 +620,42 @@
                   "value": ".",
                   "position": {
                     "start": {
-                      "line": 63,
+                      "line": 61,
                       "column": 24,
-                      "offset": 942
+                      "offset": 951
                     },
                     "end": {
-                      "line": 63,
+                      "line": 61,
                       "column": 25,
-                      "offset": 943
+                      "offset": 952
                     }
                   }
                 }
               ],
               "position": {
                 "start": {
-                  "line": 62,
+                  "line": 60,
                   "column": 8,
-                  "offset": 848
+                  "offset": 857
                 },
                 "end": {
-                  "line": 63,
+                  "line": 61,
                   "column": 25,
-                  "offset": 943
+                  "offset": 952
                 }
               }
             }
           ],
           "position": {
             "start": {
-              "line": 62,
+              "line": 60,
               "column": 1,
-              "offset": 841
+              "offset": 850
             },
             "end": {
-              "line": 63,
+              "line": 61,
               "column": 25,
-              "offset": 943
+              "offset": 952
             }
           }
         },
@@ -643,42 +672,42 @@
                   "value": "In the existing tasks, finds the highest numbered identifier.",
                   "position": {
                     "start": {
-                      "line": 64,
+                      "line": 62,
                       "column": 8,
-                      "offset": 951
+                      "offset": 960
                     },
                     "end": {
-                      "line": 64,
+                      "line": 62,
                       "column": 69,
-                      "offset": 1012
+                      "offset": 1021
                     }
                   }
                 }
               ],
               "position": {
                 "start": {
-                  "line": 64,
+                  "line": 62,
                   "column": 8,
-                  "offset": 951
+                  "offset": 960
                 },
                 "end": {
-                  "line": 64,
+                  "line": 62,
                   "column": 69,
-                  "offset": 1012
+                  "offset": 1021
                 }
               }
             }
           ],
           "position": {
             "start": {
-              "line": 64,
+              "line": 62,
               "column": 1,
-              "offset": 944
+              "offset": 953
             },
             "end": {
-              "line": 64,
+              "line": 62,
               "column": 69,
-              "offset": 1012
+              "offset": 1021
             }
           }
         },
@@ -695,42 +724,42 @@
                   "value": "Calculates the next identifier, always higher than the highest existing.\nIt's OK to skip numbers.",
                   "position": {
                     "start": {
-                      "line": 65,
+                      "line": 63,
                       "column": 8,
-                      "offset": 1020
+                      "offset": 1029
                     },
                     "end": {
-                      "line": 66,
+                      "line": 64,
                       "column": 32,
-                      "offset": 1124
+                      "offset": 1133
                     }
                   }
                 }
               ],
               "position": {
                 "start": {
-                  "line": 65,
+                  "line": 63,
                   "column": 8,
-                  "offset": 1020
+                  "offset": 1029
                 },
                 "end": {
-                  "line": 66,
+                  "line": 64,
                   "column": 32,
-                  "offset": 1124
+                  "offset": 1133
                 }
               }
             }
           ],
           "position": {
             "start": {
-              "line": 65,
+              "line": 63,
               "column": 1,
-              "offset": 1013
+              "offset": 1022
             },
             "end": {
-              "line": 66,
+              "line": 64,
               "column": 32,
-              "offset": 1124
+              "offset": 1133
             }
           }
         },
@@ -747,289 +776,269 @@
                   "value": "Identifies all new todo items, by:",
                   "position": {
                     "start": {
-                      "line": 67,
+                      "line": 65,
                       "column": 8,
-                      "offset": 1132
+                      "offset": 1141
                     },
                     "end": {
-                      "line": 67,
+                      "line": 65,
                       "column": 42,
-                      "offset": 1166
+                      "offset": 1175
                     }
                   }
                 }
               ],
               "position": {
                 "start": {
-                  "line": 67,
+                  "line": 65,
                   "column": 8,
-                  "offset": 1132
+                  "offset": 1141
                 },
                 "end": {
-                  "line": 67,
+                  "line": 65,
                   "column": 42,
-                  "offset": 1166
+                  "offset": 1175
                 }
               }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 67,
-              "column": 1,
-              "offset": 1125
             },
-            "end": {
-              "line": 67,
-              "column": 42,
-              "offset": 1166
-            }
-          }
-        }
-      ],
-      "position": {
-        "start": {
-          "line": 62,
-          "column": 1,
-          "offset": 841
-        },
-        "end": {
-          "line": 67,
-          "column": 42,
-          "offset": 1166
-        }
-      }
-    },
-    {
-      "type": "list",
-      "ordered": false,
-      "start": null,
-      "spread": false,
-      "children": [
-        {
-          "type": "listItem",
-          "spread": false,
-          "checked": false,
-          "children": [
             {
-              "type": "paragraph",
+              "type": "list",
+              "ordered": false,
+              "start": null,
+              "spread": false,
               "children": [
                 {
-                  "type": "inlineCode",
-                  "value": "- [ ]",
+                  "type": "listItem",
+                  "spread": false,
+                  "checked": false,
+                  "children": [
+                    {
+                      "type": "paragraph",
+                      "children": [
+                        {
+                          "type": "inlineCode",
+                          "value": "- [ ]",
+                          "position": {
+                            "start": {
+                              "line": 66,
+                              "column": 10,
+                              "offset": 1185
+                            },
+                            "end": {
+                              "line": 66,
+                              "column": 17,
+                              "offset": 1192
+                            }
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "value": " syntax without a task identifier,",
+                          "position": {
+                            "start": {
+                              "line": 66,
+                              "column": 17,
+                              "offset": 1192
+                            },
+                            "end": {
+                              "line": 66,
+                              "column": 51,
+                              "offset": 1226
+                            }
+                          }
+                        }
+                      ],
+                      "position": {
+                        "start": {
+                          "line": 66,
+                          "column": 6,
+                          "offset": 1181
+                        },
+                        "end": {
+                          "line": 66,
+                          "column": 51,
+                          "offset": 1226
+                        }
+                      }
+                    }
+                  ],
                   "position": {
                     "start": {
-                      "line": 69,
-                      "column": 7,
-                      "offset": 1174
+                      "line": 66,
+                      "column": 4,
+                      "offset": 1179
                     },
                     "end": {
-                      "line": 69,
-                      "column": 14,
-                      "offset": 1181
+                      "line": 66,
+                      "column": 51,
+                      "offset": 1226
                     }
                   }
                 },
                 {
-                  "type": "text",
-                  "value": " syntax without a task identifier,",
+                  "type": "listItem",
+                  "spread": false,
+                  "checked": false,
+                  "children": [
+                    {
+                      "type": "paragraph",
+                      "children": [
+                        {
+                          "type": "text",
+                          "value": "task identifier placeholder, via regex, ex\n",
+                          "position": {
+                            "start": {
+                              "line": 67,
+                              "column": 10,
+                              "offset": 1236
+                            },
+                            "end": {
+                              "line": 68,
+                              "column": 1,
+                              "offset": 1279
+                            }
+                          }
+                        },
+                        {
+                          "type": "inlineCode",
+                          "value": "\\bTODO-(\\?+|x+|X+|n+|N+)\\b",
+                          "position": {
+                            "start": {
+                              "line": 68,
+                              "column": 10,
+                              "offset": 1288
+                            },
+                            "end": {
+                              "line": 68,
+                              "column": 38,
+                              "offset": 1316
+                            }
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "value": ",",
+                          "position": {
+                            "start": {
+                              "line": 68,
+                              "column": 38,
+                              "offset": 1316
+                            },
+                            "end": {
+                              "line": 68,
+                              "column": 39,
+                              "offset": 1317
+                            }
+                          }
+                        }
+                      ],
+                      "position": {
+                        "start": {
+                          "line": 67,
+                          "column": 10,
+                          "offset": 1236
+                        },
+                        "end": {
+                          "line": 68,
+                          "column": 39,
+                          "offset": 1317
+                        }
+                      }
+                    }
+                  ],
+                  "position": {
+                    "start": {
+                      "line": 67,
+                      "column": 4,
+                      "offset": 1230
+                    },
+                    "end": {
+                      "line": 68,
+                      "column": 39,
+                      "offset": 1317
+                    }
+                  }
+                },
+                {
+                  "type": "listItem",
+                  "spread": false,
+                  "checked": false,
+                  "children": [
+                    {
+                      "type": "paragraph",
+                      "children": [
+                        {
+                          "type": "text",
+                          "value": "copied, already existing task identifier.",
+                          "position": {
+                            "start": {
+                              "line": 69,
+                              "column": 10,
+                              "offset": 1327
+                            },
+                            "end": {
+                              "line": 69,
+                              "column": 51,
+                              "offset": 1368
+                            }
+                          }
+                        }
+                      ],
+                      "position": {
+                        "start": {
+                          "line": 69,
+                          "column": 10,
+                          "offset": 1327
+                        },
+                        "end": {
+                          "line": 69,
+                          "column": 51,
+                          "offset": 1368
+                        }
+                      }
+                    }
+                  ],
                   "position": {
                     "start": {
                       "line": 69,
-                      "column": 14,
-                      "offset": 1181
+                      "column": 4,
+                      "offset": 1321
                     },
                     "end": {
                       "line": 69,
-                      "column": 48,
-                      "offset": 1215
+                      "column": 51,
+                      "offset": 1368
                     }
                   }
                 }
               ],
               "position": {
                 "start": {
-                  "line": 69,
-                  "column": 3,
-                  "offset": 1170
+                  "line": 66,
+                  "column": 4,
+                  "offset": 1179
                 },
                 "end": {
                   "line": 69,
-                  "column": 48,
-                  "offset": 1215
+                  "column": 51,
+                  "offset": 1368
                 }
               }
             }
           ],
           "position": {
             "start": {
-              "line": 69,
+              "line": 65,
               "column": 1,
-              "offset": 1168
+              "offset": 1134
             },
             "end": {
               "line": 69,
-              "column": 48,
-              "offset": 1215
+              "column": 51,
+              "offset": 1368
             }
           }
         },
-        {
-          "type": "listItem",
-          "spread": false,
-          "checked": false,
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "type": "text",
-                  "value": "task identifier placeholder, via regex, ex ",
-                  "position": {
-                    "start": {
-                      "line": 70,
-                      "column": 7,
-                      "offset": 1222
-                    },
-                    "end": {
-                      "line": 70,
-                      "column": 50,
-                      "offset": 1265
-                    }
-                  }
-                },
-                {
-                  "type": "inlineCode",
-                  "value": "\\bTODO-(\\?+|x+|X+|n+|N+)\\b",
-                  "position": {
-                    "start": {
-                      "line": 70,
-                      "column": 50,
-                      "offset": 1265
-                    },
-                    "end": {
-                      "line": 70,
-                      "column": 78,
-                      "offset": 1293
-                    }
-                  }
-                },
-                {
-                  "type": "text",
-                  "value": ",",
-                  "position": {
-                    "start": {
-                      "line": 70,
-                      "column": 78,
-                      "offset": 1293
-                    },
-                    "end": {
-                      "line": 70,
-                      "column": 79,
-                      "offset": 1294
-                    }
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 70,
-                  "column": 7,
-                  "offset": 1222
-                },
-                "end": {
-                  "line": 70,
-                  "column": 79,
-                  "offset": 1294
-                }
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 70,
-              "column": 1,
-              "offset": 1216
-            },
-            "end": {
-              "line": 70,
-              "column": 79,
-              "offset": 1294
-            }
-          }
-        },
-        {
-          "type": "listItem",
-          "spread": false,
-          "checked": false,
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "type": "text",
-                  "value": "copied, already existing task identifier.",
-                  "position": {
-                    "start": {
-                      "line": 71,
-                      "column": 7,
-                      "offset": 1301
-                    },
-                    "end": {
-                      "line": 71,
-                      "column": 48,
-                      "offset": 1342
-                    }
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 71,
-                  "column": 7,
-                  "offset": 1301
-                },
-                "end": {
-                  "line": 71,
-                  "column": 48,
-                  "offset": 1342
-                }
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 71,
-              "column": 1,
-              "offset": 1295
-            },
-            "end": {
-              "line": 71,
-              "column": 48,
-              "offset": 1342
-            }
-          }
-        }
-      ],
-      "position": {
-        "start": {
-          "line": 69,
-          "column": 1,
-          "offset": 1168
-        },
-        "end": {
-          "line": 71,
-          "column": 48,
-          "offset": 1342
-        }
-      }
-    },
-    {
-      "type": "list",
-      "ordered": true,
-      "start": 1,
-      "spread": false,
-      "children": [
         {
           "type": "listItem",
           "spread": false,
@@ -1043,42 +1052,42 @@
                   "value": "For each new task, assigns the next identifier.",
                   "position": {
                     "start": {
-                      "line": 73,
+                      "line": 70,
                       "column": 8,
-                      "offset": 1351
+                      "offset": 1376
                     },
                     "end": {
-                      "line": 73,
+                      "line": 70,
                       "column": 55,
-                      "offset": 1398
+                      "offset": 1423
                     }
                   }
                 }
               ],
               "position": {
                 "start": {
-                  "line": 73,
+                  "line": 70,
                   "column": 8,
-                  "offset": 1351
+                  "offset": 1376
                 },
                 "end": {
-                  "line": 73,
+                  "line": 70,
                   "column": 55,
-                  "offset": 1398
+                  "offset": 1423
                 }
               }
             }
           ],
           "position": {
             "start": {
-              "line": 73,
+              "line": 70,
               "column": 1,
-              "offset": 1344
+              "offset": 1369
             },
             "end": {
-              "line": 73,
+              "line": 70,
               "column": 55,
-              "offset": 1398
+              "offset": 1423
             }
           }
         },
@@ -1095,42 +1104,42 @@
                   "value": "Outputs transformed markdown.",
                   "position": {
                     "start": {
-                      "line": 74,
+                      "line": 71,
                       "column": 8,
-                      "offset": 1406
+                      "offset": 1431
                     },
                     "end": {
-                      "line": 74,
+                      "line": 71,
                       "column": 37,
-                      "offset": 1435
+                      "offset": 1460
                     }
                   }
                 }
               ],
               "position": {
                 "start": {
-                  "line": 74,
+                  "line": 71,
                   "column": 8,
-                  "offset": 1406
+                  "offset": 1431
                 },
                 "end": {
-                  "line": 74,
+                  "line": 71,
                   "column": 37,
-                  "offset": 1435
+                  "offset": 1460
                 }
               }
             }
           ],
           "position": {
             "start": {
-              "line": 74,
+              "line": 71,
               "column": 1,
-              "offset": 1399
+              "offset": 1424
             },
             "end": {
-              "line": 74,
+              "line": 71,
               "column": 37,
-              "offset": 1435
+              "offset": 1460
             }
           }
         },
@@ -1147,56 +1156,108 @@
                   "value": "Formats the markdown output.",
                   "position": {
                     "start": {
-                      "line": 75,
+                      "line": 72,
                       "column": 8,
-                      "offset": 1443
+                      "offset": 1468
                     },
                     "end": {
-                      "line": 75,
+                      "line": 72,
                       "column": 36,
-                      "offset": 1471
+                      "offset": 1496
                     }
                   }
                 }
               ],
               "position": {
                 "start": {
-                  "line": 75,
+                  "line": 72,
                   "column": 8,
-                  "offset": 1443
+                  "offset": 1468
                 },
                 "end": {
-                  "line": 75,
+                  "line": 72,
                   "column": 36,
-                  "offset": 1471
+                  "offset": 1496
                 }
               }
             }
           ],
           "position": {
             "start": {
-              "line": 75,
+              "line": 72,
               "column": 1,
-              "offset": 1436
+              "offset": 1461
             },
             "end": {
-              "line": 75,
+              "line": 72,
               "column": 36,
-              "offset": 1471
+              "offset": 1496
             }
           }
         }
       ],
       "position": {
         "start": {
-          "line": 73,
+          "line": 55,
           "column": 1,
-          "offset": 1344
+          "offset": 684
         },
         "end": {
-          "line": 75,
+          "line": 72,
           "column": 36,
-          "offset": 1471
+          "offset": 1496
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Where to find task identifiers",
+          "position": {
+            "start": {
+              "line": 74,
+              "column": 5,
+              "offset": 1502
+            },
+            "end": {
+              "line": 74,
+              "column": 35,
+              "offset": 1532
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 74,
+          "column": 1,
+          "offset": 1498
+        },
+        "end": {
+          "line": 74,
+          "column": 35,
+          "offset": 1532
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "css",
+      "meta": null,
+      "value": "listItem > paragraph text\nheading text",
+      "position": {
+        "start": {
+          "line": 76,
+          "column": 1,
+          "offset": 1534
+        },
+        "end": {
+          "line": 79,
+          "column": 4,
+          "offset": 1583
         }
       }
     }
@@ -1208,9 +1269,9 @@
       "offset": 0
     },
     "end": {
-      "line": 76,
+      "line": 80,
       "column": 1,
-      "offset": 1472
+      "offset": 1584
     }
   }
 }
