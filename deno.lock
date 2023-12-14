@@ -2,6 +2,7 @@
   "version": "3",
   "packages": {
     "specifiers": {
+      "npm:mdast": "npm:mdast@3.0.0",
       "npm:mdast-util-from-markdown": "npm:mdast-util-from-markdown@2.0.0",
       "npm:mdast-util-gfm": "npm:mdast-util-gfm@3.0.0",
       "npm:mdast-util-to-markdown": "npm:mdast-util-to-markdown@2.1.0",
@@ -180,6 +181,10 @@
         "dependencies": {
           "@types/mdast": "@types/mdast@4.0.3"
         }
+      },
+      "mdast@3.0.0": {
+        "integrity": "sha512-xySmf8g4fPKMeC07jXGz971EkLbWAJ83s4US2Tj9lEdnZ142UP5grN73H1Xd3HzrdbU5o9GYYP/y8F9ZSwLE9g==",
+        "dependencies": {}
       },
       "micromark-core-commonmark@2.0.0": {
         "integrity": "sha512-jThOz/pVmAYUtkroV3D5c1osFXAMv9e0ypGDOIZuCeAe91/sD6BoE2Sjzt30yuXtwOYUmySOhMas/PVyh02itA==",
