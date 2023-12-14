@@ -261,7 +261,7 @@
       "children": [
         {
           "type": "text",
-          "value": "Features",
+          "value": "[ ] TODO-1 Features",
           "position": {
             "start": {
               "line": 53,
@@ -270,8 +270,8 @@
             },
             "end": {
               "line": 53,
-              "column": 12,
-              "offset": 682
+              "column": 16,
+              "offset": 686
             }
           }
         }
@@ -284,8 +284,8 @@
         },
         "end": {
           "line": 53,
-          "column": 12,
-          "offset": 682
+          "column": 16,
+          "offset": 686
         }
       }
     },
@@ -305,17 +305,17 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "Parses markdown input.",
+                  "value": "TODO-2 Parses markdown input.",
                   "position": {
                     "start": {
                       "line": 55,
                       "column": 8,
-                      "offset": 691
+                      "offset": 695
                     },
                     "end": {
                       "line": 55,
                       "column": 30,
-                      "offset": 713
+                      "offset": 717
                     }
                   }
                 }
@@ -324,12 +324,12 @@
                 "start": {
                   "line": 55,
                   "column": 8,
-                  "offset": 691
+                  "offset": 695
                 },
                 "end": {
                   "line": 55,
                   "column": 30,
-                  "offset": 713
+                  "offset": 717
                 }
               }
             }
@@ -338,12 +338,12 @@
             "start": {
               "line": 55,
               "column": 1,
-              "offset": 684
+              "offset": 688
             },
             "end": {
               "line": 55,
               "column": 30,
-              "offset": 713
+              "offset": 717
             }
           }
         },
@@ -357,17 +357,17 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "Finds all places where task identifiers are used:",
+                  "value": "TODO-3 Finds all places where task identifiers are used:",
                   "position": {
                     "start": {
                       "line": 56,
                       "column": 8,
-                      "offset": 721
+                      "offset": 725
                     },
                     "end": {
                       "line": 56,
                       "column": 57,
-                      "offset": 770
+                      "offset": 774
                     }
                   }
                 }
@@ -376,12 +376,12 @@
                 "start": {
                   "line": 56,
                   "column": 8,
-                  "offset": 721
+                  "offset": 725
                 },
                 "end": {
                   "line": 56,
                   "column": 57,
-                  "offset": 770
+                  "offset": 774
                 }
               }
             },
@@ -401,17 +401,17 @@
                       "children": [
                         {
                           "type": "text",
-                          "value": "unordered lists / task lists",
+                          "value": "TODO-4 unordered lists / task lists",
                           "position": {
                             "start": {
                               "line": 57,
                               "column": 10,
-                              "offset": 780
+                              "offset": 784
                             },
                             "end": {
                               "line": 57,
                               "column": 38,
-                              "offset": 808
+                              "offset": 812
                             }
                           }
                         }
@@ -420,12 +420,12 @@
                         "start": {
                           "line": 57,
                           "column": 10,
-                          "offset": 780
+                          "offset": 784
                         },
                         "end": {
                           "line": 57,
                           "column": 38,
-                          "offset": 808
+                          "offset": 812
                         }
                       }
                     }
@@ -434,12 +434,12 @@
                     "start": {
                       "line": 57,
                       "column": 4,
-                      "offset": 774
+                      "offset": 778
                     },
                     "end": {
                       "line": 57,
                       "column": 38,
-                      "offset": 808
+                      "offset": 812
                     }
                   }
                 },
@@ -453,17 +453,17 @@
                       "children": [
                         {
                           "type": "text",
-                          "value": "ordered lists",
+                          "value": "TODO-5 ordered lists",
                           "position": {
                             "start": {
                               "line": 58,
                               "column": 10,
-                              "offset": 818
+                              "offset": 822
                             },
                             "end": {
                               "line": 58,
                               "column": 23,
-                              "offset": 831
+                              "offset": 835
                             }
                           }
                         }
@@ -472,12 +472,12 @@
                         "start": {
                           "line": 58,
                           "column": 10,
-                          "offset": 818
+                          "offset": 822
                         },
                         "end": {
                           "line": 58,
                           "column": 23,
-                          "offset": 831
+                          "offset": 835
                         }
                       }
                     }
@@ -486,36 +486,36 @@
                     "start": {
                       "line": 58,
                       "column": 4,
-                      "offset": 812
+                      "offset": 816
                     },
                     "end": {
                       "line": 58,
                       "column": 23,
-                      "offset": 831
+                      "offset": 835
                     }
                   }
                 },
                 {
                   "type": "listItem",
                   "spread": false,
-                  "checked": false,
+                  "checked": true,
                   "children": [
                     {
                       "type": "paragraph",
                       "children": [
                         {
                           "type": "text",
-                          "value": "headings",
+                          "value": "TODO-6 headings",
                           "position": {
                             "start": {
                               "line": 59,
                               "column": 10,
-                              "offset": 841
+                              "offset": 845
                             },
                             "end": {
                               "line": 59,
                               "column": 18,
-                              "offset": 849
+                              "offset": 853
                             }
                           }
                         }
@@ -524,12 +524,12 @@
                         "start": {
                           "line": 59,
                           "column": 10,
-                          "offset": 841
+                          "offset": 845
                         },
                         "end": {
                           "line": 59,
                           "column": 18,
-                          "offset": 849
+                          "offset": 853
                         }
                       }
                     }
@@ -538,12 +538,12 @@
                     "start": {
                       "line": 59,
                       "column": 4,
-                      "offset": 835
+                      "offset": 839
                     },
                     "end": {
                       "line": 59,
                       "column": 18,
-                      "offset": 849
+                      "offset": 853
                     }
                   }
                 }
@@ -552,12 +552,12 @@
                 "start": {
                   "line": 57,
                   "column": 4,
-                  "offset": 774
+                  "offset": 778
                 },
                 "end": {
                   "line": 59,
                   "column": 18,
-                  "offset": 849
+                  "offset": 853
                 }
               }
             }
@@ -566,12 +566,12 @@
             "start": {
               "line": 56,
               "column": 1,
-              "offset": 714
+              "offset": 718
             },
             "end": {
               "line": 59,
               "column": 18,
-              "offset": 849
+              "offset": 853
             }
           }
         },
@@ -585,17 +585,17 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "In each eligible place, identifies task identifiers based on regex, ex\n",
+                  "value": "TODO-7 In each eligible place, identifies task identifiers based on regex, ex\n",
                   "position": {
                     "start": {
                       "line": 60,
                       "column": 8,
-                      "offset": 857
+                      "offset": 861
                     },
                     "end": {
                       "line": 61,
                       "column": 1,
-                      "offset": 928
+                      "offset": 932
                     }
                   }
                 },
@@ -606,12 +606,12 @@
                     "start": {
                       "line": 61,
                       "column": 8,
-                      "offset": 935
+                      "offset": 939
                     },
                     "end": {
                       "line": 61,
                       "column": 24,
-                      "offset": 951
+                      "offset": 955
                     }
                   }
                 },
@@ -622,12 +622,12 @@
                     "start": {
                       "line": 61,
                       "column": 24,
-                      "offset": 951
+                      "offset": 955
                     },
                     "end": {
                       "line": 61,
                       "column": 25,
-                      "offset": 952
+                      "offset": 956
                     }
                   }
                 }
@@ -636,12 +636,12 @@
                 "start": {
                   "line": 60,
                   "column": 8,
-                  "offset": 857
+                  "offset": 861
                 },
                 "end": {
                   "line": 61,
                   "column": 25,
-                  "offset": 952
+                  "offset": 956
                 }
               }
             }
@@ -650,12 +650,12 @@
             "start": {
               "line": 60,
               "column": 1,
-              "offset": 850
+              "offset": 854
             },
             "end": {
               "line": 61,
               "column": 25,
-              "offset": 952
+              "offset": 956
             }
           }
         },
@@ -669,17 +669,17 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "In the existing tasks, finds the highest numbered identifier.",
+                  "value": "TODO-8 In the existing tasks, finds the highest numbered identifier.",
                   "position": {
                     "start": {
                       "line": 62,
                       "column": 8,
-                      "offset": 960
+                      "offset": 964
                     },
                     "end": {
                       "line": 62,
                       "column": 69,
-                      "offset": 1021
+                      "offset": 1025
                     }
                   }
                 }
@@ -688,12 +688,12 @@
                 "start": {
                   "line": 62,
                   "column": 8,
-                  "offset": 960
+                  "offset": 964
                 },
                 "end": {
                   "line": 62,
                   "column": 69,
-                  "offset": 1021
+                  "offset": 1025
                 }
               }
             }
@@ -702,12 +702,12 @@
             "start": {
               "line": 62,
               "column": 1,
-              "offset": 953
+              "offset": 957
             },
             "end": {
               "line": 62,
               "column": 69,
-              "offset": 1021
+              "offset": 1025
             }
           }
         },
@@ -721,17 +721,17 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "Calculates the next identifier, always higher than the highest existing.\nIt's OK to skip numbers.",
+                  "value": "TODO-9 Calculates the next identifier, always higher than the highest existing.\nIt's OK to skip numbers.",
                   "position": {
                     "start": {
                       "line": 63,
                       "column": 8,
-                      "offset": 1029
+                      "offset": 1033
                     },
                     "end": {
                       "line": 64,
                       "column": 32,
-                      "offset": 1133
+                      "offset": 1137
                     }
                   }
                 }
@@ -740,12 +740,12 @@
                 "start": {
                   "line": 63,
                   "column": 8,
-                  "offset": 1029
+                  "offset": 1033
                 },
                 "end": {
                   "line": 64,
                   "column": 32,
-                  "offset": 1133
+                  "offset": 1137
                 }
               }
             }
@@ -754,12 +754,12 @@
             "start": {
               "line": 63,
               "column": 1,
-              "offset": 1022
+              "offset": 1026
             },
             "end": {
               "line": 64,
               "column": 32,
-              "offset": 1133
+              "offset": 1137
             }
           }
         },
@@ -773,17 +773,17 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "Identifies all new todo items, by:",
+                  "value": "TODO-10 Identifies all new todo items, by:",
                   "position": {
                     "start": {
                       "line": 65,
                       "column": 8,
-                      "offset": 1141
+                      "offset": 1145
                     },
                     "end": {
                       "line": 65,
                       "column": 42,
-                      "offset": 1175
+                      "offset": 1179
                     }
                   }
                 }
@@ -792,12 +792,12 @@
                 "start": {
                   "line": 65,
                   "column": 8,
-                  "offset": 1141
+                  "offset": 1145
                 },
                 "end": {
                   "line": 65,
                   "column": 42,
-                  "offset": 1175
+                  "offset": 1179
                 }
               }
             },
@@ -822,12 +822,12 @@
                             "start": {
                               "line": 66,
                               "column": 10,
-                              "offset": 1185
+                              "offset": 1189
                             },
                             "end": {
                               "line": 66,
                               "column": 17,
-                              "offset": 1192
+                              "offset": 1196
                             }
                           }
                         },
@@ -838,12 +838,12 @@
                             "start": {
                               "line": 66,
                               "column": 17,
-                              "offset": 1192
+                              "offset": 1196
                             },
                             "end": {
                               "line": 66,
                               "column": 51,
-                              "offset": 1226
+                              "offset": 1230
                             }
                           }
                         }
@@ -852,12 +852,12 @@
                         "start": {
                           "line": 66,
                           "column": 6,
-                          "offset": 1181
+                          "offset": 1185
                         },
                         "end": {
                           "line": 66,
                           "column": 51,
-                          "offset": 1226
+                          "offset": 1230
                         }
                       }
                     }
@@ -866,12 +866,12 @@
                     "start": {
                       "line": 66,
                       "column": 4,
-                      "offset": 1179
+                      "offset": 1183
                     },
                     "end": {
                       "line": 66,
                       "column": 51,
-                      "offset": 1226
+                      "offset": 1230
                     }
                   }
                 },
@@ -885,17 +885,17 @@
                       "children": [
                         {
                           "type": "text",
-                          "value": "task identifier placeholder, via regex, ex\n",
+                          "value": "TODO-11 task identifier placeholder, via regex, ex\n",
                           "position": {
                             "start": {
                               "line": 67,
                               "column": 10,
-                              "offset": 1236
+                              "offset": 1240
                             },
                             "end": {
                               "line": 68,
                               "column": 1,
-                              "offset": 1279
+                              "offset": 1283
                             }
                           }
                         },
@@ -906,12 +906,12 @@
                             "start": {
                               "line": 68,
                               "column": 10,
-                              "offset": 1288
+                              "offset": 1292
                             },
                             "end": {
                               "line": 68,
                               "column": 38,
-                              "offset": 1316
+                              "offset": 1320
                             }
                           }
                         },
@@ -922,12 +922,12 @@
                             "start": {
                               "line": 68,
                               "column": 38,
-                              "offset": 1316
+                              "offset": 1320
                             },
                             "end": {
                               "line": 68,
                               "column": 39,
-                              "offset": 1317
+                              "offset": 1321
                             }
                           }
                         }
@@ -936,12 +936,12 @@
                         "start": {
                           "line": 67,
                           "column": 10,
-                          "offset": 1236
+                          "offset": 1240
                         },
                         "end": {
                           "line": 68,
                           "column": 39,
-                          "offset": 1317
+                          "offset": 1321
                         }
                       }
                     }
@@ -950,12 +950,12 @@
                     "start": {
                       "line": 67,
                       "column": 4,
-                      "offset": 1230
+                      "offset": 1234
                     },
                     "end": {
                       "line": 68,
                       "column": 39,
-                      "offset": 1317
+                      "offset": 1321
                     }
                   }
                 },
@@ -969,17 +969,17 @@
                       "children": [
                         {
                           "type": "text",
-                          "value": "copied, already existing task identifier.",
+                          "value": "TODO-12 copied, already existing task identifier.",
                           "position": {
                             "start": {
                               "line": 69,
                               "column": 10,
-                              "offset": 1327
+                              "offset": 1331
                             },
                             "end": {
                               "line": 69,
                               "column": 51,
-                              "offset": 1368
+                              "offset": 1372
                             }
                           }
                         }
@@ -988,12 +988,12 @@
                         "start": {
                           "line": 69,
                           "column": 10,
-                          "offset": 1327
+                          "offset": 1331
                         },
                         "end": {
                           "line": 69,
                           "column": 51,
-                          "offset": 1368
+                          "offset": 1372
                         }
                       }
                     }
@@ -1002,12 +1002,12 @@
                     "start": {
                       "line": 69,
                       "column": 4,
-                      "offset": 1321
+                      "offset": 1325
                     },
                     "end": {
                       "line": 69,
                       "column": 51,
-                      "offset": 1368
+                      "offset": 1372
                     }
                   }
                 }
@@ -1016,12 +1016,12 @@
                 "start": {
                   "line": 66,
                   "column": 4,
-                  "offset": 1179
+                  "offset": 1183
                 },
                 "end": {
                   "line": 69,
                   "column": 51,
-                  "offset": 1368
+                  "offset": 1372
                 }
               }
             }
@@ -1030,12 +1030,12 @@
             "start": {
               "line": 65,
               "column": 1,
-              "offset": 1134
+              "offset": 1138
             },
             "end": {
               "line": 69,
               "column": 51,
-              "offset": 1368
+              "offset": 1372
             }
           }
         },
@@ -1049,17 +1049,17 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "For each new task, assigns the next identifier.",
+                  "value": "TODO-13 For each new task, assigns the next identifier.",
                   "position": {
                     "start": {
                       "line": 70,
                       "column": 8,
-                      "offset": 1376
+                      "offset": 1380
                     },
                     "end": {
                       "line": 70,
                       "column": 55,
-                      "offset": 1423
+                      "offset": 1427
                     }
                   }
                 }
@@ -1068,12 +1068,12 @@
                 "start": {
                   "line": 70,
                   "column": 8,
-                  "offset": 1376
+                  "offset": 1380
                 },
                 "end": {
                   "line": 70,
                   "column": 55,
-                  "offset": 1423
+                  "offset": 1427
                 }
               }
             }
@@ -1082,12 +1082,12 @@
             "start": {
               "line": 70,
               "column": 1,
-              "offset": 1369
+              "offset": 1373
             },
             "end": {
               "line": 70,
               "column": 55,
-              "offset": 1423
+              "offset": 1427
             }
           }
         },
@@ -1101,17 +1101,17 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "Outputs transformed markdown.",
+                  "value": "TODO-14 Outputs transformed markdown.",
                   "position": {
                     "start": {
                       "line": 71,
                       "column": 8,
-                      "offset": 1431
+                      "offset": 1435
                     },
                     "end": {
                       "line": 71,
                       "column": 37,
-                      "offset": 1460
+                      "offset": 1464
                     }
                   }
                 }
@@ -1120,12 +1120,12 @@
                 "start": {
                   "line": 71,
                   "column": 8,
-                  "offset": 1431
+                  "offset": 1435
                 },
                 "end": {
                   "line": 71,
                   "column": 37,
-                  "offset": 1460
+                  "offset": 1464
                 }
               }
             }
@@ -1134,12 +1134,12 @@
             "start": {
               "line": 71,
               "column": 1,
-              "offset": 1424
+              "offset": 1428
             },
             "end": {
               "line": 71,
               "column": 37,
-              "offset": 1460
+              "offset": 1464
             }
           }
         },
@@ -1153,17 +1153,17 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "Formats the markdown output.",
+                  "value": "TODO-15 Formats the markdown output.",
                   "position": {
                     "start": {
                       "line": 72,
                       "column": 8,
-                      "offset": 1468
+                      "offset": 1472
                     },
                     "end": {
                       "line": 72,
                       "column": 36,
-                      "offset": 1496
+                      "offset": 1500
                     }
                   }
                 }
@@ -1172,12 +1172,12 @@
                 "start": {
                   "line": 72,
                   "column": 8,
-                  "offset": 1468
+                  "offset": 1472
                 },
                 "end": {
                   "line": 72,
                   "column": 36,
-                  "offset": 1496
+                  "offset": 1500
                 }
               }
             }
@@ -1186,12 +1186,12 @@
             "start": {
               "line": 72,
               "column": 1,
-              "offset": 1461
+              "offset": 1465
             },
             "end": {
               "line": 72,
               "column": 36,
-              "offset": 1496
+              "offset": 1500
             }
           }
         }
@@ -1200,12 +1200,12 @@
         "start": {
           "line": 55,
           "column": 1,
-          "offset": 684
+          "offset": 688
         },
         "end": {
           "line": 72,
           "column": 36,
-          "offset": 1496
+          "offset": 1500
         }
       }
     },
@@ -1220,12 +1220,12 @@
             "start": {
               "line": 74,
               "column": 5,
-              "offset": 1502
+              "offset": 1506
             },
             "end": {
               "line": 74,
               "column": 35,
-              "offset": 1532
+              "offset": 1536
             }
           }
         }
@@ -1234,12 +1234,12 @@
         "start": {
           "line": 74,
           "column": 1,
-          "offset": 1498
+          "offset": 1502
         },
         "end": {
           "line": 74,
           "column": 35,
-          "offset": 1532
+          "offset": 1536
         }
       }
     },
@@ -1252,12 +1252,12 @@
         "start": {
           "line": 76,
           "column": 1,
-          "offset": 1534
+          "offset": 1538
         },
         "end": {
           "line": 79,
           "column": 4,
-          "offset": 1583
+          "offset": 1587
         }
       }
     }
@@ -1271,7 +1271,7 @@
     "end": {
       "line": 80,
       "column": 1,
-      "offset": 1584
+      "offset": 1588
     }
   }
 }
