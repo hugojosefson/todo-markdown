@@ -50,13 +50,13 @@ Tool for using markdown document(s) for keeping track of todo items.
 - [ ] TODO-10 Do something even elser
 ```
 
-## Features
+## [ ] Features
 
 1. [x] Parses markdown input.
 1. [ ] Finds all places where task identifiers are used:
    - [ ] unordered lists / task lists
    - [ ] ordered lists
-   - [ ] headings
+   - [x] headings
 1. [ ] In each eligible place, identifies task identifiers based on regex, ex
        `/\bTODO-\d+\b/`.
 1. [ ] In the existing tasks, finds the highest numbered identifier.

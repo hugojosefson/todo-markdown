@@ -3,10 +3,16 @@
   "packages": {
     "specifiers": {
       "npm:@types/mdast": "npm:@types/mdast@4.0.3",
+      "npm:mdast-util-definitions": "npm:mdast-util-definitions@6.0.0",
+      "npm:mdast-util-find-and-replace": "npm:mdast-util-find-and-replace@3.0.1",
       "npm:mdast-util-from-markdown": "npm:mdast-util-from-markdown@2.0.0",
       "npm:mdast-util-gfm": "npm:mdast-util-gfm@3.0.0",
+      "npm:mdast-util-phrasing": "npm:mdast-util-phrasing@4.0.0",
       "npm:mdast-util-to-markdown": "npm:mdast-util-to-markdown@2.1.0",
-      "npm:micromark-extension-gfm": "npm:micromark-extension-gfm@3.0.0"
+      "npm:micromark-extension-gfm": "npm:micromark-extension-gfm@3.0.0",
+      "npm:unist-util-find-after": "npm:unist-util-find-after@5.0.0",
+      "npm:unist-util-is": "npm:unist-util-is@6.0.0",
+      "npm:unist-util-select": "npm:unist-util-select@5.1.0"
     },
     "npm": {
       "@types/debug@4.1.10": {
@@ -29,12 +35,20 @@
         "integrity": "sha512-dqId9J8K/vGi5Zr7oo212BGii5m3q5Hxlkwy3WpYuKPklmBEvsbMYYyLxAQpSffdLl/gdW0XUpKWFvYmyoWCoQ==",
         "dependencies": {}
       },
+      "boolbase@1.0.0": {
+        "integrity": "sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==",
+        "dependencies": {}
+      },
       "ccount@2.0.1": {
         "integrity": "sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==",
         "dependencies": {}
       },
       "character-entities@2.0.2": {
         "integrity": "sha512-shx7oQ0Awen/BRIdkjkvz54PnEEI/EjwXDSIZp86/KKdbafHh1Df/RYGBhn4hbe2+uKC9FnT5UCEdyPz3ai9hQ==",
+        "dependencies": {}
+      },
+      "css-selector-parser@3.0.3": {
+        "integrity": "sha512-HAcgYSBFKo1jnglINdHeBPIscPOCOh8vCDCaOV5xkwMSlGPEnfdynxBuWkgZMwXltMKgFbDcr4EPmDpSWi34MA==",
         "dependencies": {}
       },
       "debug@4.3.4": {
@@ -70,6 +84,14 @@
       "markdown-table@3.0.3": {
         "integrity": "sha512-Z1NL3Tb1M9wH4XESsCDEksWoKTdlUafKc4pt0GRwjUyXaCFZ+dc3g2erqB6zm3szA2IUSi7VnPI+o/9jnxh9hw==",
         "dependencies": {}
+      },
+      "mdast-util-definitions@6.0.0": {
+        "integrity": "sha512-scTllyX6pnYNZH/AIp/0ePz6s4cZtARxImwoPJ7kS42n+MnVsI4XbnG6d4ibehRIldYMWM2LD7ImQblVhUejVQ==",
+        "dependencies": {
+          "@types/mdast": "@types/mdast@4.0.3",
+          "@types/unist": "@types/unist@3.0.2",
+          "unist-util-visit": "unist-util-visit@5.0.0"
+        }
       },
       "mdast-util-find-and-replace@3.0.1": {
         "integrity": "sha512-SG21kZHGC3XRTSUhtofZkBzZTJNM5ecCi0SK2IMKmSXR8vO3peL+kb1O0z7Zl83jKtutG4k5Wv/W7V3/YHvzPA==",
@@ -431,10 +453,33 @@
         "integrity": "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==",
         "dependencies": {}
       },
+      "nth-check@2.1.1": {
+        "integrity": "sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==",
+        "dependencies": {
+          "boolbase": "boolbase@1.0.0"
+        }
+      },
+      "unist-util-find-after@5.0.0": {
+        "integrity": "sha512-amQa0Ep2m6hE2g72AugUItjbuM8X8cGQnFoHk0pGfrFeT9GZhzN5SW8nRsiGKK7Aif4CrACPENkA6P/Lw6fHGQ==",
+        "dependencies": {
+          "@types/unist": "@types/unist@3.0.2",
+          "unist-util-is": "unist-util-is@6.0.0"
+        }
+      },
       "unist-util-is@6.0.0": {
         "integrity": "sha512-2qCTHimwdxLfz+YzdGfkqNlH0tLi9xjTnHddPmJwtIG9MGsdbutfTc4P+haPD7l7Cjxf/WZj+we5qfVPvvxfYw==",
         "dependencies": {
           "@types/unist": "@types/unist@3.0.2"
+        }
+      },
+      "unist-util-select@5.1.0": {
+        "integrity": "sha512-4A5mfokSHG/rNQ4g7gSbdEs+H586xyd24sdJqF1IWamqrLHvYb+DH48fzxowyOhOfK7YSqX+XlCojAyuuyyT2A==",
+        "dependencies": {
+          "@types/unist": "@types/unist@3.0.2",
+          "css-selector-parser": "css-selector-parser@3.0.3",
+          "devlop": "devlop@1.1.0",
+          "nth-check": "nth-check@2.1.1",
+          "zwitch": "zwitch@2.0.4"
         }
       },
       "unist-util-stringify-position@4.0.0": {
@@ -463,6 +508,9 @@
         "dependencies": {}
       }
     }
+  },
+  "redirects": {
+    "https://deno.land/std/collections/map_entries.ts": "https://deno.land/std@0.209.0/collections/map_entries.ts"
   },
   "remote": {
     "https://deno.land/std@0.208.0/assert/_constants.ts": "8a9da298c26750b28b326b297316cdde860bc237533b07e1337c021379e6b2a9",
