@@ -1,19 +1,17 @@
 import { Root } from "npm:mdast";
-import { fromMarkdown } from "npm:mdast-util-from-markdown";
-import { gfmFromMarkdown, gfmToMarkdown } from "npm:mdast-util-gfm";
+import { gfmToMarkdown } from "npm:mdast-util-gfm";
 import { toMarkdown } from "npm:mdast-util-to-markdown";
-import { gfm } from "npm:micromark-extension-gfm";
 import { formatCode } from "./format-code.ts";
+import { markdownToAst } from "./markdown-to-ast.ts";
 import { transformAst } from "./transform-ast.ts";
 
 export async function transformMarkdown(markdown: string): Promise<string> {
-  const oldAst: Root = fromMarkdown(markdown, {
-    extensions: [gfm()],
-    mdastExtensions: [gfmFromMarkdown()],
-  });
+  const oldAst: Root = markdownToAst(markdown);
 
   const newAst: Root = transformAst(oldAst);
 
-  const out = toMarkdown(newAst, { extensions: [gfmToMarkdown()] });
-  return await formatCode("md", out);
+  return await formatCode(
+    "md",
+    toMarkdown(newAst, { extensions: [gfmToMarkdown()] }),
+  );
 }
