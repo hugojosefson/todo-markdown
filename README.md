@@ -52,7 +52,7 @@ Tool for using markdown document(s) for keeping track of todo items.
 
 ## Features
 
-- [ ] Parses markdown input.
+- [x] Parses markdown input.
 - [ ] Finds all places where task identifiers are used:
   - [ ] unordered lists / task lists
   - [ ] ordered lists
@@ -67,5 +67,5 @@ Tool for using markdown document(s) for keeping track of todo items.
   - [ ] task identifier placeholder, via regex, ex `\bTODO-(\?+|x+|X+|n+|N+)\b`,
   - [ ] copied, already existing task identifier.
 - [ ] For each new task, assigns the next identifier.
-- [ ] Outputs modified markdown with any new identifiers.
-- [ ] Formats the markdown output.
+- [x] Outputs transformed markdown.
+- [x] Formats the markdown output.
