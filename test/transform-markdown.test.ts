@@ -1,7 +1,7 @@
 import { assertEquals } from "https://deno.land/std@0.208.0/assert/assert_equals.ts";
-import { processMarkdown } from "../src/process-markdown.ts";
+import { transformMarkdown } from "../src/transform-markdown.ts";
 
-Deno.test("processMarkdown should assign identifiers to new tasks", async () => {
+Deno.test("transformMarkdown should assign identifiers to new tasks", async () => {
   const inputMarkdown = `
 # Project
 
@@ -20,11 +20,11 @@ Deno.test("processMarkdown should assign identifiers to new tasks", async () => 
 - [ ] TODO-4 Implement feature D
 `;
 
-  const result = await processMarkdown(inputMarkdown);
+  const result = await transformMarkdown(inputMarkdown);
   assertEquals(result, expectedOutputMarkdown);
 });
 
-Deno.test("processMarkdown should not change identifiers of old tasks", async () => {
+Deno.test("transformMarkdown should not change identifiers of old tasks", async () => {
   const inputMarkdown = `
 # Project
 
@@ -41,11 +41,11 @@ Deno.test("processMarkdown should not change identifiers of old tasks", async ()
 - [ ] TODO-3 Implement feature C
 `;
 
-  const result = await processMarkdown(inputMarkdown);
+  const result = await transformMarkdown(inputMarkdown);
   assertEquals(result, expectedOutputMarkdown);
 });
 
-Deno.test("processMarkdown should handle examples in the README", async () => {
+Deno.test("transformMarkdown should handle examples in the README", async () => {
   const readme = await Deno.readTextFile(
     new URL("../README.md", import.meta.url),
   );
@@ -54,6 +54,6 @@ Deno.test("processMarkdown should handle examples in the README", async () => {
     exampleSection.split(/^### .*input/i)[1].split(/^### /)[0];
   const expectedOutputExample =
     exampleSection.split(/^### .*output/i)[1].split(/^### /)[0];
-  const result = await processMarkdown(inputExample);
+  const result = await transformMarkdown(inputExample);
   assertEquals(result, expectedOutputExample);
 });

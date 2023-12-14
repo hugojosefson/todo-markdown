@@ -6,7 +6,7 @@ import { gfm } from "npm:micromark-extension-gfm";
 import { formatCode } from "./format-code.ts";
 import { transformAst } from "./transform-ast.ts";
 
-export async function processMarkdown(markdown: string): Promise<string> {
+export async function transformMarkdown(markdown: string): Promise<string> {
   const oldAst: Root = fromMarkdown(markdown, {
     extensions: [gfm()],
     mdastExtensions: [gfmFromMarkdown()],
