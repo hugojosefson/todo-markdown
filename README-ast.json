@@ -1,0 +1,1216 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [
+        {
+          "type": "text",
+          "value": "todo-markdown",
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 3,
+              "offset": 2
+            },
+            "end": {
+              "line": 1,
+              "column": 16,
+              "offset": 15
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 16,
+          "offset": 15
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Tool for using markdown document(s) for keeping track of todo items.",
+          "position": {
+            "start": {
+              "line": 3,
+              "column": 1,
+              "offset": 17
+            },
+            "end": {
+              "line": 3,
+              "column": 69,
+              "offset": 85
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 3,
+          "column": 1,
+          "offset": 17
+        },
+        "end": {
+          "line": 3,
+          "column": 69,
+          "offset": 85
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 2,
+      "children": [
+        {
+          "type": "text",
+          "value": "Example",
+          "position": {
+            "start": {
+              "line": 5,
+              "column": 4,
+              "offset": 90
+            },
+            "end": {
+              "line": 5,
+              "column": 11,
+              "offset": 97
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 5,
+          "column": 1,
+          "offset": 87
+        },
+        "end": {
+          "line": 5,
+          "column": 11,
+          "offset": 97
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Markdown input",
+          "position": {
+            "start": {
+              "line": 7,
+              "column": 5,
+              "offset": 103
+            },
+            "end": {
+              "line": 7,
+              "column": 19,
+              "offset": 117
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 7,
+          "column": 1,
+          "offset": 99
+        },
+        "end": {
+          "line": 7,
+          "column": 19,
+          "offset": 117
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "markdown",
+      "meta": null,
+      "value": "# My TODO:s\n\n## Urgent\n\n- [x] TODO-2 Pay bills\n- [ ] TODO-1 Buy milk\n- [x] TODO-3 Call mom\n- [ ] TODO-5 Buy eggs\n\n## Later\n\n- [ ] TODO-? Buy bread\n- [ ] TODO-7 Eat it all\n\n## Other\n\n- [ ] Do something else\n- [ ] TODO-xx Do something even elser",
+      "position": {
+        "start": {
+          "line": 9,
+          "column": 1,
+          "offset": 119
+        },
+        "end": {
+          "line": 28,
+          "column": 4,
+          "offset": 378
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Markdown output",
+          "position": {
+            "start": {
+              "line": 30,
+              "column": 5,
+              "offset": 384
+            },
+            "end": {
+              "line": 30,
+              "column": 20,
+              "offset": 399
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 30,
+          "column": 1,
+          "offset": 380
+        },
+        "end": {
+          "line": 30,
+          "column": 20,
+          "offset": 399
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "markdown",
+      "meta": null,
+      "value": "# My TODO:s\n\n## Urgent\n\n- [x] TODO-2 Pay bills\n- [ ] TODO-1 Buy milk\n- [x] TODO-3 Call mom\n- [ ] TODO-5 Buy eggs\n\n## Later\n\n- [ ] TODO-8 Buy bread\n- [ ] TODO-7 Eat it all\n\n## Other\n\n- [ ] TODO-9 Do something else\n- [ ] TODO-10 Do something even elser",
+      "position": {
+        "start": {
+          "line": 32,
+          "column": 1,
+          "offset": 401
+        },
+        "end": {
+          "line": 51,
+          "column": 4,
+          "offset": 667
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 2,
+      "children": [
+        {
+          "type": "text",
+          "value": "Features",
+          "position": {
+            "start": {
+              "line": 53,
+              "column": 4,
+              "offset": 672
+            },
+            "end": {
+              "line": 53,
+              "column": 12,
+              "offset": 680
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 53,
+          "column": 1,
+          "offset": 669
+        },
+        "end": {
+          "line": 53,
+          "column": 12,
+          "offset": 680
+        }
+      }
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "start": 1,
+      "spread": false,
+      "children": [
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": true,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Parses markdown input.",
+                  "position": {
+                    "start": {
+                      "line": 55,
+                      "column": 8,
+                      "offset": 689
+                    },
+                    "end": {
+                      "line": 55,
+                      "column": 30,
+                      "offset": 711
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 55,
+                  "column": 8,
+                  "offset": 689
+                },
+                "end": {
+                  "line": 55,
+                  "column": 30,
+                  "offset": 711
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 55,
+              "column": 1,
+              "offset": 682
+            },
+            "end": {
+              "line": 55,
+              "column": 30,
+              "offset": 711
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Finds all places where task identifiers are used:",
+                  "position": {
+                    "start": {
+                      "line": 56,
+                      "column": 8,
+                      "offset": 719
+                    },
+                    "end": {
+                      "line": 56,
+                      "column": 57,
+                      "offset": 768
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 56,
+                  "column": 8,
+                  "offset": 719
+                },
+                "end": {
+                  "line": 56,
+                  "column": 57,
+                  "offset": 768
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 56,
+              "column": 1,
+              "offset": 712
+            },
+            "end": {
+              "line": 56,
+              "column": 57,
+              "offset": 768
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 55,
+          "column": 1,
+          "offset": 682
+        },
+        "end": {
+          "line": 56,
+          "column": 57,
+          "offset": 768
+        }
+      }
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "start": null,
+      "spread": false,
+      "children": [
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "unordered lists / task lists",
+                  "position": {
+                    "start": {
+                      "line": 58,
+                      "column": 7,
+                      "offset": 776
+                    },
+                    "end": {
+                      "line": 58,
+                      "column": 35,
+                      "offset": 804
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 58,
+                  "column": 7,
+                  "offset": 776
+                },
+                "end": {
+                  "line": 58,
+                  "column": 35,
+                  "offset": 804
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 58,
+              "column": 1,
+              "offset": 770
+            },
+            "end": {
+              "line": 58,
+              "column": 35,
+              "offset": 804
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "ordered lists",
+                  "position": {
+                    "start": {
+                      "line": 59,
+                      "column": 7,
+                      "offset": 811
+                    },
+                    "end": {
+                      "line": 59,
+                      "column": 20,
+                      "offset": 824
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 59,
+                  "column": 7,
+                  "offset": 811
+                },
+                "end": {
+                  "line": 59,
+                  "column": 20,
+                  "offset": 824
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 59,
+              "column": 1,
+              "offset": 805
+            },
+            "end": {
+              "line": 59,
+              "column": 20,
+              "offset": 824
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "headings",
+                  "position": {
+                    "start": {
+                      "line": 60,
+                      "column": 7,
+                      "offset": 831
+                    },
+                    "end": {
+                      "line": 60,
+                      "column": 15,
+                      "offset": 839
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 60,
+                  "column": 7,
+                  "offset": 831
+                },
+                "end": {
+                  "line": 60,
+                  "column": 15,
+                  "offset": 839
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 60,
+              "column": 1,
+              "offset": 825
+            },
+            "end": {
+              "line": 60,
+              "column": 15,
+              "offset": 839
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 58,
+          "column": 1,
+          "offset": 770
+        },
+        "end": {
+          "line": 60,
+          "column": 15,
+          "offset": 839
+        }
+      }
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "start": 1,
+      "spread": false,
+      "children": [
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "In each eligible place, identifies task identifiers based on regex, ex\n",
+                  "position": {
+                    "start": {
+                      "line": 62,
+                      "column": 8,
+                      "offset": 848
+                    },
+                    "end": {
+                      "line": 63,
+                      "column": 1,
+                      "offset": 919
+                    }
+                  }
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "/\\bTODO-\\d+\\b/",
+                  "position": {
+                    "start": {
+                      "line": 63,
+                      "column": 8,
+                      "offset": 926
+                    },
+                    "end": {
+                      "line": 63,
+                      "column": 24,
+                      "offset": 942
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "value": ".",
+                  "position": {
+                    "start": {
+                      "line": 63,
+                      "column": 24,
+                      "offset": 942
+                    },
+                    "end": {
+                      "line": 63,
+                      "column": 25,
+                      "offset": 943
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 62,
+                  "column": 8,
+                  "offset": 848
+                },
+                "end": {
+                  "line": 63,
+                  "column": 25,
+                  "offset": 943
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 62,
+              "column": 1,
+              "offset": 841
+            },
+            "end": {
+              "line": 63,
+              "column": 25,
+              "offset": 943
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "In the existing tasks, finds the highest numbered identifier.",
+                  "position": {
+                    "start": {
+                      "line": 64,
+                      "column": 8,
+                      "offset": 951
+                    },
+                    "end": {
+                      "line": 64,
+                      "column": 69,
+                      "offset": 1012
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 64,
+                  "column": 8,
+                  "offset": 951
+                },
+                "end": {
+                  "line": 64,
+                  "column": 69,
+                  "offset": 1012
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 64,
+              "column": 1,
+              "offset": 944
+            },
+            "end": {
+              "line": 64,
+              "column": 69,
+              "offset": 1012
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Calculates the next identifier, always higher than the highest existing.\nIt's OK to skip numbers.",
+                  "position": {
+                    "start": {
+                      "line": 65,
+                      "column": 8,
+                      "offset": 1020
+                    },
+                    "end": {
+                      "line": 66,
+                      "column": 32,
+                      "offset": 1124
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 65,
+                  "column": 8,
+                  "offset": 1020
+                },
+                "end": {
+                  "line": 66,
+                  "column": 32,
+                  "offset": 1124
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 65,
+              "column": 1,
+              "offset": 1013
+            },
+            "end": {
+              "line": 66,
+              "column": 32,
+              "offset": 1124
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Identifies all new todo items, by:",
+                  "position": {
+                    "start": {
+                      "line": 67,
+                      "column": 8,
+                      "offset": 1132
+                    },
+                    "end": {
+                      "line": 67,
+                      "column": 42,
+                      "offset": 1166
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 67,
+                  "column": 8,
+                  "offset": 1132
+                },
+                "end": {
+                  "line": 67,
+                  "column": 42,
+                  "offset": 1166
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 67,
+              "column": 1,
+              "offset": 1125
+            },
+            "end": {
+              "line": 67,
+              "column": 42,
+              "offset": 1166
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 62,
+          "column": 1,
+          "offset": 841
+        },
+        "end": {
+          "line": 67,
+          "column": 42,
+          "offset": 1166
+        }
+      }
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "start": null,
+      "spread": false,
+      "children": [
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "inlineCode",
+                  "value": "- [ ]",
+                  "position": {
+                    "start": {
+                      "line": 69,
+                      "column": 7,
+                      "offset": 1174
+                    },
+                    "end": {
+                      "line": 69,
+                      "column": 14,
+                      "offset": 1181
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "value": " syntax without a task identifier,",
+                  "position": {
+                    "start": {
+                      "line": 69,
+                      "column": 14,
+                      "offset": 1181
+                    },
+                    "end": {
+                      "line": 69,
+                      "column": 48,
+                      "offset": 1215
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 69,
+                  "column": 3,
+                  "offset": 1170
+                },
+                "end": {
+                  "line": 69,
+                  "column": 48,
+                  "offset": 1215
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 69,
+              "column": 1,
+              "offset": 1168
+            },
+            "end": {
+              "line": 69,
+              "column": 48,
+              "offset": 1215
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "task identifier placeholder, via regex, ex ",
+                  "position": {
+                    "start": {
+                      "line": 70,
+                      "column": 7,
+                      "offset": 1222
+                    },
+                    "end": {
+                      "line": 70,
+                      "column": 50,
+                      "offset": 1265
+                    }
+                  }
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "\\bTODO-(\\?+|x+|X+|n+|N+)\\b",
+                  "position": {
+                    "start": {
+                      "line": 70,
+                      "column": 50,
+                      "offset": 1265
+                    },
+                    "end": {
+                      "line": 70,
+                      "column": 78,
+                      "offset": 1293
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "value": ",",
+                  "position": {
+                    "start": {
+                      "line": 70,
+                      "column": 78,
+                      "offset": 1293
+                    },
+                    "end": {
+                      "line": 70,
+                      "column": 79,
+                      "offset": 1294
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 70,
+                  "column": 7,
+                  "offset": 1222
+                },
+                "end": {
+                  "line": 70,
+                  "column": 79,
+                  "offset": 1294
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 70,
+              "column": 1,
+              "offset": 1216
+            },
+            "end": {
+              "line": 70,
+              "column": 79,
+              "offset": 1294
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "copied, already existing task identifier.",
+                  "position": {
+                    "start": {
+                      "line": 71,
+                      "column": 7,
+                      "offset": 1301
+                    },
+                    "end": {
+                      "line": 71,
+                      "column": 48,
+                      "offset": 1342
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 71,
+                  "column": 7,
+                  "offset": 1301
+                },
+                "end": {
+                  "line": 71,
+                  "column": 48,
+                  "offset": 1342
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 71,
+              "column": 1,
+              "offset": 1295
+            },
+            "end": {
+              "line": 71,
+              "column": 48,
+              "offset": 1342
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 69,
+          "column": 1,
+          "offset": 1168
+        },
+        "end": {
+          "line": 71,
+          "column": 48,
+          "offset": 1342
+        }
+      }
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "start": 1,
+      "spread": false,
+      "children": [
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "For each new task, assigns the next identifier.",
+                  "position": {
+                    "start": {
+                      "line": 73,
+                      "column": 8,
+                      "offset": 1351
+                    },
+                    "end": {
+                      "line": 73,
+                      "column": 55,
+                      "offset": 1398
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 73,
+                  "column": 8,
+                  "offset": 1351
+                },
+                "end": {
+                  "line": 73,
+                  "column": 55,
+                  "offset": 1398
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 73,
+              "column": 1,
+              "offset": 1344
+            },
+            "end": {
+              "line": 73,
+              "column": 55,
+              "offset": 1398
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": true,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Outputs transformed markdown.",
+                  "position": {
+                    "start": {
+                      "line": 74,
+                      "column": 8,
+                      "offset": 1406
+                    },
+                    "end": {
+                      "line": 74,
+                      "column": 37,
+                      "offset": 1435
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 74,
+                  "column": 8,
+                  "offset": 1406
+                },
+                "end": {
+                  "line": 74,
+                  "column": 37,
+                  "offset": 1435
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 74,
+              "column": 1,
+              "offset": 1399
+            },
+            "end": {
+              "line": 74,
+              "column": 37,
+              "offset": 1435
+            }
+          }
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": true,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Formats the markdown output.",
+                  "position": {
+                    "start": {
+                      "line": 75,
+                      "column": 8,
+                      "offset": 1443
+                    },
+                    "end": {
+                      "line": 75,
+                      "column": 36,
+                      "offset": 1471
+                    }
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 75,
+                  "column": 8,
+                  "offset": 1443
+                },
+                "end": {
+                  "line": 75,
+                  "column": 36,
+                  "offset": 1471
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 75,
+              "column": 1,
+              "offset": 1436
+            },
+            "end": {
+              "line": 75,
+              "column": 36,
+              "offset": 1471
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 73,
+          "column": 1,
+          "offset": 1344
+        },
+        "end": {
+          "line": 75,
+          "column": 36,
+          "offset": 1471
+        }
+      }
+    }
+  ],
+  "position": {
+    "start": {
+      "line": 1,
+      "column": 1,
+      "offset": 0
+    },
+    "end": {
+      "line": 76,
+      "column": 1,
+      "offset": 1472
+    }
+  }
+}
