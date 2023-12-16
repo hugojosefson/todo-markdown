@@ -1,5 +1,8 @@
 import { assertEquals } from "https://deno.land/std@0.208.0/assert/assert_equals.ts";
 import { transformMarkdown } from "../src/transform-markdown.ts";
+import { selectAll } from "npm:unist-util-select";
+import { markdownToAst } from "../src/markdown-to-ast.ts";
+import { Code } from "npm:@types/mdast";
 
 Deno.test("transformMarkdown should assign identifiers to new tasks", async () => {
   const inputMarkdown = `
@@ -46,44 +49,16 @@ Deno.test("transformMarkdown should not change identifiers of old tasks", async 
 });
 
 Deno.test("transformMarkdown should handle examples in the README", async () => {
-  const inputExample = `# My TODO:s
-
-## Urgent
-
-- [x] TODO-2 Pay bills
-- [ ] TODO-1 Buy milk
-- [x] TODO-3 Call mom
-- [ ] TODO-5 Buy eggs
-
-## Later
-
-- [ ] TODO-? Buy bread
-- [ ] TODO-7 Eat it all
-
-## Other
-
-- [ ] Do something else
-- [ ] TODO-xx Do something even elser
-`.trim();
-  const expectedOutputExample = `# My TODO:s
-
-## Urgent
-
-- [x] TODO-2 Pay bills
-- [ ] TODO-1 Buy milk
-- [x] TODO-3 Call mom
-- [ ] TODO-5 Buy eggs
-
-## Later
-
-- [ ] TODO-8 Buy bread
-- [ ] TODO-7 Eat it all
-
-## Other
-
-- [ ] TODO-9 Do something else
-- [ ] TODO-10 Do something even elser
-`.trim();
+  const readmeSource = await Deno.readTextFile(
+    (new URL("../README.md", import.meta.url)).pathname,
+  );
+  const readmeAst = markdownToAst(readmeSource);
+  const [inputCodeBlock, outputCodeBlock] = selectAll(
+    "code",
+    readmeAst,
+  ) as Code[];
+  const inputExample = inputCodeBlock.value.trim();
+  const expectedOutputExample = outputCodeBlock.value.trim();
   const result = await transformMarkdown(inputExample);
   assertEquals(result, expectedOutputExample);
 });
