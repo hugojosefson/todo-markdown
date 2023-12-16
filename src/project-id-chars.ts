@@ -1,7 +1,7 @@
 /**
  * Possible characters for a project ID.
  */
-export type ProjectId1Char =
+export type ProjectIdChar =
   | "A"
   | "B"
   | "C"
@@ -32,9 +32,4 @@ export type ProjectId1Char =
 /**
  * A project ID with 2 characters.
  */
-export type ProjectId2Chars = `${ProjectId1Char}${ProjectId1Char}`;
-
-/**
- * A project ID with 3 characters.
- */
-export type ProjectId3Chars = `${ProjectId2Chars}${ProjectId1Char}`;
+export type ProjectId2Chars = `${ProjectIdChar}${ProjectIdChar}`;
