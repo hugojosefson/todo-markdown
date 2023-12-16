@@ -50,7 +50,7 @@ Tool for using markdown document(s) for keeping track of todo items.
 - [ ] TODO-10 Do something even elser
 ```
 
-## [ ] Features
+## [ ] Features included in [TODO-1](./README.md#todo-1) and derivatives
 
 1. [x] Parses markdown input.
 1. [ ] Finds all places where task identifiers are used:
