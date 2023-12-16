@@ -261,7 +261,7 @@
       "children": [
         {
           "type": "text",
-          "value": "[ ] TODO-1 Features",
+          "value": "[ ] Features",
           "position": {
             "start": {
               "line": 53,
@@ -305,7 +305,7 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "TODO-2 Parses markdown input.",
+                  "value": "Parses markdown input.",
                   "position": {
                     "start": {
                       "line": 55,
@@ -357,7 +357,7 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "TODO-3 Finds all places where task identifiers are used:",
+                  "value": "Finds all places where task identifiers are used:",
                   "position": {
                     "start": {
                       "line": 56,
@@ -401,7 +401,7 @@
                       "children": [
                         {
                           "type": "text",
-                          "value": "TODO-4 unordered lists / task lists",
+                          "value": "unordered lists / task lists",
                           "position": {
                             "start": {
                               "line": 57,
@@ -453,7 +453,7 @@
                       "children": [
                         {
                           "type": "text",
-                          "value": "TODO-5 ordered lists",
+                          "value": "ordered lists",
                           "position": {
                             "start": {
                               "line": 58,
@@ -505,7 +505,7 @@
                       "children": [
                         {
                           "type": "text",
-                          "value": "TODO-6 headings",
+                          "value": "headings",
                           "position": {
                             "start": {
                               "line": 59,
@@ -585,7 +585,7 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "TODO-7 In each eligible place, identifies task identifiers based on regex, ex\n",
+                  "value": "In each eligible place, identifies task identifiers based on regex, ex\n",
                   "position": {
                     "start": {
                       "line": 60,
@@ -669,7 +669,7 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "TODO-8 In the existing tasks, finds the highest numbered identifier.",
+                  "value": "In the existing tasks, finds the highest numbered identifier.",
                   "position": {
                     "start": {
                       "line": 62,
@@ -721,7 +721,7 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "TODO-9 Calculates the next identifier, always higher than the highest existing.\nIt's OK to skip numbers.",
+                  "value": "Calculates the next identifier, always higher than the highest existing.\nIt's OK to skip numbers.",
                   "position": {
                     "start": {
                       "line": 63,
@@ -773,7 +773,7 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "TODO-10 Identifies all new todo items, by:",
+                  "value": "Identifies all new todo items, by:",
                   "position": {
                     "start": {
                       "line": 65,
@@ -885,7 +885,7 @@
                       "children": [
                         {
                           "type": "text",
-                          "value": "TODO-11 task identifier placeholder, via regex, ex\n",
+                          "value": "task identifier placeholder, via regex, ex\n",
                           "position": {
                             "start": {
                               "line": 67,
@@ -969,7 +969,7 @@
                       "children": [
                         {
                           "type": "text",
-                          "value": "TODO-12 copied, already existing task identifier.",
+                          "value": "copied, already existing task identifier.",
                           "position": {
                             "start": {
                               "line": 69,
@@ -1049,7 +1049,7 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "TODO-13 For each new task, assigns the next identifier.",
+                  "value": "For each new task, assigns the next identifier.",
                   "position": {
                     "start": {
                       "line": 70,
@@ -1101,7 +1101,7 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "TODO-14 Outputs transformed markdown.",
+                  "value": "Outputs transformed markdown.",
                   "position": {
                     "start": {
                       "line": 71,
@@ -1153,7 +1153,7 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "TODO-15 Formats the markdown output.",
+                  "value": "Formats the markdown output.",
                   "position": {
                     "start": {
                       "line": 72,
