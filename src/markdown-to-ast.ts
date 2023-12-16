@@ -9,3 +9,11 @@ export function markdownToAst(markdown: string): Nodes {
     mdastExtensions: [gfmFromMarkdown()],
   });
 }
+
+// read from Deno.stdin, console.log the result
+if (import.meta.main) {
+  const inputMarkdown = await Deno.readTextFile("/dev/stdin");
+  const ast = markdownToAst(inputMarkdown);
+  const output = JSON.stringify(ast, null, 2);
+  console.log(output);
+}
