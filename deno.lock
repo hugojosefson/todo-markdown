@@ -10,6 +10,7 @@
       "npm:mdast-util-phrasing": "npm:mdast-util-phrasing@4.0.0",
       "npm:mdast-util-to-markdown": "npm:mdast-util-to-markdown@2.1.0",
       "npm:micromark-extension-gfm": "npm:micromark-extension-gfm@3.0.0",
+      "npm:ramda": "npm:ramda@0.29.1",
       "npm:unist-util-find-after": "npm:unist-util-find-after@5.0.0",
       "npm:unist-util-is": "npm:unist-util-is@6.0.0",
       "npm:unist-util-select": "npm:unist-util-select@5.1.0"
@@ -458,6 +459,10 @@
         "dependencies": {
           "boolbase": "boolbase@1.0.0"
         }
+      },
+      "ramda@0.29.1": {
+        "integrity": "sha512-OfxIeWzd4xdUNxlWhgFazxsA/nl3mS4/jGZI5n00uWOoSSFRhC1b6gl6xvmzUamgmqELraWp0J/qqVlXYPDPyA==",
+        "dependencies": {}
       },
       "unist-util-find-after@5.0.0": {
         "integrity": "sha512-amQa0Ep2m6hE2g72AugUItjbuM8X8cGQnFoHk0pGfrFeT9GZhzN5SW8nRsiGKK7Aif4CrACPENkA6P/Lw6fHGQ==",

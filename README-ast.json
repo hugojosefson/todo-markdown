@@ -7,66 +7,18 @@
       "children": [
         {
           "type": "text",
-          "value": "todo-markdown",
-          "position": {
-            "start": {
-              "line": 1,
-              "column": 3,
-              "offset": 2
-            },
-            "end": {
-              "line": 1,
-              "column": 16,
-              "offset": 15
-            }
-          }
+          "value": "todo-markdown"
         }
-      ],
-      "position": {
-        "start": {
-          "line": 1,
-          "column": 1,
-          "offset": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 16,
-          "offset": 15
-        }
-      }
+      ]
     },
     {
       "type": "paragraph",
       "children": [
         {
           "type": "text",
-          "value": "Tool for using markdown document(s) for keeping track of todo items.",
-          "position": {
-            "start": {
-              "line": 3,
-              "column": 1,
-              "offset": 17
-            },
-            "end": {
-              "line": 3,
-              "column": 69,
-              "offset": 85
-            }
-          }
+          "value": "Tool for using markdown document(s) for keeping track of todo items."
         }
-      ],
-      "position": {
-        "start": {
-          "line": 3,
-          "column": 1,
-          "offset": 17
-        },
-        "end": {
-          "line": 3,
-          "column": 69,
-          "offset": 85
-        }
-      }
+      ]
     },
     {
       "type": "heading",
@@ -74,82 +26,22 @@
       "children": [
         {
           "type": "text",
-          "value": "Ex",
-          "position": {
-            "start": {
-              "line": 5,
-              "column": 4,
-              "offset": 90
-            },
-            "end": {
-              "line": 5,
-              "column": 6,
-              "offset": 92
-            }
-          }
+          "value": "Ex"
         },
         {
           "type": "emphasis",
           "children": [
             {
               "type": "text",
-              "value": "amp",
-              "position": {
-                "start": {
-                  "line": 5,
-                  "column": 7,
-                  "offset": 93
-                },
-                "end": {
-                  "line": 5,
-                  "column": 10,
-                  "offset": 96
-                }
-              }
+              "value": "amp"
             }
-          ],
-          "position": {
-            "start": {
-              "line": 5,
-              "column": 6,
-              "offset": 92
-            },
-            "end": {
-              "line": 5,
-              "column": 11,
-              "offset": 97
-            }
-          }
+          ]
         },
         {
           "type": "text",
-          "value": "le",
-          "position": {
-            "start": {
-              "line": 5,
-              "column": 11,
-              "offset": 97
-            },
-            "end": {
-              "line": 5,
-              "column": 13,
-              "offset": 99
-            }
-          }
+          "value": "le"
         }
-      ],
-      "position": {
-        "start": {
-          "line": 5,
-          "column": 1,
-          "offset": 87
-        },
-        "end": {
-          "line": 5,
-          "column": 13,
-          "offset": 99
-        }
-      }
+      ]
     },
     {
       "type": "heading",
@@ -157,51 +49,15 @@
       "children": [
         {
           "type": "text",
-          "value": "Markdown input",
-          "position": {
-            "start": {
-              "line": 7,
-              "column": 5,
-              "offset": 105
-            },
-            "end": {
-              "line": 7,
-              "column": 19,
-              "offset": 119
-            }
-          }
+          "value": "Markdown input"
         }
-      ],
-      "position": {
-        "start": {
-          "line": 7,
-          "column": 1,
-          "offset": 101
-        },
-        "end": {
-          "line": 7,
-          "column": 19,
-          "offset": 119
-        }
-      }
+      ]
     },
     {
       "type": "code",
       "lang": "markdown",
       "meta": null,
-      "value": "# My TODO:s\n\n## Urgent\n\n- [x] TODO-2 Pay bills\n- [ ] TODO-1 Buy milk\n- [x] TODO-3 Call mom\n- [ ] TODO-5 Buy eggs\n\n## Later\n\n- [ ] TODO-? Buy bread\n- [ ] TODO-7 Eat it all\n\n## Other\n\n- [ ] Do something else\n- [ ] TODO-xx Do something even elser",
-      "position": {
-        "start": {
-          "line": 9,
-          "column": 1,
-          "offset": 121
-        },
-        "end": {
-          "line": 28,
-          "column": 4,
-          "offset": 380
-        }
-      }
+      "value": "# My TODO:s\n\n## Urgent\n\n- [x] TODO-2 Pay bills\n- [ ] TODO-1 Buy milk\n- [x] TODO-3 Call mom\n- [ ] TODO-5 Buy eggs\n\n## Later\n\n- [ ] TODO-? Buy bread\n- [ ] TODO-7 Eat it all\n\n## Other\n\n- [ ] Do something else\n- [ ] TODO-xx Do something even elser"
     },
     {
       "type": "heading",
@@ -209,51 +65,15 @@
       "children": [
         {
           "type": "text",
-          "value": "Markdown output",
-          "position": {
-            "start": {
-              "line": 30,
-              "column": 5,
-              "offset": 386
-            },
-            "end": {
-              "line": 30,
-              "column": 20,
-              "offset": 401
-            }
-          }
+          "value": "Markdown output"
         }
-      ],
-      "position": {
-        "start": {
-          "line": 30,
-          "column": 1,
-          "offset": 382
-        },
-        "end": {
-          "line": 30,
-          "column": 20,
-          "offset": 401
-        }
-      }
+      ]
     },
     {
       "type": "code",
       "lang": "markdown",
       "meta": null,
-      "value": "# My TODO:s\n\n## Urgent\n\n- [x] TODO-2 Pay bills\n- [ ] TODO-1 Buy milk\n- [x] TODO-3 Call mom\n- [ ] TODO-5 Buy eggs\n\n## Later\n\n- [ ] TODO-8 Buy bread\n- [ ] TODO-7 Eat it all\n\n## Other\n\n- [ ] TODO-9 Do something else\n- [ ] TODO-10 Do something even elser",
-      "position": {
-        "start": {
-          "line": 32,
-          "column": 1,
-          "offset": 403
-        },
-        "end": {
-          "line": 51,
-          "column": 4,
-          "offset": 669
-        }
-      }
+      "value": "# My TODO:s\n\n## Urgent\n\n- [x] TODO-2 Pay bills\n- [ ] TODO-1 Buy milk\n- [x] TODO-3 Call mom\n- [ ] TODO-5 Buy eggs\n\n## Later\n\n- [ ] TODO-8 Buy bread\n- [ ] TODO-7 Eat it all\n\n## Other\n\n- [ ] TODO-9 Do something else\n- [ ] TODO-10 Do something even elser"
     },
     {
       "type": "heading",
@@ -261,33 +81,9 @@
       "children": [
         {
           "type": "text",
-          "value": "[ ] Features",
-          "position": {
-            "start": {
-              "line": 53,
-              "column": 4,
-              "offset": 674
-            },
-            "end": {
-              "line": 53,
-              "column": 16,
-              "offset": 686
-            }
-          }
+          "value": "[ ] Features"
         }
-      ],
-      "position": {
-        "start": {
-          "line": 53,
-          "column": 1,
-          "offset": 671
-        },
-        "end": {
-          "line": 53,
-          "column": 16,
-          "offset": 686
-        }
-      }
+      ]
     },
     {
       "type": "list",
@@ -305,47 +101,11 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "Parses markdown input.",
-                  "position": {
-                    "start": {
-                      "line": 55,
-                      "column": 8,
-                      "offset": 695
-                    },
-                    "end": {
-                      "line": 55,
-                      "column": 30,
-                      "offset": 717
-                    }
-                  }
+                  "value": "Parses markdown input."
                 }
-              ],
-              "position": {
-                "start": {
-                  "line": 55,
-                  "column": 8,
-                  "offset": 695
-                },
-                "end": {
-                  "line": 55,
-                  "column": 30,
-                  "offset": 717
-                }
-              }
+              ]
             }
-          ],
-          "position": {
-            "start": {
-              "line": 55,
-              "column": 1,
-              "offset": 688
-            },
-            "end": {
-              "line": 55,
-              "column": 30,
-              "offset": 717
-            }
-          }
+          ]
         },
         {
           "type": "listItem",
@@ -357,33 +117,9 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "Finds all places where task identifiers are used:",
-                  "position": {
-                    "start": {
-                      "line": 56,
-                      "column": 8,
-                      "offset": 725
-                    },
-                    "end": {
-                      "line": 56,
-                      "column": 57,
-                      "offset": 774
-                    }
-                  }
+                  "value": "Finds all places where task identifiers are used:"
                 }
-              ],
-              "position": {
-                "start": {
-                  "line": 56,
-                  "column": 8,
-                  "offset": 725
-                },
-                "end": {
-                  "line": 56,
-                  "column": 57,
-                  "offset": 774
-                }
-              }
+              ]
             },
             {
               "type": "list",
@@ -401,47 +137,11 @@
                       "children": [
                         {
                           "type": "text",
-                          "value": "unordered lists / task lists",
-                          "position": {
-                            "start": {
-                              "line": 57,
-                              "column": 10,
-                              "offset": 784
-                            },
-                            "end": {
-                              "line": 57,
-                              "column": 38,
-                              "offset": 812
-                            }
-                          }
+                          "value": "unordered lists / task lists"
                         }
-                      ],
-                      "position": {
-                        "start": {
-                          "line": 57,
-                          "column": 10,
-                          "offset": 784
-                        },
-                        "end": {
-                          "line": 57,
-                          "column": 38,
-                          "offset": 812
-                        }
-                      }
+                      ]
                     }
-                  ],
-                  "position": {
-                    "start": {
-                      "line": 57,
-                      "column": 4,
-                      "offset": 778
-                    },
-                    "end": {
-                      "line": 57,
-                      "column": 38,
-                      "offset": 812
-                    }
-                  }
+                  ]
                 },
                 {
                   "type": "listItem",
@@ -453,47 +153,11 @@
                       "children": [
                         {
                           "type": "text",
-                          "value": "ordered lists",
-                          "position": {
-                            "start": {
-                              "line": 58,
-                              "column": 10,
-                              "offset": 822
-                            },
-                            "end": {
-                              "line": 58,
-                              "column": 23,
-                              "offset": 835
-                            }
-                          }
+                          "value": "ordered lists"
                         }
-                      ],
-                      "position": {
-                        "start": {
-                          "line": 58,
-                          "column": 10,
-                          "offset": 822
-                        },
-                        "end": {
-                          "line": 58,
-                          "column": 23,
-                          "offset": 835
-                        }
-                      }
+                      ]
                     }
-                  ],
-                  "position": {
-                    "start": {
-                      "line": 58,
-                      "column": 4,
-                      "offset": 816
-                    },
-                    "end": {
-                      "line": 58,
-                      "column": 23,
-                      "offset": 835
-                    }
-                  }
+                  ]
                 },
                 {
                   "type": "listItem",
@@ -505,75 +169,15 @@
                       "children": [
                         {
                           "type": "text",
-                          "value": "headings",
-                          "position": {
-                            "start": {
-                              "line": 59,
-                              "column": 10,
-                              "offset": 845
-                            },
-                            "end": {
-                              "line": 59,
-                              "column": 18,
-                              "offset": 853
-                            }
-                          }
+                          "value": "headings"
                         }
-                      ],
-                      "position": {
-                        "start": {
-                          "line": 59,
-                          "column": 10,
-                          "offset": 845
-                        },
-                        "end": {
-                          "line": 59,
-                          "column": 18,
-                          "offset": 853
-                        }
-                      }
+                      ]
                     }
-                  ],
-                  "position": {
-                    "start": {
-                      "line": 59,
-                      "column": 4,
-                      "offset": 839
-                    },
-                    "end": {
-                      "line": 59,
-                      "column": 18,
-                      "offset": 853
-                    }
-                  }
+                  ]
                 }
-              ],
-              "position": {
-                "start": {
-                  "line": 57,
-                  "column": 4,
-                  "offset": 778
-                },
-                "end": {
-                  "line": 59,
-                  "column": 18,
-                  "offset": 853
-                }
-              }
+              ]
             }
-          ],
-          "position": {
-            "start": {
-              "line": 56,
-              "column": 1,
-              "offset": 718
-            },
-            "end": {
-              "line": 59,
-              "column": 18,
-              "offset": 853
-            }
-          }
+          ]
         },
         {
           "type": "listItem",
@@ -585,79 +189,19 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "In each eligible place, identifies task identifiers based on regex, ex\n",
-                  "position": {
-                    "start": {
-                      "line": 60,
-                      "column": 8,
-                      "offset": 861
-                    },
-                    "end": {
-                      "line": 61,
-                      "column": 1,
-                      "offset": 932
-                    }
-                  }
+                  "value": "In each eligible place, identifies task identifiers based on regex, ex\n"
                 },
                 {
                   "type": "inlineCode",
-                  "value": "/\\bTODO-\\d+\\b/",
-                  "position": {
-                    "start": {
-                      "line": 61,
-                      "column": 8,
-                      "offset": 939
-                    },
-                    "end": {
-                      "line": 61,
-                      "column": 24,
-                      "offset": 955
-                    }
-                  }
+                  "value": "/\\bTODO-\\d+\\b/"
                 },
                 {
                   "type": "text",
-                  "value": ".",
-                  "position": {
-                    "start": {
-                      "line": 61,
-                      "column": 24,
-                      "offset": 955
-                    },
-                    "end": {
-                      "line": 61,
-                      "column": 25,
-                      "offset": 956
-                    }
-                  }
+                  "value": "."
                 }
-              ],
-              "position": {
-                "start": {
-                  "line": 60,
-                  "column": 8,
-                  "offset": 861
-                },
-                "end": {
-                  "line": 61,
-                  "column": 25,
-                  "offset": 956
-                }
-              }
+              ]
             }
-          ],
-          "position": {
-            "start": {
-              "line": 60,
-              "column": 1,
-              "offset": 854
-            },
-            "end": {
-              "line": 61,
-              "column": 25,
-              "offset": 956
-            }
-          }
+          ]
         },
         {
           "type": "listItem",
@@ -669,47 +213,11 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "In the existing tasks, finds the highest numbered identifier.",
-                  "position": {
-                    "start": {
-                      "line": 62,
-                      "column": 8,
-                      "offset": 964
-                    },
-                    "end": {
-                      "line": 62,
-                      "column": 69,
-                      "offset": 1025
-                    }
-                  }
+                  "value": "In the existing tasks, finds the highest numbered identifier."
                 }
-              ],
-              "position": {
-                "start": {
-                  "line": 62,
-                  "column": 8,
-                  "offset": 964
-                },
-                "end": {
-                  "line": 62,
-                  "column": 69,
-                  "offset": 1025
-                }
-              }
+              ]
             }
-          ],
-          "position": {
-            "start": {
-              "line": 62,
-              "column": 1,
-              "offset": 957
-            },
-            "end": {
-              "line": 62,
-              "column": 69,
-              "offset": 1025
-            }
-          }
+          ]
         },
         {
           "type": "listItem",
@@ -721,47 +229,11 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "Calculates the next identifier, always higher than the highest existing.\nIt's OK to skip numbers.",
-                  "position": {
-                    "start": {
-                      "line": 63,
-                      "column": 8,
-                      "offset": 1033
-                    },
-                    "end": {
-                      "line": 64,
-                      "column": 32,
-                      "offset": 1137
-                    }
-                  }
+                  "value": "Calculates the next identifier, always higher than the highest existing.\nIt's OK to skip numbers."
                 }
-              ],
-              "position": {
-                "start": {
-                  "line": 63,
-                  "column": 8,
-                  "offset": 1033
-                },
-                "end": {
-                  "line": 64,
-                  "column": 32,
-                  "offset": 1137
-                }
-              }
+              ]
             }
-          ],
-          "position": {
-            "start": {
-              "line": 63,
-              "column": 1,
-              "offset": 1026
-            },
-            "end": {
-              "line": 64,
-              "column": 32,
-              "offset": 1137
-            }
-          }
+          ]
         },
         {
           "type": "listItem",
@@ -773,33 +245,9 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "Identifies all new todo items, by:",
-                  "position": {
-                    "start": {
-                      "line": 65,
-                      "column": 8,
-                      "offset": 1145
-                    },
-                    "end": {
-                      "line": 65,
-                      "column": 42,
-                      "offset": 1179
-                    }
-                  }
+                  "value": "Identifies all new todo items, by:"
                 }
-              ],
-              "position": {
-                "start": {
-                  "line": 65,
-                  "column": 8,
-                  "offset": 1145
-                },
-                "end": {
-                  "line": 65,
-                  "column": 42,
-                  "offset": 1179
-                }
-              }
+              ]
             },
             {
               "type": "list",
@@ -817,63 +265,15 @@
                       "children": [
                         {
                           "type": "inlineCode",
-                          "value": "- [ ]",
-                          "position": {
-                            "start": {
-                              "line": 66,
-                              "column": 10,
-                              "offset": 1189
-                            },
-                            "end": {
-                              "line": 66,
-                              "column": 17,
-                              "offset": 1196
-                            }
-                          }
+                          "value": "- [ ]"
                         },
                         {
                           "type": "text",
-                          "value": " syntax without a task identifier,",
-                          "position": {
-                            "start": {
-                              "line": 66,
-                              "column": 17,
-                              "offset": 1196
-                            },
-                            "end": {
-                              "line": 66,
-                              "column": 51,
-                              "offset": 1230
-                            }
-                          }
+                          "value": " syntax without a task identifier,"
                         }
-                      ],
-                      "position": {
-                        "start": {
-                          "line": 66,
-                          "column": 6,
-                          "offset": 1185
-                        },
-                        "end": {
-                          "line": 66,
-                          "column": 51,
-                          "offset": 1230
-                        }
-                      }
+                      ]
                     }
-                  ],
-                  "position": {
-                    "start": {
-                      "line": 66,
-                      "column": 4,
-                      "offset": 1183
-                    },
-                    "end": {
-                      "line": 66,
-                      "column": 51,
-                      "offset": 1230
-                    }
-                  }
+                  ]
                 },
                 {
                   "type": "listItem",
@@ -885,79 +285,19 @@
                       "children": [
                         {
                           "type": "text",
-                          "value": "task identifier placeholder, via regex, ex\n",
-                          "position": {
-                            "start": {
-                              "line": 67,
-                              "column": 10,
-                              "offset": 1240
-                            },
-                            "end": {
-                              "line": 68,
-                              "column": 1,
-                              "offset": 1283
-                            }
-                          }
+                          "value": "task identifier placeholder, via regex, ex\n"
                         },
                         {
                           "type": "inlineCode",
-                          "value": "\\bTODO-(\\?+|x+|X+|n+|N+)\\b",
-                          "position": {
-                            "start": {
-                              "line": 68,
-                              "column": 10,
-                              "offset": 1292
-                            },
-                            "end": {
-                              "line": 68,
-                              "column": 38,
-                              "offset": 1320
-                            }
-                          }
+                          "value": "\\bTODO-(\\?+|x+|X+|n+|N+)\\b"
                         },
                         {
                           "type": "text",
-                          "value": ",",
-                          "position": {
-                            "start": {
-                              "line": 68,
-                              "column": 38,
-                              "offset": 1320
-                            },
-                            "end": {
-                              "line": 68,
-                              "column": 39,
-                              "offset": 1321
-                            }
-                          }
+                          "value": ","
                         }
-                      ],
-                      "position": {
-                        "start": {
-                          "line": 67,
-                          "column": 10,
-                          "offset": 1240
-                        },
-                        "end": {
-                          "line": 68,
-                          "column": 39,
-                          "offset": 1321
-                        }
-                      }
+                      ]
                     }
-                  ],
-                  "position": {
-                    "start": {
-                      "line": 67,
-                      "column": 4,
-                      "offset": 1234
-                    },
-                    "end": {
-                      "line": 68,
-                      "column": 39,
-                      "offset": 1321
-                    }
-                  }
+                  ]
                 },
                 {
                   "type": "listItem",
@@ -969,75 +309,15 @@
                       "children": [
                         {
                           "type": "text",
-                          "value": "copied, already existing task identifier.",
-                          "position": {
-                            "start": {
-                              "line": 69,
-                              "column": 10,
-                              "offset": 1331
-                            },
-                            "end": {
-                              "line": 69,
-                              "column": 51,
-                              "offset": 1372
-                            }
-                          }
+                          "value": "copied, already existing task identifier."
                         }
-                      ],
-                      "position": {
-                        "start": {
-                          "line": 69,
-                          "column": 10,
-                          "offset": 1331
-                        },
-                        "end": {
-                          "line": 69,
-                          "column": 51,
-                          "offset": 1372
-                        }
-                      }
+                      ]
                     }
-                  ],
-                  "position": {
-                    "start": {
-                      "line": 69,
-                      "column": 4,
-                      "offset": 1325
-                    },
-                    "end": {
-                      "line": 69,
-                      "column": 51,
-                      "offset": 1372
-                    }
-                  }
+                  ]
                 }
-              ],
-              "position": {
-                "start": {
-                  "line": 66,
-                  "column": 4,
-                  "offset": 1183
-                },
-                "end": {
-                  "line": 69,
-                  "column": 51,
-                  "offset": 1372
-                }
-              }
+              ]
             }
-          ],
-          "position": {
-            "start": {
-              "line": 65,
-              "column": 1,
-              "offset": 1138
-            },
-            "end": {
-              "line": 69,
-              "column": 51,
-              "offset": 1372
-            }
-          }
+          ]
         },
         {
           "type": "listItem",
@@ -1049,47 +329,11 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "For each new task, assigns the next identifier.",
-                  "position": {
-                    "start": {
-                      "line": 70,
-                      "column": 8,
-                      "offset": 1380
-                    },
-                    "end": {
-                      "line": 70,
-                      "column": 55,
-                      "offset": 1427
-                    }
-                  }
+                  "value": "For each new task, assigns the next identifier."
                 }
-              ],
-              "position": {
-                "start": {
-                  "line": 70,
-                  "column": 8,
-                  "offset": 1380
-                },
-                "end": {
-                  "line": 70,
-                  "column": 55,
-                  "offset": 1427
-                }
-              }
+              ]
             }
-          ],
-          "position": {
-            "start": {
-              "line": 70,
-              "column": 1,
-              "offset": 1373
-            },
-            "end": {
-              "line": 70,
-              "column": 55,
-              "offset": 1427
-            }
-          }
+          ]
         },
         {
           "type": "listItem",
@@ -1101,47 +345,11 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "Outputs transformed markdown.",
-                  "position": {
-                    "start": {
-                      "line": 71,
-                      "column": 8,
-                      "offset": 1435
-                    },
-                    "end": {
-                      "line": 71,
-                      "column": 37,
-                      "offset": 1464
-                    }
-                  }
+                  "value": "Outputs transformed markdown."
                 }
-              ],
-              "position": {
-                "start": {
-                  "line": 71,
-                  "column": 8,
-                  "offset": 1435
-                },
-                "end": {
-                  "line": 71,
-                  "column": 37,
-                  "offset": 1464
-                }
-              }
+              ]
             }
-          ],
-          "position": {
-            "start": {
-              "line": 71,
-              "column": 1,
-              "offset": 1428
-            },
-            "end": {
-              "line": 71,
-              "column": 37,
-              "offset": 1464
-            }
-          }
+          ]
         },
         {
           "type": "listItem",
@@ -1153,61 +361,13 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "Formats the markdown output.",
-                  "position": {
-                    "start": {
-                      "line": 72,
-                      "column": 8,
-                      "offset": 1472
-                    },
-                    "end": {
-                      "line": 72,
-                      "column": 36,
-                      "offset": 1500
-                    }
-                  }
+                  "value": "Formats the markdown output."
                 }
-              ],
-              "position": {
-                "start": {
-                  "line": 72,
-                  "column": 8,
-                  "offset": 1472
-                },
-                "end": {
-                  "line": 72,
-                  "column": 36,
-                  "offset": 1500
-                }
-              }
+              ]
             }
-          ],
-          "position": {
-            "start": {
-              "line": 72,
-              "column": 1,
-              "offset": 1465
-            },
-            "end": {
-              "line": 72,
-              "column": 36,
-              "offset": 1500
-            }
-          }
+          ]
         }
-      ],
-      "position": {
-        "start": {
-          "line": 55,
-          "column": 1,
-          "offset": 688
-        },
-        "end": {
-          "line": 72,
-          "column": 36,
-          "offset": 1500
-        }
-      }
+      ]
     },
     {
       "type": "heading",
@@ -1215,63 +375,15 @@
       "children": [
         {
           "type": "text",
-          "value": "Where to find task identifiers",
-          "position": {
-            "start": {
-              "line": 74,
-              "column": 5,
-              "offset": 1506
-            },
-            "end": {
-              "line": 74,
-              "column": 35,
-              "offset": 1536
-            }
-          }
+          "value": "Where to find task identifiers"
         }
-      ],
-      "position": {
-        "start": {
-          "line": 74,
-          "column": 1,
-          "offset": 1502
-        },
-        "end": {
-          "line": 74,
-          "column": 35,
-          "offset": 1536
-        }
-      }
+      ]
     },
     {
       "type": "code",
       "lang": "css",
       "meta": null,
-      "value": "listItem > paragraph text\nheading text",
-      "position": {
-        "start": {
-          "line": 76,
-          "column": 1,
-          "offset": 1538
-        },
-        "end": {
-          "line": 79,
-          "column": 4,
-          "offset": 1587
-        }
-      }
+      "value": "listItem > paragraph text\nheading text"
     }
-  ],
-  "position": {
-    "start": {
-      "line": 1,
-      "column": 1,
-      "offset": 0
-    },
-    "end": {
-      "line": 80,
-      "column": 1,
-      "offset": 1588
-    }
-  }
+  ]
 }
