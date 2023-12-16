@@ -1,4 +1,4 @@
-import { containsA, isA, TypeGuard } from "./regex.ts";
+import { containsA, isA, TypeGuard } from "../regex.ts";
 
 export const TASK_ID_NUMBER_REGEX = /(?<taskIdNumber>\d+)/u;
 export type TaskIdNumber = `{number}`;

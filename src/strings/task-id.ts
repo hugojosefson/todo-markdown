@@ -1,5 +1,5 @@
 import { PROJECT_ID_REGEX, type ProjectId } from "./project-id.ts";
-import { containsA, isA, sequence, TypeGuard } from "./regex.ts";
+import { containsA, isA, sequence, TypeGuard } from "../regex.ts";
 import { TASK_ID_NUMBER_REGEX, TaskIdNumber } from "./task-id-number.ts";
 
 export const TASK_ID_REGEX = sequence(

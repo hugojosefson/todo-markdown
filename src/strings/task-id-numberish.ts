@@ -1,4 +1,4 @@
-import { containsA, isA, or, TypeGuard } from "./regex.ts";
+import { containsA, isA, or, TypeGuard } from "../regex.ts";
 import {
   TASK_ID_NUMBER_PLACEHOLDER_REGEX,
   TaskIdNumberPlaceholder,

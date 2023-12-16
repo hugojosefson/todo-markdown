@@ -1,5 +1,5 @@
 import { PROJECT_ID_REGEX, ProjectId } from "./project-id.ts";
-import { containsA, isA, sequence, TypeGuard } from "./regex.ts";
+import { containsA, isA, sequence, TypeGuard } from "../regex.ts";
 import {
   TASK_ID_NUMBER_PLACEHOLDER_REGEX,
   TaskIdNumberPlaceholder,

@@ -1,5 +1,5 @@
 import { ProjectId2Chars } from "./project-id-chars.ts";
-import { containsA, isA, TypeGuard, TypeGuardContaining } from "./regex.ts";
+import { containsA, isA, TypeGuard, TypeGuardContaining } from "../regex.ts";
 
 export type ProjectId =
   | ProjectId2Chars

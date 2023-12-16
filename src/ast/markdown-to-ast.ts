@@ -10,7 +10,7 @@ import * as R from "npm:ramda";
 const cloneWithoutPosition = R.compose(R.omit(["position"]), R.clone);
 
 /**
- * Clone an AST "position" properties
+ * Clone an AST, excluding "position" properties
  */
 export function removePosition(node: unknown) {
   if (R.is(Array, node)) {

@@ -1,7 +1,7 @@
 import { assertEquals } from "https://deno.land/std@0.208.0/assert/assert_equals.ts";
-import { transformMarkdown } from "../src/transform-markdown.ts";
+import { transformMarkdown } from "../src/markdown/transform-markdown.ts";
 import { selectAll } from "npm:unist-util-select";
-import { markdownToAst } from "../src/markdown-to-ast.ts";
+import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
 import { Code } from "npm:@types/mdast";
 
 Deno.test("transformMarkdown should assign identifiers to new tasks", async () => {
