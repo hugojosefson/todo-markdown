@@ -11,6 +11,7 @@
       "npm:mdast-util-to-markdown": "npm:mdast-util-to-markdown@2.1.0",
       "npm:micromark-extension-gfm": "npm:micromark-extension-gfm@3.0.0",
       "npm:ramda": "npm:ramda@0.29.1",
+      "npm:regex-merge": "npm:regex-merge@2.0.0",
       "npm:unist-util-find-after": "npm:unist-util-find-after@5.0.0",
       "npm:unist-util-is": "npm:unist-util-is@6.0.0",
       "npm:unist-util-select": "npm:unist-util-select@5.1.0"
@@ -462,6 +463,10 @@
       },
       "ramda@0.29.1": {
         "integrity": "sha512-OfxIeWzd4xdUNxlWhgFazxsA/nl3mS4/jGZI5n00uWOoSSFRhC1b6gl6xvmzUamgmqELraWp0J/qqVlXYPDPyA==",
+        "dependencies": {}
+      },
+      "regex-merge@2.0.0": {
+        "integrity": "sha512-Jtv8gq8ciCfCUcwVhsBC/YrYPs4oF3wN1kZSsO3NOQbowzPa/x+8dXZ2gyvvxSGrdI9GjGSKhiEblZ9KyVTa3w==",
         "dependencies": {}
       },
       "unist-util-find-after@5.0.0": {
