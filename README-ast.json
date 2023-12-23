@@ -79,7 +79,7 @@
       "type": "code",
       "lang": "markdown",
       "meta": null,
-      "value": "# My TODO:s\n\n## Urgent\n\n- [x] TODO-2 Pay bills\n- [ ] TODO-1 Buy milk\n- [x] TODO-3 Call mom\n- [ ] TODO-5 Buy eggs\n\n## Later\n\n- [ ] TODO-? Buy bread\n- [ ] TODO-7 Eat it all\n\n## Other\n\n- [ ] TODO-xx Do something else\n- [ ] Do something even elser"
+      "value": "# My TODO:s\n\n## Urgent\n\n- [x] TODO-2 Pay bills\n- [ ] TODO-1 Buy milk\n- [x] TODO-3 Call mom\n- [ ] TODO-5 Buy eggs\n\n## [ ] Later\n\n- [ ] TODO-? Buy bread\n- [ ] TODO-7 Eat it all\n\n## TODO-? Other\n\n- [ ] TODO-xx Do something else\n- [ ] Do something even elser\n\n## [ ] TODO-? Heading with box and placeholder\n\n## TODO-10 Heading with task identifier, but no box"
     },
     {
       "type": "heading",
@@ -95,7 +95,7 @@
       "type": "code",
       "lang": "markdown",
       "meta": null,
-      "value": "# My TODO:s\n\n## Urgent\n\n- [x] TODO-2 Pay bills\n- [ ] TODO-1 Buy milk\n- [x] TODO-3 Call mom\n- [ ] TODO-5 Buy eggs\n\n## Later\n\n- [ ] TODO-8 Buy bread\n- [ ] TODO-7 Eat it all\n\n## Other\n\n- [ ] TODO-9 Do something else\n- [ ] TODO-10 Do something even elser"
+      "value": "# My TODO:s\n\n## Urgent\n\n- [x] TODO-2 Pay bills\n- [ ] TODO-1 Buy milk\n- [x] TODO-3 Call mom\n- [ ] TODO-5 Buy eggs\n\n## [ ] TODO-11 Later\n\n- [ ] TODO-14 Buy bread\n- [ ] TODO-7 Eat it all\n\n## [ ] TODO-12 Other\n\n- [ ] TODO-15 Do something else\n- [ ] TODO-16 Do something even elser\n\n## [ ] TODO-13 Heading with box and placeholder\n\n## TODO-10 Heading with task identifier, but no box"
     },
     {
       "type": "heading",
@@ -357,6 +357,22 @@
                 {
                   "type": "text",
                   "value": "For each text node with a new task, mutates the node to include the next\nidentifier."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "For each text node with a task identifier, but no box, adds a box."
                 }
               ]
             }

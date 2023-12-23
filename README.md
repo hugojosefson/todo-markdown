@@ -19,15 +19,19 @@ Use markdown docs, to keep track of todo items.
 - [x] TODO-3 Call mom
 - [ ] TODO-5 Buy eggs
 
-## Later
+## [ ] Later
 
 - [ ] TODO-? Buy bread
 - [ ] TODO-7 Eat it all
 
-## Other
+## TODO-? Other
 
 - [ ] TODO-xx Do something else
 - [ ] Do something even elser
+
+## [ ] TODO-? Heading with box and placeholder
+
+## TODO-10 Heading with task identifier, but no box
 ```
 
 ### Markdown output
@@ -42,15 +46,19 @@ Use markdown docs, to keep track of todo items.
 - [x] TODO-3 Call mom
 - [ ] TODO-5 Buy eggs
 
-## Later
+## [ ] TODO-11 Later
 
-- [ ] TODO-8 Buy bread
+- [ ] TODO-14 Buy bread
 - [ ] TODO-7 Eat it all
 
-## Other
+## [ ] TODO-12 Other
 
-- [ ] TODO-9 Do something else
-- [ ] TODO-10 Do something even elser
+- [ ] TODO-15 Do something else
+- [ ] TODO-16 Do something even elser
+
+## [ ] TODO-13 Heading with box and placeholder
+
+## TODO-10 Heading with task identifier, but no box
 ```
 
 ## [ ] Features included
@@ -72,6 +80,7 @@ Use markdown docs, to keep track of todo items.
    - ~~[ ] copied, already existing task identifier.~~
 1. [x] For each text node with a new task, mutates the node to include the next
        identifier.
+1. [ ] For each text node with a task identifier, but no box, adds a box.
 1. [x] Outputs transformed markdown.
 1. [x] Formats the markdown output.
 
