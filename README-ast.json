@@ -95,7 +95,97 @@
       "type": "code",
       "lang": "markdown",
       "meta": null,
-      "value": "# My TODO:s\n\n## Urgent\n\n- [x] TODO-2 Pay bills\n- [ ] TODO-1 Buy milk\n- [x] TODO-3 Call mom\n- [ ] TODO-5 Buy eggs\n\n## [ ] TODO-11 Later\n\n- [ ] TODO-14 Buy bread\n- [ ] TODO-7 Eat it all\n\n## [ ] TODO-12 Other\n\n- [ ] TODO-15 Do something else\n- [ ] TODO-16 Do something even elser\n\n## [ ] TODO-13 Heading with box and placeholder\n\n## TODO-10 Heading with task identifier, but no box"
+      "value": "# My TODO:s\n\n## Urgent\n\n- [x] TODO-2 Pay bills\n- [ ] TODO-1 Buy milk\n- [x] TODO-3 Call mom\n- [ ] TODO-5 Buy eggs\n\n## [ ] TODO-11 Later\n\n- [ ] TODO-12 Buy bread\n- [ ] TODO-7 Eat it all\n\n## [ ] TODO-13 Other\n\n- [ ] TODO-14 Do something else\n- [ ] TODO-15 Do something even elser\n\n## [ ] TODO-16 Heading with box and placeholder\n\n## [ ] TODO-10 Heading with task identifier, but no box"
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "List of things, that are not tasks"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "start": null,
+      "spread": false,
+      "children": [
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "This is a normal list item, not a task."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "This is another."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "start": 1,
+      "spread": false,
+      "children": [
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "This is a normal ordered list item, not a task."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "This is another."
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "type": "heading",
@@ -300,7 +390,7 @@
                 {
                   "type": "listItem",
                   "spread": false,
-                  "checked": false,
+                  "checked": true,
                   "children": [
                     {
                       "type": "paragraph",
@@ -385,7 +475,7 @@
         {
           "type": "listItem",
           "spread": false,
-          "checked": false,
+          "checked": true,
           "children": [
             {
               "type": "paragraph",
@@ -401,7 +491,7 @@
         {
           "type": "listItem",
           "spread": false,
-          "checked": false,
+          "checked": true,
           "children": [
             {
               "type": "paragraph",
@@ -417,7 +507,7 @@
         {
           "type": "listItem",
           "spread": false,
-          "checked": false,
+          "checked": true,
           "children": [
             {
               "type": "paragraph",
@@ -469,6 +559,16 @@
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "depth": 2,
+      "children": [
+        {
+          "type": "text",
+          "value": "Further details"
         }
       ]
     },

@@ -1,14 +1,24 @@
 import { PROJECT_ID_REGEX, type ProjectId } from "./project-id.ts";
-import { containsA, extractA, isA, sequence, TypeGuard } from "../regex.ts";
+import {
+  capture,
+  containsA,
+  extractA,
+  isA,
+  sequence,
+  TypeGuard,
+} from "../regex.ts";
 import { TASK_ID_NUMBER_REGEX, TaskIdNumber } from "./task-id-number.ts";
 
 export function createTaskIdRegex<PI extends ProjectId = ProjectId>(
   projectId: PI | RegExp = PROJECT_ID_REGEX,
 ): RegExp {
-  return sequence(
-    projectId,
-    /-/,
-    TASK_ID_NUMBER_REGEX,
+  return capture(
+    "taskId",
+    sequence(
+      projectId,
+      /-/,
+      TASK_ID_NUMBER_REGEX,
+    ),
   );
 }
 export type TaskId<PI extends ProjectId = ProjectId> = `${PI}-${TaskIdNumber}`;

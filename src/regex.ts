@@ -1,6 +1,6 @@
+import { Text } from "npm:@types/mdast";
 import merge from "npm:regex-merge";
 import { pipe } from "./fn.ts";
-import { Text } from "npm:@types/mdast";
 
 export type StartsWith<T extends string> = `${T}${string}`;
 
@@ -12,8 +12,13 @@ export const startsWithA = <
   X extends (string | Text) = (string | Text),
   R extends boolean = X extends string ? (X extends T ? true : false)
     : (X extends Text & { value: T } ? true : false),
->(regex: RegExp): TypeGuard<T, X, R> =>
-(x: X): R => startWith(regex).test(typeof x === "string" ? x : x.value) as R;
+>(regex: RegExp): TypeGuard<T, X, R> => {
+  const effectiveRegex = startWith(regex);
+  return Object.assign(
+    (x: X): R => effectiveRegex.test(typeof x === "string" ? x : x.value) as R,
+    { regex: effectiveRegex },
+  );
+};
 
 export const endWith = <R extends RegExp>(regex: R): R => sequence(regex, /$/);
 
@@ -31,8 +36,13 @@ export const isA = <
   X extends (string | Text) = (string | Text),
   R extends boolean = X extends string ? (X extends T ? true : false)
     : (X extends Text & { value: T } ? true : false),
->(regex: RegExp): TypeGuard<T, X, R> =>
-(x: X): R => only(regex).test(typeof x === "string" ? x : x.value) as R;
+>(regex: RegExp): TypeGuard<T, X, R> => {
+  const effectiveRegex = only(regex);
+  return Object.assign(
+    (x: X): R => effectiveRegex.test(typeof x === "string" ? x : x.value) as R,
+    { regex: effectiveRegex },
+  );
+};
 
 export type StringContaining<T extends string> = `{string}${T}{string}`;
 
@@ -46,7 +56,9 @@ export type TypeGuard<
   X extends (string | Text) = (string | Text),
   R extends boolean = X extends string ? (X extends T ? true : false)
     : (X extends Text & { value: T } ? true : false),
-> = (x: X) => R;
+> =
+  & ((x: X) => R)
+  & { regex: RegExp };
 
 export type TypeGuardContaining<
   T extends string,
@@ -71,8 +83,12 @@ export const containsA: <T extends string>(
   X extends (string | Text) = (string | Text),
   R extends boolean = X extends string ? (X extends T ? true : false)
     : (X extends Text & { value: T } ? true : false),
->(regex: RegExp): TypeGuardContaining<T, X, R> =>
-(x: X): R => regex.test(typeof x === "string" ? x : x.value) as R;
+>(regex: RegExp): TypeGuardContaining<T, X, R> => {
+  return Object.assign(
+    (x: X): R => regex.test(typeof x === "string" ? x : x.value) as R,
+    { regex },
+  );
+};
 
 export const extractA: <
   T extends string,
@@ -124,6 +140,15 @@ export function sequence<A extends RegExp, B extends RegExp>(
 }
 
 /**
+ * Returns a regex with the global flag set.
+ * @param regex the regex to make global
+ * @returns a regex with the global flag set
+ */
+export function global<R extends RegExp>(regex: R): R {
+  return new RegExp(regex.source, `${regex.flags}g`) as R;
+}
+
+/**
  * Wraps a regex in a named capture group.
  * @param groupName name to give the capture group
  * @param regex the regex to capture
@@ -137,4 +162,13 @@ export function capture<G extends string, R extends RegExp>(
     & {
       groups: { [K in G]: string };
     };
+}
+
+/**
+ * Extracts the captured groups from the args of a replacer function used with
+ * {$@link String.prototype.replace}.
+ * @param args the args you receive in a replacer function
+ */
+export function groups<K extends string>(args: unknown[]): Record<K, string> {
+  return args.at(-1) as Record<K, string>;
 }

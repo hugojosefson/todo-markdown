@@ -48,18 +48,26 @@ Use markdown docs, to keep track of todo items.
 
 ## [ ] TODO-11 Later
 
-- [ ] TODO-14 Buy bread
+- [ ] TODO-12 Buy bread
 - [ ] TODO-7 Eat it all
 
-## [ ] TODO-12 Other
+## [ ] TODO-13 Other
 
-- [ ] TODO-15 Do something else
-- [ ] TODO-16 Do something even elser
+- [ ] TODO-14 Do something else
+- [ ] TODO-15 Do something even elser
 
-## [ ] TODO-13 Heading with box and placeholder
+## [ ] TODO-16 Heading with box and placeholder
 
-## TODO-10 Heading with task identifier, but no box
+## [ ] TODO-10 Heading with task identifier, but no box
 ```
+
+### List of things, that are not tasks
+
+- This is a normal list item, not a task.
+- This is another.
+
+1. This is a normal ordered list item, not a task.
+2. This is another.
 
 ## [ ] Features included
 
@@ -75,18 +83,20 @@ Use markdown docs, to keep track of todo items.
        It's OK to skip numbers.
 1. [x] Identifies all text nodes with new todo items, by:
    - [x] `- [ ]` syntax without a task identifier,
-   - [ ] `# [ ]` syntax without a task identifier,
+   - [x] `# [ ]` syntax without a task identifier,
    - [x] task identifier placeholder, via regex, ex
          `\bTODO-(\?+|x+|X+|n+|N+)\b`,
    - ~~[ ] copied, already existing task identifier.~~
 1. [x] For each text node with a new task, mutates the node to include the next
        identifier.
-1. [ ] For each text node with a task identifier, but no box, adds a box.
-1. [ ] Processes the markdown from beginning to end, so that new task
+1. [x] For each text node with a task identifier, but no box, adds a box.
+1. [x] Processes the markdown from beginning to end, so that new task
        identifiers are in order.
-1. [ ] Removes `\` before a box and task identifier, if any.
+1. [x] Removes `\` before a box and task identifier, if any.
 1. [x] Outputs transformed markdown.
 1. [x] Formats the markdown output.
+
+## Further details
 
 ### Where to find task identifiers
 

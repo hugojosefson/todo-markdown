@@ -1,8 +1,13 @@
 import { isString } from "https://deno.land/x/run_simple@2.2.0/src/fn.ts";
-import { Nodes, Text } from "npm:@types/mdast";
+import { ListItem, Nodes, Text } from "npm:@types/mdast";
 import { selectAll } from "npm:unist-util-select";
-import { and, boolify, not, reduceToLargestNumber } from "../fn.ts";
-import { startsWithA } from "../regex.ts";
+import { reduceToLargestNumber } from "../fn.ts";
+import { groups, startsWithA } from "../regex.ts";
+import {
+  BOX_REGEX,
+  createBoxAndTaskIdPlaceholderRegex,
+  createBoxAndTaskIdRegex,
+} from "../strings/box.ts";
 import { ProjectId } from "../strings/project-id.ts";
 import { extractTaskIdNumber } from "../strings/task-id-number.ts";
 import { createTaskIdPlaceholderRegex } from "../strings/task-id-placeholder.ts";
@@ -39,45 +44,141 @@ export function mutateAst<PI extends ProjectId = ProjectId>(
   projectId: PI,
   tree: Nodes,
 ): void {
-  const taskIdRegex = createTaskIdRegex(projectId);
-  const taskIdPlaceholderRegex = createTaskIdPlaceholderRegex(projectId);
-  const startsWithTaskIdPlaceholder = startsWithA(taskIdPlaceholderRegex);
-  const startsWithTaskId = startsWithA(taskIdRegex);
+  const startsWithTaskId = startsWithA(createTaskIdRegex(projectId));
+  const startsWithTaskIdPlaceholder = startsWithA(
+    createTaskIdPlaceholderRegex(projectId),
+  );
+  const startsWithBoxAndTaskId = startsWithA(
+    createBoxAndTaskIdRegex(projectId),
+  );
+  const startsWithBoxAndTaskIdPlaceholder = startsWithA(
+    createBoxAndTaskIdPlaceholderRegex(
+      projectId,
+    ),
+  );
+  const startsWithBox = startsWithA(BOX_REGEX);
 
   let maxIdentifierNumber = getMaxIdentifierNumber(projectId, tree);
   const nextIdentifierNumber = () => ++maxIdentifierNumber;
 
-  const texts: Text[] = selectAll("text", tree) as Text[];
+  const texts: {
+    all: Text[];
+    listItem: ListItem[];
+    heading: Text[];
+  } = {
+    all: selectAll("text", tree) as Text[],
+    listItem: selectAll("listItem", tree) as ListItem[],
+    heading: selectAll("heading text", tree) as Text[],
+  };
 
-  const listItemParagraphTexts: Text[] = selectAll(
-    "listItem > paragraph text",
-    tree,
-  ) as Text[];
-  const headingTexts: Text[] = selectAll("heading text", tree) as Text[];
+  const isHeading = (textNode: Text) => texts.heading.includes(textNode);
+  const findListItemWithTextNode = (textNode: Text) =>
+    texts.listItem.find((listItem) =>
+      selectAll("paragraph text", listItem).includes(textNode)
+    );
 
-  const withTaskIdPlaceholder: Text[] = [
-    ...listItemParagraphTexts,
-    ...headingTexts,
-  ]
-    .filter(startsWithTaskIdPlaceholder);
+  const processHeading = (textNode: Text): void => {
+    // if heading meant as a task, should look like this:
+    // {value: "[ ] TODO-123 This is a task"}
 
-  const withoutTaskId: Text[] = listItemParagraphTexts
-    .filter(and(
-      not(boolify(startsWithTaskIdPlaceholder)),
-      not(boolify(startsWithTaskId)),
-    ));
+    if (startsWithBoxAndTaskId(textNode)) {
+      // if heading has both box and proper task id, return
+      return;
+    }
 
-  for (const textNode of texts) {
-    if (withTaskIdPlaceholder.includes(textNode)) {
-      textNode.value = textNode.value
-        .replace(
-          taskIdPlaceholderRegex,
+    if (startsWithBoxAndTaskIdPlaceholder(textNode)) {
+      // if heading has box, and unidentified placeholder task id, replace with new task id
+      textNode.value = textNode.value.replace(
+        startsWithBoxAndTaskIdPlaceholder.regex,
+        (...args) =>
+          `${groups<"box">(args).box} ${projectId}-${nextIdentifierNumber()}`,
+      );
+      return;
+    }
+
+    if (startsWithTaskId(textNode)) {
+      // if heading already has task id, but no box, add box
+      textNode.value = textNode.value.replace(
+        startsWithTaskId.regex,
+        (...args) => `[ ] ${groups<"taskId">(args).taskId}`,
+      );
+      return;
+    }
+
+    if (startsWithTaskIdPlaceholder(textNode)) {
+      // if heading has unidentified placeholder task id, replace with new task id, and add box
+      textNode.value = textNode.value.replace(
+        startsWithTaskIdPlaceholder.regex,
+        () => `[ ] ${projectId}-${nextIdentifierNumber()}`,
+      );
+      return;
+    }
+
+    if (startsWithBox(textNode)) {
+      // if heading has box, but no task id, add task id
+      textNode.value = textNode.value.replace(
+        startsWithBox.regex,
+        (...args) =>
+          `${groups<"box">(args).box} ${projectId}-${nextIdentifierNumber()}`,
+      );
+      return;
+    }
+  };
+
+  const processListItem = (textNode: Text, listItem: ListItem): void => {
+    // if list item meant as a task, should look like this:
+    // {checked: true|false, value: "TODO-123 This is a task"}
+
+    // if it is not meant as a task, it should look like this:
+    // {checked: null, value: "This is not a task"}
+
+    // whether it's meant as a task, is determined by whether it starts with a task id, placeholder, or a box.
+
+    if (listItem.checked === true || listItem.checked === false) {
+      // list item has a box!
+      if (startsWithTaskId(textNode)) {
+        // if list item has box, and proper task id, return
+        return;
+      }
+      if (startsWithTaskIdPlaceholder(textNode)) {
+        // if list item has box, and unidentified placeholder task id, replace with new task id
+        textNode.value = textNode.value.replace(
+          startsWithTaskIdPlaceholder.regex,
           () => `${projectId}-${nextIdentifierNumber()}`,
         );
-    }
-    if (withoutTaskId.includes(textNode)) {
+        return;
+      }
+      // if list item has box, but no task id, add task id
       textNode.value =
         `${projectId}-${nextIdentifierNumber()} ${textNode.value}`;
+      return;
+    }
+
+    // list item has no box!
+    if (startsWithTaskId(textNode)) {
+      // if list item has no box, but proper task id, add box
+      listItem.checked = false;
+      return;
+    }
+    if (startsWithTaskIdPlaceholder(textNode)) {
+      // if list item has no box, but unidentified placeholder task id, replace with new task id, and add box
+      textNode.value = textNode.value.replace(
+        startsWithTaskIdPlaceholder.regex,
+        () => `${projectId}-${nextIdentifierNumber()}`,
+      );
+      listItem.checked = false;
+      return;
+    }
+    // if list item has no box, and no task id, it's not meant as a task
+  };
+
+  for (const textNode of texts.all) {
+    if (isHeading(textNode)) {
+      processHeading(textNode);
+    }
+    const listItem = findListItemWithTextNode(textNode);
+    if (listItem) {
+      processListItem(textNode, listItem);
     }
   }
 }

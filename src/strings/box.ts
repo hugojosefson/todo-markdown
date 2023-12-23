@@ -6,6 +6,7 @@ import {
   type TypeGuard,
 } from "../regex.ts";
 import { PROJECT_ID_REGEX, ProjectId } from "./project-id.ts";
+import { createTaskIdPlaceholderRegex } from "./task-id-placeholder.ts";
 import { createTaskIdRegex, TaskId } from "./task-id.ts";
 
 export type BoxContents = " " | "x";
@@ -22,11 +23,19 @@ export const BOX_REGEX = capture(
 export const isBox: TypeGuard<Box> = isA<Box>(BOX_REGEX);
 
 export type BoxAndTaskId = `${Box} ${TaskId}`;
-export function createBoxAndTaskIdRegex(
-  projectId: ProjectId | RegExp = PROJECT_ID_REGEX,
+export function createBoxAndTaskIdRegex<PI extends ProjectId = ProjectId>(
+  projectId: PI | RegExp = PROJECT_ID_REGEX,
 ) {
   return sequence(BOX_REGEX, " ", createTaskIdRegex(projectId));
 }
+export function createBoxAndTaskIdPlaceholderRegex<
+  PI extends ProjectId = ProjectId,
+>(
+  projectId: PI | RegExp = PROJECT_ID_REGEX,
+) {
+  return sequence(BOX_REGEX, " ", createTaskIdPlaceholderRegex(projectId));
+}
+
 export function createIsBoxAndTaskId(
   projectId: ProjectId | RegExp = PROJECT_ID_REGEX,
 ): TypeGuard<BoxAndTaskId> {
