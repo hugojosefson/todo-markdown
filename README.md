@@ -26,8 +26,8 @@ Use markdown docs, to keep track of todo items.
 
 ## Other
 
-- [ ] Do something else
-- [ ] TODO-xx Do something even elser
+- [ ] TODO-xx Do something else
+- [ ] Do something even elser
 ```
 
 ### Markdown output
@@ -53,14 +53,14 @@ Use markdown docs, to keep track of todo items.
 - [ ] TODO-10 Do something even elser
 ```
 
-## [ ] Features included in [TODO-1](./README.md#todo-1) and derivatives
+## [ ] Features included
 
 1. [x] Parses markdown input.
-1. [ ] Finds all places where task identifiers are used:
-   - [ ] unordered lists / task lists
-   - [ ] ordered lists
+1. [x] Finds all places where task identifiers are used:
+   - [x] unordered lists / task lists
+   - [x] ordered lists
    - [x] headings
-1. [ ] In each eligible place, identifies task identifiers based on regex, ex
+1. [x] In each eligible place, identifies task identifiers based on regex, ex
        `/\bTODO-\d+\b/`.
 1. [x] In the existing tasks, finds the highest numbered identifier.
 1. [x] Calculates the next identifier, always higher than the highest existing.
@@ -70,7 +70,7 @@ Use markdown docs, to keep track of todo items.
    - [x] task identifier placeholder, via regex, ex
          `\bTODO-(\?+|x+|X+|n+|N+)\b`,
    - ~~[ ] copied, already existing task identifier.~~
-1. [ ] For each text node with a new task, mutates the node to include the next
+1. [x] For each text node with a new task, mutates the node to include the next
        identifier.
 1. [x] Outputs transformed markdown.
 1. [x] Formats the markdown output.

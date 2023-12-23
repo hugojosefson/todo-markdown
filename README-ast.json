@@ -79,7 +79,7 @@
       "type": "code",
       "lang": "markdown",
       "meta": null,
-      "value": "# My TODO:s\n\n## Urgent\n\n- [x] TODO-2 Pay bills\n- [ ] TODO-1 Buy milk\n- [x] TODO-3 Call mom\n- [ ] TODO-5 Buy eggs\n\n## Later\n\n- [ ] TODO-? Buy bread\n- [ ] TODO-7 Eat it all\n\n## Other\n\n- [ ] Do something else\n- [ ] TODO-xx Do something even elser"
+      "value": "# My TODO:s\n\n## Urgent\n\n- [x] TODO-2 Pay bills\n- [ ] TODO-1 Buy milk\n- [x] TODO-3 Call mom\n- [ ] TODO-5 Buy eggs\n\n## Later\n\n- [ ] TODO-? Buy bread\n- [ ] TODO-7 Eat it all\n\n## Other\n\n- [ ] TODO-xx Do something else\n- [ ] Do something even elser"
     },
     {
       "type": "heading",
@@ -103,22 +103,7 @@
       "children": [
         {
           "type": "text",
-          "value": "[ ] Features included in "
-        },
-        {
-          "type": "link",
-          "title": null,
-          "url": "./README.md#todo-1",
-          "children": [
-            {
-              "type": "text",
-              "value": "TODO-1"
-            }
-          ]
-        },
-        {
-          "type": "text",
-          "value": " and derivatives"
+          "value": "[ ] Features included"
         }
       ]
     },
@@ -147,7 +132,7 @@
         {
           "type": "listItem",
           "spread": false,
-          "checked": false,
+          "checked": true,
           "children": [
             {
               "type": "paragraph",
@@ -167,7 +152,7 @@
                 {
                   "type": "listItem",
                   "spread": false,
-                  "checked": false,
+                  "checked": true,
                   "children": [
                     {
                       "type": "paragraph",
@@ -183,7 +168,7 @@
                 {
                   "type": "listItem",
                   "spread": false,
-                  "checked": false,
+                  "checked": true,
                   "children": [
                     {
                       "type": "paragraph",
@@ -219,7 +204,7 @@
         {
           "type": "listItem",
           "spread": false,
-          "checked": false,
+          "checked": true,
           "children": [
             {
               "type": "paragraph",
@@ -364,7 +349,7 @@
         {
           "type": "listItem",
           "spread": false,
-          "checked": false,
+          "checked": true,
           "children": [
             {
               "type": "paragraph",

@@ -111,10 +111,10 @@ export function or<A extends RegExp, B extends RegExp>(
 }
 
 /**
- * Returns a regex that matches all of the given regexes in sequence.
+ * Returns a regex that matches all given regexes in sequence.
  * @param firstRegex the first regex
  * @param restRegexes the rest of the regexes
- * @returns a regex that matches all of the given regexes in sequence
+ * @returns a regex that matches all given regexes in sequence
  */
 export function sequence<A extends RegExp, B extends RegExp>(
   firstRegex: A | string,

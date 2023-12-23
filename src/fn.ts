@@ -30,6 +30,16 @@ export function not<T>(fn: (x: T) => boolean): (x: T) => boolean {
 }
 
 /**
+ * Returns true if all given functions return true. This function takes in a variable number of functions,
+ * and returns a new function that returns true if all input functions return true.
+ * @param fns the functions to check
+ * @returns a function that returns true if all input functions return true
+ */
+export function and<T>(...fns: ((x: T) => boolean)[]): (x: T) => boolean {
+  return (x) => fns.every((fn) => fn(x));
+}
+
+/**
  * Converts a function's return value to a boolean. This function takes in a function that returns a value,
  * and returns a new function that converts the result of the input function to a boolean.
  * @param fn the function whose return value is to be converted to a boolean

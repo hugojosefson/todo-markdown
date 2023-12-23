@@ -1,11 +1,12 @@
 import { isString } from "https://deno.land/x/run_simple@2.2.0/src/fn.ts";
 import { Nodes, Text } from "npm:@types/mdast";
 import { selectAll } from "npm:unist-util-select";
-import { boolify, not, reduceToLargestNumber } from "../fn.ts";
+import { and, boolify, not, reduceToLargestNumber } from "../fn.ts";
+import { startsWithA } from "../regex.ts";
 import { ProjectId } from "../strings/project-id.ts";
 import { extractTaskIdNumber } from "../strings/task-id-number.ts";
 import { createTaskIdPlaceholderRegex } from "../strings/task-id-placeholder.ts";
-import { createExtractTaskId } from "../strings/task-id.ts";
+import { createExtractTaskId, createTaskIdRegex } from "../strings/task-id.ts";
 
 /**
  * Finds the maximum identifier number in the given tree.
@@ -38,9 +39,10 @@ export function mutateAst<PI extends ProjectId = ProjectId>(
   projectId: PI,
   tree: Nodes,
 ): void {
-  const extractTaskId = createExtractTaskId(projectId);
-  const extractTaskIdPlaceholder = createExtractTaskId(projectId);
+  const taskIdRegex = createTaskIdRegex(projectId);
   const taskIdPlaceholderRegex = createTaskIdPlaceholderRegex(projectId);
+  const startsWithTaskIdPlaceholder = startsWithA(taskIdPlaceholderRegex);
+  const startsWithTaskId = startsWithA(taskIdRegex);
 
   let maxIdentifierNumber = getMaxIdentifierNumber(projectId, tree);
   const nextIdentifierNumber = () => ++maxIdentifierNumber;
@@ -53,12 +55,15 @@ export function mutateAst<PI extends ProjectId = ProjectId>(
 
   const textNodesWithTaskIdPlaceholder: Text[] = [
     ...listItemParagraphTexts
-      .filter(extractTaskIdPlaceholder),
+      .filter(startsWithTaskIdPlaceholder),
     ...headingTexts
-      .filter(extractTaskIdPlaceholder),
+      .filter(startsWithTaskIdPlaceholder),
   ];
   const textNodesWithoutTaskId: Text[] = listItemParagraphTexts
-    .filter(not(boolify(extractTaskId)));
+    .filter(and(
+      not(boolify(startsWithTaskIdPlaceholder)),
+      not(boolify(startsWithTaskId)),
+    ));
 
   textNodesWithTaskIdPlaceholder.forEach((textNode) => {
     textNode.value = textNode.value
