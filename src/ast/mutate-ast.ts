@@ -47,33 +47,37 @@ export function mutateAst<PI extends ProjectId = ProjectId>(
   let maxIdentifierNumber = getMaxIdentifierNumber(projectId, tree);
   const nextIdentifierNumber = () => ++maxIdentifierNumber;
 
+  const texts: Text[] = selectAll("text", tree) as Text[];
+
   const listItemParagraphTexts: Text[] = selectAll(
     "listItem > paragraph text",
     tree,
   ) as Text[];
   const headingTexts: Text[] = selectAll("heading text", tree) as Text[];
 
-  const textNodesWithTaskIdPlaceholder: Text[] = [
-    ...listItemParagraphTexts
-      .filter(startsWithTaskIdPlaceholder),
-    ...headingTexts
-      .filter(startsWithTaskIdPlaceholder),
-  ];
-  const textNodesWithoutTaskId: Text[] = listItemParagraphTexts
+  const withTaskIdPlaceholder: Text[] = [
+    ...listItemParagraphTexts,
+    ...headingTexts,
+  ]
+    .filter(startsWithTaskIdPlaceholder);
+
+  const withoutTaskId: Text[] = listItemParagraphTexts
     .filter(and(
       not(boolify(startsWithTaskIdPlaceholder)),
       not(boolify(startsWithTaskId)),
     ));
 
-  textNodesWithTaskIdPlaceholder.forEach((textNode) => {
-    textNode.value = textNode.value
-      .replace(
-        taskIdPlaceholderRegex,
-        () => `${projectId}-${nextIdentifierNumber()}`,
-      );
-  });
-
-  textNodesWithoutTaskId.forEach((textNode) => {
-    textNode.value = `${projectId}-${nextIdentifierNumber()} ${textNode.value}`;
-  });
+  for (const textNode of texts) {
+    if (withTaskIdPlaceholder.includes(textNode)) {
+      textNode.value = textNode.value
+        .replace(
+          taskIdPlaceholderRegex,
+          () => `${projectId}-${nextIdentifierNumber()}`,
+        );
+    }
+    if (withoutTaskId.includes(textNode)) {
+      textNode.value =
+        `${projectId}-${nextIdentifierNumber()} ${textNode.value}`;
+    }
+  }
 }

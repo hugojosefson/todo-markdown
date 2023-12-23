@@ -40,6 +40,16 @@ export function and<T>(...fns: ((x: T) => boolean)[]): (x: T) => boolean {
 }
 
 /**
+ * Returns true if any given function returns true. This function takes in a variable number of functions,
+ * and returns a new function that returns true if any input function returns true.
+ * @param fns the functions to check
+ * @returns a function that returns true if any input function returns true
+ */
+export function or<T>(...fns: ((x: T) => boolean)[]): (x: T) => boolean {
+  return (x) => fns.some((fn) => fn(x));
+}
+
+/**
  * Converts a function's return value to a boolean. This function takes in a function that returns a value,
  * and returns a new function that converts the result of the input function to a boolean.
  * @param fn the function whose return value is to be converted to a boolean
