@@ -76,7 +76,15 @@ Use markdown docs, to keep track of todo items.
 
 ### Where to find task identifiers
 
+In the Abstract Syntax Tree (AST) of the markdown input, we expect to find task
+identifiers in the following places:
+
 ```css
 listItem > paragraph text
 heading text
 ```
+
+### AST from this README
+
+For an example of the AST of this entire README, please see
+[README-ast.json](./README-ast.json).

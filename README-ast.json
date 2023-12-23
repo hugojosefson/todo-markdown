@@ -417,10 +417,53 @@
       ]
     },
     {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "In the Abstract Syntax Tree (AST) of the markdown input, we expect to find task\nidentifiers in the following places:"
+        }
+      ]
+    },
+    {
       "type": "code",
       "lang": "css",
       "meta": null,
       "value": "listItem > paragraph text\nheading text"
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "AST from this README"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "For an example of the AST of this entire README, please see\n"
+        },
+        {
+          "type": "link",
+          "title": null,
+          "url": "./README-ast.json",
+          "children": [
+            {
+              "type": "text",
+              "value": "README-ast.json"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "value": "."
+        }
+      ]
     }
   ]
 }
