@@ -21,6 +21,28 @@
       ]
     },
     {
+      "type": "table",
+      "align": [
+        null
+      ],
+      "children": [
+        {
+          "type": "tableRow",
+          "children": [
+            {
+              "type": "tableCell",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "🚧️👷 Under construction 👷🚧️"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "heading",
       "depth": 2,
       "children": [
