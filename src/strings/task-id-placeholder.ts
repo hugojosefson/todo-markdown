@@ -5,15 +5,28 @@ import {
   TaskIdNumberPlaceholder,
 } from "./task-id-number-placeholder.ts";
 
-export const TASK_ID_PLACEHOLDER_REGEX = sequence(
-  PROJECT_ID_REGEX,
-  /-/,
-  TASK_ID_NUMBER_PLACEHOLDER_REGEX,
-);
-export type TaskIdPlaceholder = `${ProjectId}-${TaskIdNumberPlaceholder}`;
-export const isTaskIdPlaceholder: TypeGuard<TaskIdPlaceholder> = isA<
-  TaskIdPlaceholder
->(TASK_ID_PLACEHOLDER_REGEX);
-export const containsTaskIdPlaceholder = containsA<TaskIdPlaceholder>(
-  TASK_ID_PLACEHOLDER_REGEX,
-);
+export function createTaskIdPlaceholderRegex(
+  projectId: ProjectId | RegExp = PROJECT_ID_REGEX,
+) {
+  return sequence(
+    projectId,
+    /-/,
+    TASK_ID_NUMBER_PLACEHOLDER_REGEX,
+  );
+}
+export type TaskIdPlaceholder<PI extends ProjectId = ProjectId> =
+  `${PI}-${TaskIdNumberPlaceholder}`;
+export function createIsTaskIdPlaceholder<PI extends ProjectId = ProjectId>(
+  projectId: PI | RegExp = PROJECT_ID_REGEX,
+): TypeGuard<TaskIdPlaceholder<PI>> {
+  return isA<
+    TaskIdPlaceholder
+  >(createTaskIdPlaceholderRegex(projectId));
+}
+export function createContainsTaskIdPlaceholder<
+  PI extends ProjectId = ProjectId,
+>(projectId: PI | RegExp = PROJECT_ID_REGEX) {
+  return containsA<TaskIdPlaceholder<PI>>(
+    createTaskIdPlaceholderRegex(projectId),
+  );
+}

@@ -23,7 +23,7 @@ Deno.test("transformMarkdown should assign identifiers to new tasks", async () =
 - [ ] TODO-4 Implement feature D
 `.trim();
 
-  const result = await transformMarkdown(inputMarkdown);
+  const result = await transformMarkdown("TODO", inputMarkdown);
   assertEquals(result, expectedOutputMarkdown);
 });
 
@@ -44,7 +44,7 @@ Deno.test("transformMarkdown should not change identifiers of old tasks", async 
 - [ ] TODO-3 Implement feature C
 `.trim();
 
-  const result = await transformMarkdown(inputMarkdown);
+  const result = await transformMarkdown("TODO", inputMarkdown);
   assertEquals(result, expectedOutputMarkdown);
 });
 
@@ -59,6 +59,6 @@ Deno.test("transformMarkdown should handle examples in the README", async () => 
   ) as Code[];
   const inputExample = inputCodeBlock.value.trim();
   const expectedOutputExample = outputCodeBlock.value.trim();
-  const result = await transformMarkdown(inputExample);
+  const result = await transformMarkdown("TODO", inputExample);
   assertEquals(result, expectedOutputExample);
 });

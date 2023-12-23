@@ -243,7 +243,7 @@
         {
           "type": "listItem",
           "spread": false,
-          "checked": false,
+          "checked": true,
           "children": [
             {
               "type": "paragraph",
@@ -259,7 +259,7 @@
         {
           "type": "listItem",
           "spread": false,
-          "checked": false,
+          "checked": true,
           "children": [
             {
               "type": "paragraph",
@@ -275,14 +275,14 @@
         {
           "type": "listItem",
           "spread": false,
-          "checked": false,
+          "checked": true,
           "children": [
             {
               "type": "paragraph",
               "children": [
                 {
                   "type": "text",
-                  "value": "Identifies all new todo items, by:"
+                  "value": "Identifies all text nodes with new todo items, by:"
                 }
               ]
             },
@@ -295,7 +295,7 @@
                 {
                   "type": "listItem",
                   "spread": false,
-                  "checked": false,
+                  "checked": true,
                   "children": [
                     {
                       "type": "paragraph",
@@ -315,7 +315,7 @@
                 {
                   "type": "listItem",
                   "spread": false,
-                  "checked": false,
+                  "checked": true,
                   "children": [
                     {
                       "type": "paragraph",
@@ -339,14 +339,19 @@
                 {
                   "type": "listItem",
                   "spread": false,
-                  "checked": false,
+                  "checked": null,
                   "children": [
                     {
                       "type": "paragraph",
                       "children": [
                         {
-                          "type": "text",
-                          "value": "copied, already existing task identifier."
+                          "type": "delete",
+                          "children": [
+                            {
+                              "type": "text",
+                              "value": "[ ] copied, already existing task identifier."
+                            }
+                          ]
                         }
                       ]
                     }
@@ -366,7 +371,7 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "For each new task, assigns the next identifier."
+                  "value": "For each text node with a new task, mutates the node to include the next\nidentifier."
                 }
               ]
             }

@@ -62,15 +62,16 @@ Use markdown docs, to keep track of todo items.
    - [x] headings
 1. [ ] In each eligible place, identifies task identifiers based on regex, ex
        `/\bTODO-\d+\b/`.
-1. [ ] In the existing tasks, finds the highest numbered identifier.
-1. [ ] Calculates the next identifier, always higher than the highest existing.
+1. [x] In the existing tasks, finds the highest numbered identifier.
+1. [x] Calculates the next identifier, always higher than the highest existing.
        It's OK to skip numbers.
-1. [ ] Identifies all new todo items, by:
-   - [ ] `- [ ]` syntax without a task identifier,
-   - [ ] task identifier placeholder, via regex, ex
+1. [x] Identifies all text nodes with new todo items, by:
+   - [x] `- [ ]` syntax without a task identifier,
+   - [x] task identifier placeholder, via regex, ex
          `\bTODO-(\?+|x+|X+|n+|N+)\b`,
-   - [ ] copied, already existing task identifier.
-1. [ ] For each new task, assigns the next identifier.
+   - ~~[ ] copied, already existing task identifier.~~
+1. [ ] For each text node with a new task, mutates the node to include the next
+       identifier.
 1. [x] Outputs transformed markdown.
 1. [x] Formats the markdown output.
 

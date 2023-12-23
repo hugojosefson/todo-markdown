@@ -4,6 +4,6 @@ import { readAllFromStdin } from "./markdown/read-all-from-stdin.ts";
 import { transformMarkdown } from "./markdown/transform-markdown.ts";
 
 const input = await readAllFromStdin();
-const output = await transformMarkdown(input);
+const output = await transformMarkdown("TODO", input);
 
 console.log(output);

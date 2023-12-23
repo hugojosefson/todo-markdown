@@ -1,13 +1,31 @@
 import { containsA, isA, or, TypeGuard } from "../regex.ts";
+import { PROJECT_ID_REGEX, ProjectId } from "./project-id.ts";
 import {
-  TASK_ID_PLACEHOLDER_REGEX,
+  createTaskIdPlaceholderRegex,
   TaskIdPlaceholder,
 } from "./task-id-placeholder.ts";
-import { TASK_ID_REGEX, TaskId } from "./task-id.ts";
+import { createTaskIdRegex, TaskId } from "./task-id.ts";
 
-export type TaskIdish = TaskId | TaskIdPlaceholder;
-export const TASK_IDISH_REGEX = or(TASK_ID_REGEX, TASK_ID_PLACEHOLDER_REGEX);
-export const isTaskIdish: TypeGuard<TaskIdish> = isA<TaskIdish>(
-  TASK_IDISH_REGEX,
-);
-export const containsTaskIdish = containsA<TaskIdish>(TASK_IDISH_REGEX);
+export type TaskIdish<PI extends ProjectId = ProjectId> =
+  | TaskId
+  | TaskIdPlaceholder<PI>;
+export function createTaskIdishRegex<PI extends ProjectId = ProjectId>(
+  projectId: PI | RegExp = PROJECT_ID_REGEX,
+) {
+  return or(
+    createTaskIdRegex(projectId),
+    createTaskIdPlaceholderRegex(projectId),
+  );
+}
+export function createIsTaskIdish(
+  projectId: ProjectId | RegExp = PROJECT_ID_REGEX,
+): TypeGuard<TaskIdish> {
+  return isA<TaskIdish>(
+    createTaskIdishRegex(projectId),
+  );
+}
+export function createContainsTaskIdish(
+  projectId: ProjectId | RegExp = PROJECT_ID_REGEX,
+) {
+  return containsA<TaskIdish>(createTaskIdishRegex(projectId));
+}
