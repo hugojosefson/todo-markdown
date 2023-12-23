@@ -81,6 +81,8 @@ Use markdown docs, to keep track of todo items.
 1. [x] For each text node with a new task, mutates the node to include the next
        identifier.
 1. [ ] For each text node with a task identifier, but no box, adds a box.
+1. [ ] Processes the markdown from beginning to end, so that new task
+       identifiers are in order.
 1. [x] Outputs transformed markdown.
 1. [x] Formats the markdown output.
 

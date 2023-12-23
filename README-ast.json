@@ -381,6 +381,22 @@
         {
           "type": "listItem",
           "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Processes the markdown from beginning to end, so that new task\nidentifiers are in order."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
           "checked": true,
           "children": [
             {
