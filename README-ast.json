@@ -300,6 +300,26 @@
                 {
                   "type": "listItem",
                   "spread": false,
+                  "checked": false,
+                  "children": [
+                    {
+                      "type": "paragraph",
+                      "children": [
+                        {
+                          "type": "inlineCode",
+                          "value": "# [ ]"
+                        },
+                        {
+                          "type": "text",
+                          "value": " syntax without a task identifier,"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "listItem",
+                  "spread": false,
                   "checked": true,
                   "children": [
                     {
@@ -389,6 +409,30 @@
                 {
                   "type": "text",
                   "value": "Processes the markdown from beginning to end, so that new task\nidentifiers are in order."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Removes "
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "\\"
+                },
+                {
+                  "type": "text",
+                  "value": " before a box and task identifier, if any."
                 }
               ]
             }

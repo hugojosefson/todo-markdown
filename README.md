@@ -75,6 +75,7 @@ Use markdown docs, to keep track of todo items.
        It's OK to skip numbers.
 1. [x] Identifies all text nodes with new todo items, by:
    - [x] `- [ ]` syntax without a task identifier,
+   - [ ] `# [ ]` syntax without a task identifier,
    - [x] task identifier placeholder, via regex, ex
          `\bTODO-(\?+|x+|X+|n+|N+)\b`,
    - ~~[ ] copied, already existing task identifier.~~
@@ -83,6 +84,7 @@ Use markdown docs, to keep track of todo items.
 1. [ ] For each text node with a task identifier, but no box, adds a box.
 1. [ ] Processes the markdown from beginning to end, so that new task
        identifiers are in order.
+1. [ ] Removes `\` before a box and task identifier, if any.
 1. [x] Outputs transformed markdown.
 1. [x] Formats the markdown output.
 
