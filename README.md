@@ -1,6 +1,6 @@
 # todo-markdown
 
-Tool for using markdown document(s) for keeping track of todo items.
+Use markdown docs, to keep track of todo items.
 
 | 🚧️👷 Under construction 👷🚧️ |
 | ---------------------------- |
