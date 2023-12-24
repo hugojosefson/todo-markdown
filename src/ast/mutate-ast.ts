@@ -1,4 +1,4 @@
-import { isString } from "https://deno.land/x/run_simple@2.2.0/src/fn.ts";
+import { isString } from "run_simple/src/fn.ts";
 import { ListItem, Nodes, Text } from "npm:@types/mdast";
 import { selectAll } from "npm:unist-util-select";
 import { reduceToLargestNumber } from "../fn.ts";

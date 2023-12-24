@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.208.0/assert/assert_equals.ts";
+import { assertEquals } from "std/assert/assert_equals.ts";
 import { transformMarkdown } from "../src/markdown/transform-markdown.ts";
 import { selectAll } from "npm:unist-util-select";
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";

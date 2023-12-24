@@ -1,4 +1,4 @@
-import { run } from "https://deno.land/x/run_simple@2.2.0/mod.ts";
+import { run } from "run_simple";
 import { global, groups, sequence } from "../regex.ts";
 import { BOX_REGEX } from "../strings/box.ts";
 export async function formatCode(

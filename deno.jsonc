@@ -6,6 +6,7 @@
     "test": "deno test --allow-run --allow-read --allow-env=VERBOSE",
     "readme-ast": "bash -c 'deno run --allow-run --allow-read ./src/ast/markdown-to-ast.ts < README.md > README-ast.json'",
     "readme-ast-types": "grep type README-ast.json | awk -F '\"' '{print $4}' | sort -u",
-    "udd": "deno run --allow-read=. --allow-write=. --allow-net https://deno.land/x/udd@0.8.2/main.ts $($(which fd || which fdfind || echo fd) '(\\.(mj|j|t)sx?|^deno.jsonc?)$')"
-  }
+    "deps": "./tools/upgrade-npm-deps-in-import-map.ts && git diff import_map.json"
+  },
+  "importMap": "import_map.json"
 }
