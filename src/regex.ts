@@ -166,7 +166,7 @@ export function capture<G extends string, R extends RegExp>(
 
 /**
  * Extracts the captured groups from the args of a replacer function used with
- * {$@link String.prototype.replace}.
+ * {@link String.prototype.replace}.
  * @param args the args you receive in a replacer function
  */
 export function groups<K extends string>(args: unknown[]): Record<K, string> {
