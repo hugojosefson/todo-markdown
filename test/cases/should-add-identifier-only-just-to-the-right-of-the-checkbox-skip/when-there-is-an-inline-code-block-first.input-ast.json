@@ -1,0 +1,41 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "list",
+      "ordered": false,
+      "start": null,
+      "spread": false,
+      "children": [
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": true,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "inlineCode",
+                  "value": "createMemo"
+                },
+                {
+                  "type": "text",
+                  "value": " instead of "
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "createEffect"
+                },
+                {
+                  "type": "text",
+                  "value": "?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

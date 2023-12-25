@@ -23,17 +23,17 @@ export function removePosition(node: unknown) {
 }
 
 export function markdownToAst(markdown: string): Nodes {
-  return fromMarkdown(markdown, {
+  const ast = fromMarkdown(markdown, {
     extensions: [gfm()],
     mdastExtensions: [gfmFromMarkdown()],
   });
+  return removePosition(ast);
 }
 
 // read from Deno.stdin, console.log the result
 if (import.meta.main) {
   const inputMarkdown = await Deno.readTextFile("/dev/stdin");
   const ast = markdownToAst(inputMarkdown);
-  const withoutPosition = removePosition(ast);
-  const output = JSON.stringify(withoutPosition, null, 2);
+  const output = JSON.stringify(ast, null, 2);
   console.log(output);
 }

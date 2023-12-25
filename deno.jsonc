@@ -3,7 +3,7 @@
     "all": "deno task hook install && deno fmt && deno task readme-ast && deno lint && deno task check && deno task test",
     "hook": "deno run --allow-read=. --allow-write=. --allow-run=git https://deno.land/x/deno_hooks@0.1.1/mod.ts",
     "check": "$(which fd || which fdfind || echo fd) '\\.(mj|j|t)sx?$' --hidden --exec deno check '{}'",
-    "test": "deno test --allow-run --allow-read --allow-env=VERBOSE",
+    "test": "deno test --allow-run --allow-read --allow-write=test/cases --allow-env=VERBOSE",
     "readme-ast": "bash -c 'deno run --allow-run --allow-read ./src/ast/markdown-to-ast.ts < README.md > README-ast.json'",
     "readme-ast-types": "grep type README-ast.json | awk -F '\"' '{print $4}' | sort -u",
     "deps": "./tools/upgrade-npm-deps-in-import-map.ts && git diff import_map.json"
