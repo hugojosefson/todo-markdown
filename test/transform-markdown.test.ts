@@ -60,6 +60,47 @@ describe("transformMarkdown", () => {
   });
 
   it(
+    "should add identifier only at the checkbox level",
+    expectInputToOutput(
+      `
+- [ ] this is a task
+  - clarification-
+`,
+      `
+- [ ] TODO-1 this is a task
+  - clarification-
+`,
+    ),
+  );
+
+  describe(
+    "should add identifier only just to the right of the checkbox",
+    () => {
+      it(
+        "when there is an inline code block first",
+        expectInputToOutput(
+          `- [x] \`createMemo\` instead of \`createEffect\`?`,
+          `- [x] TODO-1 \`createMemo\` instead of \`createEffect\`?`,
+        ),
+      );
+      it(
+        "when there is a described link first",
+        expectInputToOutput(
+          `- [x] [Link description](https://www.example.com/)`,
+          `- [x] TODO-1 [Link description](https://www.example.com/)`,
+        ),
+      );
+      it(
+        "when there is just a url first",
+        expectInputToOutput(
+          `- [x] https://www.example.com/`,
+          `- [x] TODO-1 https://www.example.com/`,
+        ),
+      );
+    },
+  );
+
+  it.skip(
     "should add identifier only at the checkbox level, as the first thing there",
     expectInputToOutput(
       `
