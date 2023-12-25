@@ -11,7 +11,9 @@ import {
 
 function doCase(c: Case): void {
   if (isDescribe(c)) {
-    const fn = c.skip ? describe.skip : describe;
+    const fn: typeof describe.skip | typeof describe = c.skip
+      ? describe.skip
+      : describe;
     fn(c.description, () => Promise.all(c.cases.map(doCase)));
     return;
   }

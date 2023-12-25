@@ -3,6 +3,7 @@ import {
   ListItem,
   Node,
   Nodes,
+  Paragraph,
   Parent,
   PhrasingContent,
   Text,
@@ -207,18 +208,49 @@ function replaceHeading<T extends Heading, PI extends ProjectId = ProjectId>(
   return heading;
 }
 
-type EligibleNodes = Heading | ListItem;
-type WithFirstChildText<T extends EligibleNodes> = T & {
-  children: [Text, ...T["children"]];
-};
-function isWithFirstChildText<T extends EligibleNodes>(
+type WithFirstChild<
+  T extends EligibleParentNodes,
+  C extends EligibleNodes,
+> =
+  & T
+  & {
+    children: [
+      C,
+      ...(T["children"])[],
+    ];
+  };
+
+type EligibleParentNodes = Heading | ListItem | Paragraph;
+type EligibleNodes = EligibleParentNodes | Text;
+type WithFirstChildText<T extends EligibleParentNodes> = WithFirstChild<
+  T,
+  Text
+>;
+
+function isWithFirstChildText<T extends EligibleParentNodes>(
   node: T,
 ): node is WithFirstChildText<T> {
   return isText(node.children[0]);
 }
 
+type WithFirstChildParagraphWithText<T extends EligibleParentNodes> =
+  WithFirstChild<
+    T,
+    WithFirstChild<Paragraph, Text>
+  >;
+
+function isWithFirstChildParagraphWithText<T extends EligibleParentNodes>(
+  node: T,
+): node is WithFirstChildParagraphWithText<T> {
+  return isParagraph(node.children[0]) && isText(node.children[0].children[0]);
+}
+
+function isParagraph(node: Node): node is Paragraph {
+  return node.type === "paragraph";
+}
+
 function replaceFirstChildTextValue<
-  T extends WithFirstChildText<EligibleNodes>,
+  T extends WithFirstChildText<EligibleParentNodes>,
 >(
   node: T,
   find: string | RegExp,
@@ -234,6 +266,29 @@ function replaceFirstChildTextValue<
           isString(replacer) ? (() => replacer) : replacer,
         ),
       },
+      ...node.children.slice(1),
+    ],
+  };
+}
+
+function replaceFirstChildParagraphTextValue<
+  T extends WithFirstChildParagraphWithText<EligibleParentNodes>,
+>(
+  node: T,
+  find: string | RegExp,
+  replacer: string | ((substring: string, ...args: unknown[]) => string),
+): T {
+  const paragraph = node.children[0];
+  const replacedParagraph = replaceFirstChildTextValue(
+    paragraph,
+    find,
+    replacer,
+  );
+
+  return {
+    ...node,
+    children: [
+      replacedParagraph,
       ...node.children.slice(1),
     ],
   };
@@ -300,11 +355,83 @@ function replaceListItem<T extends ListItem, PI extends ProjectId = ProjectId>(
 
       return listItem;
     }
-  } else {
-    // if list item doesn't start with text...
+  } else if (isWithFirstChildParagraphWithText(listItem)) {
+    // if list item has paragraph with text...
 
     if (hasBox(listItem)) {
-      // ...and has a box, inject identifier first
+      // ...and has a box...
+
+      if (startsWithTaskId(listItem.children[0].children[0])) {
+        // ...and starts with a proper task id, return as is
+        return listItem;
+      }
+
+      if (startsWithTaskIdPlaceholder(listItem.children[0].children[0])) {
+        // ...and starts with an unidentified placeholder task id, replace with new task id
+        return replaceFirstChildParagraphTextValue(
+          listItem,
+          startsWithTaskIdPlaceholder.regex,
+          () => `${projectId}-${nextIdentifierNumber()}`,
+        );
+      }
+
+      // ...and doesn't start with a task id, add task id
+      return replaceFirstChildParagraphTextValue(
+        listItem,
+        /^/,
+        () => `${projectId}-${nextIdentifierNumber()} `,
+      );
+    } else {
+      // ...and doesn't have a box...
+
+      if (startsWithTaskId(listItem.children[0].children[0])) {
+        // ...and starts with a proper task id, add a box
+        return {
+          ...listItem,
+          checked: false,
+        };
+      }
+
+      if (startsWithTaskIdPlaceholder(listItem.children[0].children[0])) {
+        // ...and starts with an unidentified placeholder task id, replace with new task id, and add box
+        return {
+          ...replaceFirstChildParagraphTextValue(
+            listItem,
+            startsWithTaskIdPlaceholder.regex,
+            () => `${projectId}-${nextIdentifierNumber()}`,
+          ),
+          checked: false,
+        };
+      }
+
+      return listItem;
+    }
+  } else {
+    // if list item doesn't start with paragraph or text...
+
+    if (hasBox(listItem)) {
+      // ...and has a box...
+
+      if (isParagraph(listItem.children[0])) {
+        // ...and starts with a paragraph, but no text, add text to paragraph's children
+        return {
+          ...listItem,
+          children: [
+            {
+              ...listItem.children[0],
+              children: [
+                {
+                  type: "text",
+                  value: `${projectId}-${nextIdentifierNumber()} `,
+                },
+                ...listItem.children[0].children,
+              ],
+            },
+            ...listItem.children.slice(1),
+          ],
+        };
+      }
+      // ...inject identifier first
       return {
         ...listItem,
         children: [
