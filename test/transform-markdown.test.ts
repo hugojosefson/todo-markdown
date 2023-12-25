@@ -1,53 +1,51 @@
 import { describe, it } from "std/testing/bdd.ts";
-import { assertEquals } from "std/assert/assert_equals.ts";
-import { transformMarkdown } from "../src/markdown/transform-markdown.ts";
 import { selectAll } from "npm:unist-util-select";
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
 import { Code } from "npm:@types/mdast";
+import { expectInputToOutput } from "./expect-input-to-output.ts";
+
 describe("transformMarkdown", () => {
-  it("should assign identifiers to new tasks", async () => {
-    const inputMarkdown = `
+  it(
+    "should assign identifiers to new tasks",
+    expectInputToOutput(
+      `
 # Project
 
 - [ ] TODO-1 Implement feature A
 - [ ] TODO-? Implement feature B
 - [ ] TODO-? Implement feature C
 - [ ] Implement feature D
-`.trim();
-
-    const expectedOutputMarkdown = `
+`,
+      `
 # Project
 
 - [ ] TODO-1 Implement feature A
 - [ ] TODO-2 Implement feature B
 - [ ] TODO-3 Implement feature C
 - [ ] TODO-4 Implement feature D
-`.trim();
+`,
+    ),
+  );
 
-    const result = await transformMarkdown("TODO", inputMarkdown);
-    assertEquals(result, expectedOutputMarkdown);
-  });
-
-  it("should not change identifiers of old tasks", async () => {
-    const inputMarkdown = `
+  it(
+    "should not change identifiers of old tasks",
+    expectInputToOutput(
+      `
 # Project
 
 - [ ] TODO-1 Implement feature A
 - [ ] TODO-2 Implement feature B
 - [ ] TODO-3 Implement feature C
-`.trim();
-
-    const expectedOutputMarkdown = `
+`,
+      `
 # Project
 
 - [ ] TODO-1 Implement feature A
 - [ ] TODO-2 Implement feature B
 - [ ] TODO-3 Implement feature C
-`.trim();
-
-    const result = await transformMarkdown("TODO", inputMarkdown);
-    assertEquals(result, expectedOutputMarkdown);
-  });
+`,
+    ),
+  );
 
   it("should handle examples in the README", async () => {
     const readmeSource = await Deno.readTextFile(
@@ -58,14 +56,13 @@ describe("transformMarkdown", () => {
       "code",
       readmeAst,
     ) as Code[];
-    const inputExample = inputCodeBlock.value.trim();
-    const expectedOutputExample = outputCodeBlock.value.trim();
-    const result = await transformMarkdown("TODO", inputExample);
-    assertEquals(result, expectedOutputExample);
+    await expectInputToOutput(inputCodeBlock.value, outputCodeBlock.value)();
   });
 
-  it("should add identifier only at the checkbox level, as the first thing there", async () => {
-    const inputMarkdown = `
+  it(
+    "should add identifier only at the checkbox level, as the first thing there",
+    expectInputToOutput(
+      `
 - [x] \`createMemo\` instead of \`createEffect\`?
 - [x] this is a task
   - clarification-
@@ -84,9 +81,8 @@ describe("transformMarkdown", () => {
   - https://www.ikea.com/se/sv/assembly_instructions/brimnes-avlastningsbord-vit__AA-1850775-5.pdf
   - 107519 / 107938
 - [x] [Link description](https://www.example.com/)
-`.trim();
-
-    const expectedOutputMarkdown = `
+`,
+      `
 - [x] TODO-1 \`createMemo\` instead of \`createEffect\`?
 - [x] TODO-2 this is a task
   - clarification-
@@ -105,9 +101,7 @@ describe("transformMarkdown", () => {
   - https://www.ikea.com/se/sv/assembly_instructions/brimnes-avlastningsbord-vit__AA-1850775-5.pdf
   - 107519 / 107938
 - [x] TODO-10 [Link description](https://www.example.com/)
-`.trim();
-
-    const result = await transformMarkdown("TODO", inputMarkdown);
-    assertEquals(result, expectedOutputMarkdown);
-  });
+`,
+    ),
+  );
 });
