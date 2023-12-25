@@ -95,6 +95,23 @@ Use markdown docs, to keep track of todo items.
 1. [x] Removes `\` before a box and task identifier, if any.
 1. [x] Outputs transformed markdown.
 1. [x] Formats the markdown output.
+1. [ ] Supports multiple files, parsing them, and seeing all tasks across all
+       files at the same time.
+1. [ ] Renames each file to its first top-level heading, if any. Excluding the
+       `#` character, any box, and sets file extension to `.md`.
+1. [ ] When renaming, if a file with the same name already exists, does any
+       renaming on that file first. If they still collide, concatenates the
+       contents of the two files.
+1. [ ] When renaming, if a file with the same name already exists, and the
+       contents are identical, deletes the file, so that it's not duplicated.
+1. [ ] When renaming, updates links to the renamed file, in all files. Ex
+       `[Link description](./old-file-name.md)` →
+       `[Link description](./new-file-name.md)`.
+1. [ ] When updating links to a renamed file, if the link is to a heading, and
+       the heading is renamed, updates the link to point to the new heading.
+1. [ ] When updating links to a renamed file, if the link text contains the old
+       file name without file extension, replaces that part of the link text
+       with the new file name without file extension.
 
 ## Further details
 

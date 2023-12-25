@@ -559,6 +559,150 @@
               ]
             }
           ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Supports multiple files, parsing them, and seeing all tasks across all\nfiles at the same time."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Renames each file to its first top-level heading, if any. Excluding the\n"
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "#"
+                },
+                {
+                  "type": "text",
+                  "value": " character, any box, and sets file extension to "
+                },
+                {
+                  "type": "inlineCode",
+                  "value": ".md"
+                },
+                {
+                  "type": "text",
+                  "value": "."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "When renaming, if a file with the same name already exists, does any\nrenaming on that file first. If they still collide, concatenates the\ncontents of the two files."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "When renaming, if a file with the same name already exists, and the\ncontents are identical, deletes the file, so that it's not duplicated."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "When renaming, updates links to the renamed file, in all files. Ex\n"
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "[Link description](./old-file-name.md)"
+                },
+                {
+                  "type": "text",
+                  "value": " →\n"
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "[Link description](./new-file-name.md)"
+                },
+                {
+                  "type": "text",
+                  "value": "."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "When updating links to a renamed file, if the link is to a heading, and\nthe heading is renamed, updates the link to point to the new heading."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "When updating links to a renamed file, if the link text contains the old\nfile name without file extension, replaces that part of the link text\nwith the new file name without file extension."
+                }
+              ]
+            }
+          ]
         }
       ]
     },
