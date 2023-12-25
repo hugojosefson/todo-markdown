@@ -61,19 +61,17 @@ export function mutateAst<PI extends ProjectId = ProjectId>(
   let maxIdentifierNumber = getMaxIdentifierNumber(projectId, tree);
   const nextIdentifierNumber = () => ++maxIdentifierNumber;
 
-  const texts: {
-    all: Text[];
-    listItem: ListItem[];
-    heading: Text[];
-  } = {
-    all: selectAll("text", tree) as Text[],
-    listItem: selectAll("listItem", tree) as ListItem[],
-    heading: selectAll("heading text", tree) as Text[],
-  };
+  const allTextNodes = selectAll("text", tree) as Text[];
+  const allListItemNodes = selectAll("listItem", tree) as ListItem[];
+  const allTextNodesInsideAHeadingNode = selectAll(
+    "heading text",
+    tree,
+  ) as Text[];
 
-  const isHeading = (textNode: Text) => texts.heading.includes(textNode);
+  const isHeading = (textNode: Text) =>
+    allTextNodesInsideAHeadingNode.includes(textNode);
   const findListItemWithTextNode = (textNode: Text) =>
-    texts.listItem.find((listItem) =>
+    allListItemNodes.find((listItem: ListItem) =>
       selectAll("paragraph text", listItem).includes(textNode)
     );
 
@@ -172,7 +170,7 @@ export function mutateAst<PI extends ProjectId = ProjectId>(
     // if list item has no box, and no task id, it's not meant as a task
   };
 
-  for (const textNode of texts.all) {
+  for (const textNode of allTextNodes) {
     if (isHeading(textNode)) {
       processHeading(textNode);
     }
