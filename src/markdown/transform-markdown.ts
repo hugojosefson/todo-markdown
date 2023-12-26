@@ -2,11 +2,9 @@ import { walk, WalkEntry } from "std/fs/walk.ts";
 import { Nodes } from "npm:@types/mdast";
 import { astToMarkdown } from "../ast/ast-to-markdown.ts";
 import { markdownToAst } from "../ast/markdown-to-ast.ts";
-import {
-  generateNextIdentifierNumber,
-  replaceNode,
-} from "../ast/replace-ast.ts";
+import { replaceNode } from "../ast/replace-ast.ts";
 import { ProjectId } from "../strings/project-id.ts";
+import { createNextIdentifierNumberGetter } from "../strings/task-id-number.ts";
 
 export async function transformMarkdown<PI extends ProjectId = ProjectId>(
   projectId: PI,
@@ -20,7 +18,7 @@ export async function transformMarkdown<PI extends ProjectId = ProjectId>(
   return await astToMarkdown(
     replaceNode(
       projectId,
-      generateNextIdentifierNumber(projectId, [ast, ...otherAsts]),
+      createNextIdentifierNumberGetter(projectId, [ast, ...otherAsts]),
       ast,
     ),
   );

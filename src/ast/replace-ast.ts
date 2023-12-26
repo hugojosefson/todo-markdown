@@ -2,16 +2,12 @@ import {
   Heading,
   ListItem,
   Node,
-  Nodes,
   Paragraph,
   Parent,
   PhrasingContent,
   Text,
 } from "npm:@types/mdast";
-import { selectAll } from "npm:unist-util-select";
 import { isString } from "run_simple/src/fn.ts";
-
-import { reduceToLargestNumber } from "../numbers.ts";
 import { groups, StartsWith, startsWithA } from "../regex.ts";
 import {
   Box,
@@ -20,43 +16,9 @@ import {
   createBoxAndTaskIdRegex,
 } from "../strings/box.ts";
 import { ProjectId } from "../strings/project-id.ts";
-import { extractTaskIdNumber } from "../strings/task-id-number.ts";
+import { NextIdentifierNumberGetter } from "../strings/task-id-number.ts";
 import { createTaskIdPlaceholderRegex } from "../strings/task-id-placeholder.ts";
-import { createExtractTaskId, createTaskIdRegex } from "../strings/task-id.ts";
-
-/**
- * Finds the maximum identifier number in the given tree.
- * @param projectId The project identifier to search for.
- * @param trees The trees to search in.
- * @returns The maximum identifier number in the given tree.
- */
-export function getMaxIdentifierNumber<PI extends ProjectId = ProjectId>(
-  projectId: PI,
-  trees: Nodes[],
-): number {
-  const texts: Text[] = trees.flatMap((tree) =>
-    selectAll("text", tree) as Text[]
-  );
-  return texts
-    .map(createExtractTaskId(projectId))
-    .filter(isString)
-    .map((x) => x!)
-    .map(extractTaskIdNumber)
-    .filter(isString)
-    .map((x) => x!)
-    .map((taskIdNumber) => parseInt(taskIdNumber, 10))
-    .reduce(reduceToLargestNumber, 0);
-}
-
-export type NextIdentifierNumber = () => number;
-
-export function generateNextIdentifierNumber<PI extends ProjectId = ProjectId>(
-  projectId: PI,
-  trees: Nodes[],
-): NextIdentifierNumber {
-  let maxIdentifierNumber = getMaxIdentifierNumber(projectId, trees);
-  return () => ++maxIdentifierNumber;
-}
+import { createTaskIdRegex } from "../strings/task-id.ts";
 
 function isParent(node: Node): node is Parent {
   return "children" in node && Array.isArray(node.children);
@@ -113,7 +75,7 @@ function hasBox<T extends ListItem | Heading>(node: T): boolean {
 
 export function replaceNode<N extends Node, PI extends ProjectId = ProjectId>(
   projectId: PI,
-  nextIdentifierNumber: NextIdentifierNumber,
+  nextIdentifierNumber: NextIdentifierNumberGetter,
   node: N,
 ): N {
   if (isHeading(node)) {
@@ -140,7 +102,7 @@ export function replaceNode<N extends Node, PI extends ProjectId = ProjectId>(
 
 function replaceHeading<T extends Heading, PI extends ProjectId = ProjectId>(
   projectId: PI,
-  nextIdentifierNumber: NextIdentifierNumber,
+  nextIdentifierNumber: NextIdentifierNumberGetter,
   heading: T,
 ): T {
   if (heading.children.length === 0) {
@@ -299,7 +261,7 @@ function replaceFirstChildParagraphTextValue<
 
 function replaceListItem<T extends ListItem, PI extends ProjectId = ProjectId>(
   projectId: PI,
-  nextIdentifierNumber: NextIdentifierNumber,
+  nextIdentifierNumber: NextIdentifierNumberGetter,
   listItem: T,
 ): T {
   const startsWithTaskId = startsWithA(createTaskIdRegex(projectId));
@@ -457,7 +419,7 @@ function replaceParent<
   PI extends ProjectId = ProjectId,
 >(
   projectId: PI,
-  nextIdentifierNumber: NextIdentifierNumber,
+  nextIdentifierNumber: NextIdentifierNumberGetter,
   parent: T,
 ): T {
   return {
