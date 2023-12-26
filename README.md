@@ -95,7 +95,7 @@ Use markdown docs, to keep track of todo items.
 1. [x] Removes `\` before a box and task identifier, if any.
 1. [x] Outputs transformed markdown.
 1. [x] Formats the markdown output.
-1. [ ] Supports multiple files, parsing them, and seeing all tasks across all
+1. [x] Supports multiple files, parsing them, and seeing all tasks across all
        files at the same time.
 1. [ ] Renames each file to its first top-level heading, if any. Excluding the
        `#` character, any box, and sets file extension to `.md`.

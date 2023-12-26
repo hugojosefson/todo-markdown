@@ -26,14 +26,16 @@ import { createExtractTaskId, createTaskIdRegex } from "../strings/task-id.ts";
 /**
  * Finds the maximum identifier number in the given tree.
  * @param projectId The project identifier to search for.
- * @param tree The tree to search.
+ * @param trees The trees to search in.
  * @returns The maximum identifier number in the given tree.
  */
 export function getMaxIdentifierNumber<PI extends ProjectId = ProjectId>(
   projectId: PI,
-  tree: Nodes,
+  trees: Nodes[],
 ): number {
-  const texts: Text[] = selectAll("text", tree) as Text[];
+  const texts: Text[] = trees.flatMap((tree) =>
+    selectAll("text", tree) as Text[]
+  );
   return texts
     .map(createExtractTaskId(projectId))
     .filter(isString)
@@ -49,9 +51,9 @@ export type NextIdentifierNumber = () => number;
 
 export function generateNextIdentifierNumber<PI extends ProjectId = ProjectId>(
   projectId: PI,
-  tree: Nodes,
+  trees: Nodes[],
 ): NextIdentifierNumber {
-  let maxIdentifierNumber = getMaxIdentifierNumber(projectId, tree);
+  let maxIdentifierNumber = getMaxIdentifierNumber(projectId, trees);
   return () => ++maxIdentifierNumber;
 }
 
