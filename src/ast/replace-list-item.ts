@@ -18,7 +18,7 @@ export function replaceListItem<
   PI extends ProjectId = ProjectId,
 >(
   projectId: PI,
-  nextIdentifierNumber: NextIdentifierNumberGetter,
+  nextIdentifierNumberGetter: NextIdentifierNumberGetter,
   listItem: T,
 ): T {
   const startsWithTaskId = startsWithA(createTaskIdRegex(projectId));
@@ -42,7 +42,7 @@ export function replaceListItem<
         return replaceFirstChildTextValue(
           listItem,
           startsWithTaskIdPlaceholder.regex,
-          () => `${projectId}-${nextIdentifierNumber()}`,
+          () => `${projectId}-${nextIdentifierNumberGetter()}`,
         );
       }
 
@@ -50,7 +50,7 @@ export function replaceListItem<
       return replaceFirstChildTextValue(
         listItem,
         /^/,
-        () => `${projectId}-${nextIdentifierNumber()} `,
+        () => `${projectId}-${nextIdentifierNumberGetter()} `,
       );
     } else {
       // ...and doesn't have a box...
@@ -69,7 +69,7 @@ export function replaceListItem<
           ...replaceFirstChildTextValue(
             listItem,
             startsWithTaskIdPlaceholder.regex,
-            () => `${projectId}-${nextIdentifierNumber()}`,
+            () => `${projectId}-${nextIdentifierNumberGetter()}`,
           ),
           checked: false,
         };
@@ -93,7 +93,7 @@ export function replaceListItem<
         return replaceFirstChildParagraphTextValue(
           listItem,
           startsWithTaskIdPlaceholder.regex,
-          () => `${projectId}-${nextIdentifierNumber()}`,
+          () => `${projectId}-${nextIdentifierNumberGetter()}`,
         );
       }
 
@@ -101,7 +101,7 @@ export function replaceListItem<
       return replaceFirstChildParagraphTextValue(
         listItem,
         /^/,
-        () => `${projectId}-${nextIdentifierNumber()} `,
+        () => `${projectId}-${nextIdentifierNumberGetter()} `,
       );
     } else {
       // ...and doesn't have a box...
@@ -120,7 +120,7 @@ export function replaceListItem<
           ...replaceFirstChildParagraphTextValue(
             listItem,
             startsWithTaskIdPlaceholder.regex,
-            () => `${projectId}-${nextIdentifierNumber()}`,
+            () => `${projectId}-${nextIdentifierNumberGetter()}`,
           ),
           checked: false,
         };
@@ -144,7 +144,7 @@ export function replaceListItem<
               children: [
                 {
                   type: "text",
-                  value: `${projectId}-${nextIdentifierNumber()} `,
+                  value: `${projectId}-${nextIdentifierNumberGetter()} `,
                 },
                 ...listItem.children[0].children,
               ],
@@ -159,7 +159,7 @@ export function replaceListItem<
         children: [
           {
             type: "text",
-            value: `${projectId}-${nextIdentifierNumber()} `,
+            value: `${projectId}-${nextIdentifierNumberGetter()} `,
           },
           ...listItem.children,
         ],

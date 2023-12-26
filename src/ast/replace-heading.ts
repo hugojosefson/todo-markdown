@@ -17,7 +17,7 @@ export function replaceHeading<
   PI extends ProjectId = ProjectId,
 >(
   projectId: PI,
-  nextIdentifierNumber: NextIdentifierNumberGetter,
+  nextIdentifierNumberGetter: NextIdentifierNumberGetter,
   heading: T,
 ): T {
   if (heading.children.length === 0) {
@@ -48,7 +48,9 @@ export function replaceHeading<
       heading,
       startsWithBoxAndTaskIdPlaceholder.regex,
       (...args) =>
-        `${groups<"box">(args).box} ${projectId}-${nextIdentifierNumber()}`,
+        `${
+          groups<"box">(args).box
+        } ${projectId}-${nextIdentifierNumberGetter()}`,
     );
   }
 
@@ -70,7 +72,7 @@ export function replaceHeading<
     return replaceFirstChildTextValue(
       heading,
       startsWithTaskIdPlaceholder.regex,
-      () => `[ ] ${projectId}-${nextIdentifierNumber()}`,
+      () => `[ ] ${projectId}-${nextIdentifierNumberGetter()}`,
     );
   }
 
@@ -81,7 +83,9 @@ export function replaceHeading<
       heading,
       startsWithBox.regex,
       (...args) =>
-        `${groups<"box">(args).box} ${projectId}-${nextIdentifierNumber()}`,
+        `${
+          groups<"box">(args).box
+        } ${projectId}-${nextIdentifierNumberGetter()}`,
     );
   }
 

@@ -8,27 +8,27 @@ import { isHeading, isListItem, isParent } from "./types.ts";
 
 export function replaceNode<N extends Node, PI extends ProjectId = ProjectId>(
   projectId: PI,
-  nextIdentifierNumber: NextIdentifierNumberGetter,
+  nextIdentifierNumberGetter: NextIdentifierNumberGetter,
   node: N,
 ): N {
   if (isHeading(node)) {
     return replaceParent(
       projectId,
-      nextIdentifierNumber,
-      replaceHeading(projectId, nextIdentifierNumber, node),
+      nextIdentifierNumberGetter,
+      replaceHeading(projectId, nextIdentifierNumberGetter, node),
     ) as unknown as N;
   }
 
   if (isListItem(node)) {
     return replaceParent(
       projectId,
-      nextIdentifierNumber,
-      replaceListItem(projectId, nextIdentifierNumber, node),
+      nextIdentifierNumberGetter,
+      replaceListItem(projectId, nextIdentifierNumberGetter, node),
     ) as unknown as N;
   }
 
   if (isParent(node)) {
-    return replaceParent(projectId, nextIdentifierNumber, node);
+    return replaceParent(projectId, nextIdentifierNumberGetter, node);
   }
   return node;
 }

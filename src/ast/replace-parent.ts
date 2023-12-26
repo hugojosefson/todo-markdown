@@ -9,13 +9,13 @@ export function replaceParent<
   PI extends ProjectId = ProjectId,
 >(
   projectId: PI,
-  nextIdentifierNumber: NextIdentifierNumberGetter,
+  nextIdentifierNumberGetter: NextIdentifierNumberGetter,
   parent: T,
 ): T {
   return {
     ...parent,
     children: parent.children.map((child) =>
-      replaceNode(projectId, nextIdentifierNumber, child)
+      replaceNode(projectId, nextIdentifierNumberGetter, child)
     ),
   };
 }
