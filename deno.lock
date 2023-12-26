@@ -6,6 +6,7 @@
       "npm:mdast-util-from-markdown@2.0.0": "npm:mdast-util-from-markdown@2.0.0",
       "npm:mdast-util-gfm@3.0.0": "npm:mdast-util-gfm@3.0.0",
       "npm:mdast-util-to-markdown@2.1.0": "npm:mdast-util-to-markdown@2.1.0",
+      "npm:mdast-util-to-string@4.0.0": "npm:mdast-util-to-string@4.0.0",
       "npm:micromark-extension-gfm@3.0.0": "npm:micromark-extension-gfm@3.0.0",
       "npm:ramda@0.29.1": "npm:ramda@0.29.1",
       "npm:regex-merge@2.0.0": "npm:regex-merge@2.0.0",

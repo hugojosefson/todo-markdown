@@ -3,6 +3,7 @@
     "npm:@types/mdast": "npm:@types/mdast@4.0.3",
     "npm:mdast-util-gfm": "npm:mdast-util-gfm@3.0.0",
     "npm:mdast-util-to-markdown": "npm:mdast-util-to-markdown@2.1.0",
+    "npm:mdast-util-to-string": "npm:mdast-util-to-string@4.0.0",
     "npm:mdast-util-from-markdown": "npm:mdast-util-from-markdown@2.0.0",
     "npm:micromark-extension-gfm": "npm:micromark-extension-gfm@3.0.0",
     "npm:ramda": "npm:ramda@0.29.1",
