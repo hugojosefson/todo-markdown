@@ -1,4 +1,4 @@
-import { Heading, ListItem, Node, Parent } from "npm:@types/mdast";
+import { Heading, ListItem, Node } from "npm:@types/mdast";
 import { isString } from "run_simple/src/fn.ts";
 import { groups, startsWithA } from "../regex.ts";
 import {
@@ -10,6 +10,7 @@ import { ProjectId } from "../strings/project-id.ts";
 import { NextIdentifierNumberGetter } from "../strings/task-id-number.ts";
 import { createTaskIdPlaceholderRegex } from "../strings/task-id-placeholder.ts";
 import { createTaskIdRegex } from "../strings/task-id.ts";
+import { replaceParent } from "./replace-parent.ts";
 import {
   EligibleParentNodes,
   hasBox,
@@ -321,20 +322,4 @@ function replaceListItem<T extends ListItem, PI extends ProjectId = ProjectId>(
       return listItem;
     }
   }
-}
-
-function replaceParent<
-  T extends Parent,
-  PI extends ProjectId = ProjectId,
->(
-  projectId: PI,
-  nextIdentifierNumber: NextIdentifierNumberGetter,
-  parent: T,
-): T {
-  return {
-    ...parent,
-    children: parent.children.map((child) =>
-      replaceNode(projectId, nextIdentifierNumber, child)
-    ),
-  };
 }
