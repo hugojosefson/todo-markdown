@@ -1,16 +1,7 @@
-import {
-  Heading,
-  ListItem,
-  Node,
-  Paragraph,
-  Parent,
-  PhrasingContent,
-  Text,
-} from "npm:@types/mdast";
+import { Heading, ListItem, Node, Parent } from "npm:@types/mdast";
 import { isString } from "run_simple/src/fn.ts";
-import { groups, StartsWith, startsWithA } from "../regex.ts";
+import { groups, startsWithA } from "../regex.ts";
 import {
-  Box,
   BOX_REGEX,
   createBoxAndTaskIdPlaceholderRegex,
   createBoxAndTaskIdRegex,
@@ -19,59 +10,18 @@ import { ProjectId } from "../strings/project-id.ts";
 import { NextIdentifierNumberGetter } from "../strings/task-id-number.ts";
 import { createTaskIdPlaceholderRegex } from "../strings/task-id-placeholder.ts";
 import { createTaskIdRegex } from "../strings/task-id.ts";
-
-function isParent(node: Node): node is Parent {
-  return "children" in node && Array.isArray(node.children);
-}
-
-function isText(node: Node): node is Text {
-  return node.type === "text";
-}
-
-function isHeading<N extends Node>(node: N): node is N & Heading {
-  return node.type === "heading";
-}
-
-function isListItem(node: Node): node is ListItem {
-  return node.type === "listItem";
-}
-
-function hasListItemBox(
-  listItem: ListItem,
-): listItem is ListItem & { checked: boolean } {
-  return listItem.checked === true || listItem.checked === false;
-}
-const startsWithBox = startsWithA(BOX_REGEX);
-
-/**
- * Returns true if the given heading has a first child that is a text node, and that starts with a box.
- * @param heading
- */
-function hasHeadingBox(
-  heading: Heading,
-): heading is Heading & {
-  children: [{ type: "text"; value: StartsWith<Box> }, ...PhrasingContent[]];
-} {
-  return isText(heading.children[0]) && startsWithBox(heading.children[0]);
-}
-
-function hasBox(
-  listItem: ListItem,
-): listItem is ListItem & { checked: boolean };
-function hasBox(
-  heading: Heading,
-): heading is Heading & {
-  children: [{ type: "text"; value: StartsWith<Box> }, ...PhrasingContent[]];
-};
-function hasBox<T extends ListItem | Heading>(node: T): boolean {
-  if (isHeading(node)) {
-    return hasHeadingBox(node);
-  }
-  if (isListItem(node)) {
-    return hasListItemBox(node);
-  }
-  return false;
-}
+import {
+  EligibleParentNodes,
+  hasBox,
+  isHeading,
+  isListItem,
+  isParagraph,
+  isParent,
+  isWithFirstChildParagraphWithText,
+  isWithFirstChildText,
+  WithFirstChildParagraphWithText,
+  WithFirstChildText,
+} from "./types.ts";
 
 export function replaceNode<N extends Node, PI extends ProjectId = ProjectId>(
   projectId: PI,
@@ -171,47 +121,6 @@ function replaceHeading<T extends Heading, PI extends ProjectId = ProjectId>(
   }
 
   return heading;
-}
-
-type WithFirstChild<
-  T extends EligibleParentNodes,
-  C extends EligibleNodes,
-> =
-  & T
-  & {
-    children: [
-      C,
-      ...(T["children"])[],
-    ];
-  };
-
-type EligibleParentNodes = Heading | ListItem | Paragraph;
-type EligibleNodes = EligibleParentNodes | Text;
-type WithFirstChildText<T extends EligibleParentNodes> = WithFirstChild<
-  T,
-  Text
->;
-
-function isWithFirstChildText<T extends EligibleParentNodes>(
-  node: T,
-): node is WithFirstChildText<T> {
-  return isText(node.children[0]);
-}
-
-type WithFirstChildParagraphWithText<T extends EligibleParentNodes> =
-  WithFirstChild<
-    T,
-    WithFirstChild<Paragraph, Text>
-  >;
-
-function isWithFirstChildParagraphWithText<T extends EligibleParentNodes>(
-  node: T,
-): node is WithFirstChildParagraphWithText<T> {
-  return isParagraph(node.children[0]) && isText(node.children[0].children[0]);
-}
-
-function isParagraph(node: Node): node is Paragraph {
-  return node.type === "paragraph";
 }
 
 function replaceFirstChildTextValue<
