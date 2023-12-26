@@ -26,7 +26,7 @@ export function isListItem(node: Node): node is ListItem {
   return node.type === "listItem";
 }
 
-export function hasListItemBox(
+function hasListItemBox(
   listItem: ListItem,
 ): listItem is ListItem & { checked: boolean } {
   return listItem.checked === true || listItem.checked === false;
@@ -38,7 +38,7 @@ export const startsWithBox = startsWithA(BOX_REGEX);
  * Returns true if the given heading has a first child that is a text node, and that starts with a box.
  * @param heading
  */
-export function hasHeadingBox(
+function hasHeadingBox(
   heading: Heading,
 ): heading is Heading & {
   children: [{ type: "text"; value: StartsWith<Box> }, ...PhrasingContent[]];
