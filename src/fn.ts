@@ -9,17 +9,6 @@ export function pipe<T>(...fns: ((x: T) => T)[]): (x: T) => T {
 }
 
 /**
- * Reduces a list of numbers to the largest number. This function takes in an accumulator and a number,
- * and returns the larger of the two.
- * @param acc the accumulator, which is the current largest number
- * @param x the current number
- * @returns the larger of the accumulator and the current number
- */
-export function reduceToLargestNumber(acc: number, x: number): number {
-  return Math.max(acc, x);
-}
-
-/**
  * Negates a boolean function. This function takes in a function that returns a boolean,
  * and returns a new function that negates the result of the input function.
  * @param fn the function to negate

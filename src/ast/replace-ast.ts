@@ -10,7 +10,8 @@ import {
 } from "npm:@types/mdast";
 import { selectAll } from "npm:unist-util-select";
 import { isString } from "run_simple/src/fn.ts";
-import { reduceToLargestNumber } from "../fn.ts";
+
+import { reduceToLargestNumber } from "../numbers.ts";
 import { groups, StartsWith, startsWithA } from "../regex.ts";
 import {
   Box,
