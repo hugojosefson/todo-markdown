@@ -1,14 +1,12 @@
 import { walk, WalkEntry } from "std/fs/walk.ts";
 import { Nodes } from "npm:@types/mdast";
-import { gfmToMarkdown } from "npm:mdast-util-gfm";
-import { toMarkdown } from "npm:mdast-util-to-markdown";
+import { astToMarkdown } from "../ast/ast-to-markdown.ts";
 import { markdownToAst } from "../ast/markdown-to-ast.ts";
 import {
   generateNextIdentifierNumber,
   replaceNode,
 } from "../ast/replace-ast.ts";
 import { ProjectId } from "../strings/project-id.ts";
-import { formatCode } from "./format-code.ts";
 
 export async function transformMarkdown<PI extends ProjectId = ProjectId>(
   projectId: PI,
@@ -19,17 +17,13 @@ export async function transformMarkdown<PI extends ProjectId = ProjectId>(
   const otherAsts: Nodes[] = otherMarkdownToConsiderForIdentifierNumbers.map(
     markdownToAst,
   );
-  const transformedMarkdown = toMarkdown(
+  return await astToMarkdown(
     replaceNode(
       projectId,
       generateNextIdentifierNumber(projectId, [ast, ...otherAsts]),
       ast,
     ),
-    {
-      extensions: [gfmToMarkdown()],
-    },
   );
-  return await formatCode("md", transformedMarkdown);
 }
 
 export async function transformMarkdownDirectory<
