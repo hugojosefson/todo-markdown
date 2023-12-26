@@ -15,7 +15,7 @@ function doCase(c: Case): void {
     const fn: typeof describe.skip | typeof describe = c.skip
       ? describe.skip
       : describe;
-    fn(c.description, () => Promise.all(c.cases.map(doCase)));
+    fn(c.description, () => c.cases.forEach(doCase));
     return;
   }
 
