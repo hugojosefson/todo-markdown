@@ -1,128 +1,22 @@
-import { Heading, ListItem, Node } from "npm:@types/mdast";
-import { groups, startsWithA } from "../regex.ts";
-import {
-  BOX_REGEX,
-  createBoxAndTaskIdPlaceholderRegex,
-  createBoxAndTaskIdRegex,
-} from "../strings/box.ts";
+import { ListItem } from "npm:@types/mdast";
+import { startsWithA } from "../regex.ts";
 import { ProjectId } from "../strings/project-id.ts";
 import { NextIdentifierNumberGetter } from "../strings/task-id-number.ts";
 import { createTaskIdPlaceholderRegex } from "../strings/task-id-placeholder.ts";
 import { createTaskIdRegex } from "../strings/task-id.ts";
 import { replaceFirstChildParagraphTextValue } from "./replace-first-child-paragraph-text-value.ts";
 import { replaceFirstChildTextValue } from "./replace-first-child-text-value.ts";
-import { replaceParent } from "./replace-parent.ts";
 import {
   hasBox,
-  isHeading,
-  isListItem,
   isParagraph,
-  isParent,
   isWithFirstChildParagraphWithText,
   isWithFirstChildText,
 } from "./types.ts";
 
-export function replaceNode<N extends Node, PI extends ProjectId = ProjectId>(
-  projectId: PI,
-  nextIdentifierNumber: NextIdentifierNumberGetter,
-  node: N,
-): N {
-  if (isHeading(node)) {
-    return replaceParent(
-      projectId,
-      nextIdentifierNumber,
-      replaceHeading(projectId, nextIdentifierNumber, node),
-    ) as unknown as N;
-  }
-
-  if (isListItem(node)) {
-    return replaceParent(
-      projectId,
-      nextIdentifierNumber,
-      replaceListItem(projectId, nextIdentifierNumber, node),
-    ) as unknown as N;
-  }
-
-  if (isParent(node)) {
-    return replaceParent(projectId, nextIdentifierNumber, node);
-  }
-  return node;
-}
-
-function replaceHeading<T extends Heading, PI extends ProjectId = ProjectId>(
-  projectId: PI,
-  nextIdentifierNumber: NextIdentifierNumberGetter,
-  heading: T,
-): T {
-  if (heading.children.length === 0) {
-    // if heading has no children, return as is
-    return heading;
-  }
-
-  if (!isWithFirstChildText(heading)) {
-    // if heading doesn't start with text, return as is
-    return heading;
-  }
-  const startsWithBoxAndTaskId = startsWithA(
-    createBoxAndTaskIdRegex(projectId),
-  );
-  if (startsWithBoxAndTaskId(heading.children[0])) {
-    // if heading has both box and proper task id, return as is
-    return heading;
-  }
-
-  const startsWithBoxAndTaskIdPlaceholder = startsWithA(
-    createBoxAndTaskIdPlaceholderRegex(
-      projectId,
-    ),
-  );
-  if (startsWithBoxAndTaskIdPlaceholder(heading.children[0])) {
-    // if heading has box, and unidentified placeholder task id, replace with new task id
-    return replaceFirstChildTextValue(
-      heading,
-      startsWithBoxAndTaskIdPlaceholder.regex,
-      (...args) =>
-        `${groups<"box">(args).box} ${projectId}-${nextIdentifierNumber()}`,
-    );
-  }
-
-  const startsWithTaskId = startsWithA(createTaskIdRegex(projectId));
-  if (startsWithTaskId(heading.children[0])) {
-    // if heading already has task id, but no box, add box
-    return replaceFirstChildTextValue(
-      heading,
-      startsWithTaskId.regex,
-      (...args) => `[ ] ${groups<"taskId">(args).taskId}`,
-    );
-  }
-
-  const startsWithTaskIdPlaceholder = startsWithA(
-    createTaskIdPlaceholderRegex(projectId),
-  );
-  if (startsWithTaskIdPlaceholder(heading.children[0])) {
-    // if heading has unidentified placeholder task id, replace with new task id, and add box
-    return replaceFirstChildTextValue(
-      heading,
-      startsWithTaskIdPlaceholder.regex,
-      () => `[ ] ${projectId}-${nextIdentifierNumber()}`,
-    );
-  }
-
-  const startsWithBox = startsWithA(BOX_REGEX);
-  if (startsWithBox(heading.children[0])) {
-    // if heading has box, but no task id, add task id
-    return replaceFirstChildTextValue(
-      heading,
-      startsWithBox.regex,
-      (...args) =>
-        `${groups<"box">(args).box} ${projectId}-${nextIdentifierNumber()}`,
-    );
-  }
-
-  return heading;
-}
-
-function replaceListItem<T extends ListItem, PI extends ProjectId = ProjectId>(
+export function replaceListItem<
+  T extends ListItem,
+  PI extends ProjectId = ProjectId,
+>(
   projectId: PI,
   nextIdentifierNumber: NextIdentifierNumberGetter,
   listItem: T,

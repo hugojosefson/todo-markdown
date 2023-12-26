@@ -2,7 +2,7 @@ import { walk, WalkEntry } from "std/fs/walk.ts";
 import { Nodes } from "npm:@types/mdast";
 import { astToMarkdown } from "../ast/ast-to-markdown.ts";
 import { markdownToAst } from "../ast/markdown-to-ast.ts";
-import { replaceNode } from "../ast/replace-ast.ts";
+import { replaceNode } from "../ast/replace-node.ts";
 import { ProjectId } from "../strings/project-id.ts";
 import { createNextIdentifierNumberGetter } from "../strings/task-id-number.ts";
 
