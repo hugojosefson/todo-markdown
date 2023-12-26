@@ -10,6 +10,10 @@ import {
 import { StartsWith, startsWithA } from "../regex.ts";
 import { Box, BOX_REGEX } from "../strings/box.ts";
 
+export function isString(value: unknown): value is string {
+  return typeof value === "string";
+}
+
 export function isParent(node: Node): node is Parent {
   return "children" in node && Array.isArray(node.children);
 }

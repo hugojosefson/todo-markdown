@@ -1,5 +1,4 @@
 import { Heading, ListItem, Node } from "npm:@types/mdast";
-import { isString } from "run_simple/src/fn.ts";
 import { groups, startsWithA } from "../regex.ts";
 import {
   BOX_REGEX,
@@ -10,9 +9,10 @@ import { ProjectId } from "../strings/project-id.ts";
 import { NextIdentifierNumberGetter } from "../strings/task-id-number.ts";
 import { createTaskIdPlaceholderRegex } from "../strings/task-id-placeholder.ts";
 import { createTaskIdRegex } from "../strings/task-id.ts";
+import { replaceFirstChildParagraphTextValue } from "./replace-first-child-paragraph-text-value.ts";
+import { replaceFirstChildTextValue } from "./replace-first-child-text-value.ts";
 import { replaceParent } from "./replace-parent.ts";
 import {
-  EligibleParentNodes,
   hasBox,
   isHeading,
   isListItem,
@@ -20,8 +20,6 @@ import {
   isParent,
   isWithFirstChildParagraphWithText,
   isWithFirstChildText,
-  WithFirstChildParagraphWithText,
-  WithFirstChildText,
 } from "./types.ts";
 
 export function replaceNode<N extends Node, PI extends ProjectId = ProjectId>(
@@ -122,51 +120,6 @@ function replaceHeading<T extends Heading, PI extends ProjectId = ProjectId>(
   }
 
   return heading;
-}
-
-function replaceFirstChildTextValue<
-  T extends WithFirstChildText<EligibleParentNodes>,
->(
-  node: T,
-  find: string | RegExp,
-  replacer: string | ((substring: string, ...args: unknown[]) => string),
-): T {
-  return {
-    ...node,
-    children: [
-      {
-        ...node.children[0],
-        value: node.children[0].value.replace(
-          find,
-          isString(replacer) ? (() => replacer) : replacer,
-        ),
-      },
-      ...node.children.slice(1),
-    ],
-  };
-}
-
-function replaceFirstChildParagraphTextValue<
-  T extends WithFirstChildParagraphWithText<EligibleParentNodes>,
->(
-  node: T,
-  find: string | RegExp,
-  replacer: string | ((substring: string, ...args: unknown[]) => string),
-): T {
-  const paragraph = node.children[0];
-  const replacedParagraph = replaceFirstChildTextValue(
-    paragraph,
-    find,
-    replacer,
-  );
-
-  return {
-    ...node,
-    children: [
-      replacedParagraph,
-      ...node.children.slice(1),
-    ],
-  };
 }
 
 function replaceListItem<T extends ListItem, PI extends ProjectId = ProjectId>(
