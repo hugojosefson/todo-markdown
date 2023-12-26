@@ -2,8 +2,13 @@ import { assertEquals } from "std/assert/assert_equals.ts";
 import { mapValues } from "std/collections/map_values.ts";
 import { mapKeys } from "std/collections/map_keys.ts";
 import { transformMarkdown } from "../mod.ts";
-import { transformMarkdownDirectory } from "../src/markdown/transform-markdown.ts";
+import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
+import {
+  DELETE_FILE,
+  transformMarkdownDirectory,
+} from "../src/markdown/transform-markdown.ts";
 import { ProjectId } from "../src/strings/project-id.ts";
+import { isString } from "../src/ast/types.ts";
 
 export function expectInputToOutput(
   input: string,
@@ -11,7 +16,8 @@ export function expectInputToOutput(
   projectId: ProjectId = "TODO",
 ): () => Promise<void> {
   return async () => {
-    const result = await transformMarkdown(projectId, input.trim() + "\n");
+    const inputAst = markdownToAst(input.trim() + "\n");
+    const result = await transformMarkdown(projectId, inputAst);
     assertEquals(result, expectedOutput.trim() + "\n");
   };
 }
@@ -22,24 +28,30 @@ export function expectInputDirectoryToOutputs(
   projectId: ProjectId = "TODO",
 ): () => Promise<void> {
   return async () => {
-    const trimmedExpectedOutputs = mapValues(
-      expectedOutputs,
-      (v: string) => v.trim() + "\n",
-    );
-    const outputs = await transformMarkdownDirectory(
+    const actualOutputs = await transformMarkdownDirectory(
       projectId,
       inputDirectory.trim(),
-      false,
     );
+    const actualOutputsWithRelativePaths = mapKeys(
+      actualOutputs,
+      removeLeadingCharacters(inputDirectory.length + 1),
+    );
+
+    const trimmedExpectedOutputs = mapValues(
+      expectedOutputs,
+      (v: string | typeof DELETE_FILE) => isString(v) ? v.trim() + "\n" : v,
+    );
+    const expectedOutputsWithRelativePaths = mapKeys(
+      trimmedExpectedOutputs,
+      removeLeadingCharacters(inputDirectory.length + 2),
+    );
+
     assertEquals(
-      mapKeys(
-        outputs,
-        removeLeadingCharacters(inputDirectory.length + 1),
-      ),
-      mapKeys(
-        trimmedExpectedOutputs,
-        removeLeadingCharacters(inputDirectory.length + 2),
-      ),
+      actualOutputsWithRelativePaths,
+      {
+        ...mapValues(actualOutputsWithRelativePaths, () => DELETE_FILE),
+        ...expectedOutputsWithRelativePaths,
+      },
     );
   };
 }

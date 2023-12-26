@@ -15,7 +15,8 @@ export function isString(value: unknown): value is string {
 }
 
 export function isParent(node: Node): node is Parent {
-  return "children" in node && Array.isArray(node.children);
+  return typeof node === "object" && node !== null &&
+    "children" in node && Array.isArray(node.children);
 }
 
 export function isText(node: Node): node is Text {

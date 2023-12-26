@@ -7,7 +7,9 @@ import { readAllFromStdin } from "./io/read-all-from-stdin.ts";
 import {
   transformMarkdown,
   transformMarkdownDirectory,
+  writeChanges,
 } from "./markdown/transform-markdown.ts";
+import { markdownToAst } from "./ast/markdown-to-ast.ts";
 
 const projectId = Deno.args.find(isProjectId) ?? "TODO";
 const filename = Deno.args.find(not(isProjectId));
@@ -21,13 +23,15 @@ console.error({
 });
 
 if (inputIsDirectory) {
-  await transformMarkdownDirectory(projectId, filename, true);
+  const outputs = await transformMarkdownDirectory(projectId, filename);
+  await writeChanges(outputs);
 } else {
   const input = shouldReadFromStdin
     ? await readAllFromStdin()
     : await Deno.readTextFile(filename);
 
-  const output = await transformMarkdown(projectId, input);
+  const inputAst = markdownToAst(input);
+  const output = await transformMarkdown(projectId, inputAst);
 
   console.log(output);
 }

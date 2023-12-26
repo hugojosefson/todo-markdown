@@ -6,7 +6,7 @@ import { replaceListItem } from "./replace-list-item.ts";
 import { replaceParent } from "./replace-parent.ts";
 import { isHeading, isListItem, isParent } from "./types.ts";
 
-export function replaceNode<N extends Node, PI extends ProjectId = ProjectId>(
+export function transformNode<N extends Node, PI extends ProjectId = ProjectId>(
   projectId: PI,
   nextIdentifierNumberGetter: NextIdentifierNumberGetter,
   node: N,
