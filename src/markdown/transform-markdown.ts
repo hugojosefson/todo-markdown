@@ -134,8 +134,44 @@ export async function transformMarkdownDirectory<
         inputAst,
       )
     );
+  const outputEntries = (await Promise.all(outputEntryPromises)).flat();
+  return postProcessOutputEntries(outputEntries);
+}
+
+/**
+ * Takes care of collisions between output paths.
+ *
+ * If two output paths are the same, then:
+ * - if the output is the same, then it's fine. Just keep one of them.
+ * - if the output is different, then it's a collision. Concatenate the outputs.
+ * - if one of the outputs is DELETE_FILE, then it's a collision. Keep the other one.
+ * @param outputEntries
+ */
+export function postProcessOutputEntries(
+  outputEntries: TransformOutputEntry[],
+): TransformOutput {
   return Object.fromEntries(
-    (await Promise.all(outputEntryPromises)).flat(),
+    outputEntries.reduce(
+      (acc, [outputPath, output]) => {
+        const existingOutput = acc.get(outputPath);
+        if (existingOutput === undefined) {
+          acc.set(outputPath, output);
+        } else if (existingOutput === output) {
+          // do nothing
+        } else if (existingOutput === DELETE_FILE) {
+          acc.set(outputPath, output);
+        } else if (output === DELETE_FILE) {
+          // do nothing
+        } else {
+          acc.set(
+            outputPath,
+            [existingOutput, output].sort().join("\n"),
+          );
+        }
+        return acc;
+      },
+      new Map<string, string | typeof DELETE_FILE>(),
+    ),
   ) as TransformOutput;
 }
 

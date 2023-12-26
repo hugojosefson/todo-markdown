@@ -1,0 +1,32 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [
+        {
+          "type": "text",
+          "value": "three"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "This is the second file, will be renamed to "
+        },
+        {
+          "type": "inlineCode",
+          "value": "three.md"
+        },
+        {
+          "type": "text",
+          "value": "."
+        }
+      ]
+    }
+  ]
+}
