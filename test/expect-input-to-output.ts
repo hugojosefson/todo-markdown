@@ -11,8 +11,8 @@ export function expectInputToOutput(
   projectId: ProjectId = "TODO",
 ): () => Promise<void> {
   return async () => {
-    const result = await transformMarkdown(projectId, input.trim());
-    assertEquals(result, expectedOutput.trim());
+    const result = await transformMarkdown(projectId, input.trim() + "\n");
+    assertEquals(result, expectedOutput.trim() + "\n");
   };
 }
 
@@ -24,7 +24,7 @@ export function expectInputDirectoryToOutputs(
   return async () => {
     const trimmedExpectedOutputs = mapValues(
       expectedOutputs,
-      (v: string) => v.trim(),
+      (v: string) => v.trim() + "\n",
     );
     const outputs = await transformMarkdownDirectory(
       projectId,

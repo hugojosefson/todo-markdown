@@ -97,7 +97,7 @@ Use markdown docs, to keep track of todo items.
 1. [x] Formats the markdown output.
 1. [x] Supports multiple files, parsing them, and seeing all tasks across all
        files at the same time.
-1. [ ] Renames each file to its first top-level heading, if any. Excluding the
+1. [x] Renames each file to its first top-level heading, if any. Excluding the
        `#` character, any box, and sets file extension to `.md`.
 1. [ ] When renaming, if a file with the same name already exists, does any
        renaming on that file first. If they still collide, concatenates the

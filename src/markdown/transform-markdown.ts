@@ -1,6 +1,7 @@
 import { walk, WalkEntry } from "std/fs/walk.ts";
 import { Nodes } from "npm:@types/mdast";
 import { astToMarkdown } from "../ast/ast-to-markdown.ts";
+import { extractFirstTopLevelHeadingString } from "../ast/extract-first-top-level-heading.ts";
 import { markdownToAst } from "../ast/markdown-to-ast.ts";
 import { replaceNode } from "../ast/replace-node.ts";
 import { ProjectId } from "../strings/project-id.ts";
@@ -54,10 +55,21 @@ export async function transformMarkdownDirectory<
       input,
       Object.values(inputs),
     );
-    inputAsts[inputPath] = markdownToAst(input);
-    outputs[inputPath] = output;
+    const inputAst = markdownToAst(input);
+    inputAsts[inputPath] = inputAst;
+    const headingString = extractFirstTopLevelHeadingString(inputAst);
+    const outputPath = headingString
+      ? inputPath.replace(
+        /\/([^\/]+)\.md$/,
+        `/${headingString}.md`,
+      )
+      : inputPath;
+    outputs[outputPath] = output;
     if (writeFiles) {
-      await Deno.writeTextFile(inputPath, output);
+      if (inputPath !== outputPath) {
+        await Deno.remove(inputPath);
+      }
+      await Deno.writeTextFile(outputPath, output);
     }
   }
   return outputs;
