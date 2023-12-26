@@ -1,6 +1,9 @@
 import { describe, it } from "std/testing/bdd.ts";
 import { expect, Expected } from "std/expect/expect.ts";
-import { expectInputToOutput } from "./expect-input-to-output.ts";
+import {
+  expectInputDirectoryToOutputs,
+  expectInputToOutput,
+} from "./expect-input-to-output.ts";
 import {
   buildCaseAndWriteAst,
   Case,
@@ -26,7 +29,10 @@ function doCase(c: Case): void {
     return it(c.description, expectInputToOutput(c.input, c.output));
   }
   if (isItRunDirectory(c)) {
-    return it(c.description, () => {/* TODO */});
+    return it(
+      c.description,
+      expectInputDirectoryToOutputs(c.inputDirectory, c.outputs),
+    );
   }
   throw new Error(`Unexpected case: ${JSON.stringify(c)}`);
 }

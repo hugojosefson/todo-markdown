@@ -1,3 +1,4 @@
+import { walk, WalkEntry } from "std/fs/walk.ts";
 import { Nodes } from "npm:@types/mdast";
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
 
@@ -67,6 +68,10 @@ export type ItRunFile =
     output: string;
   };
 
+export type ItFile =
+  | ItSkip
+  | ItRunFile;
+
 export type ItRunDirectory =
   & CaseInputDirectory
   & {
@@ -74,6 +79,10 @@ export type ItRunDirectory =
     outputDirectory: string;
     outputs: Record<string, string>;
   };
+
+export type ItDirectory =
+  | ItSkip
+  | ItRunDirectory;
 
 /**
  * A test case we run, because it has an expected output file/directory.
@@ -120,12 +129,45 @@ export function isIt(c: Case): c is It {
  * Build a {@link Case} object from a path.
  */
 export async function buildCaseAndWriteAst(path: string): Promise<Case> {
-  const stat = await Deno.stat(path);
-  if (stat.isDirectory) {
-    return buildDescribe(path);
-  } else {
-    return buildItAndWriteAst(path);
+  if (await isDirectory(`${path}/input`)) {
+    return buildItDirectoryAndWriteAst(path);
   }
+  if (await isDirectory(path)) {
+    return buildDescribe(path);
+  }
+  return buildItFileAndWriteAst(path);
+}
+
+export async function isDirectory(path: string): Promise<boolean> {
+  if (path === "") {
+    throw new Error(`Empty path is not a directory`);
+  }
+  if (path === "/") {
+    return true;
+  }
+  if (path === ".") {
+    return true;
+  }
+  if (!await isDirectory(parent(path))) {
+    return false;
+  }
+  try {
+    const stat = await Deno.stat(path);
+    return stat.isDirectory;
+  } catch (e) {
+    if (e instanceof Deno.errors.NotFound) {
+      return false;
+    }
+    throw e;
+  }
+}
+
+export function parent(path: string): string {
+  const segments = path.split("/");
+  if (segments.length <= 2 && segments[0] === "") {
+    return "/";
+  }
+  return segments.slice(0, -1).join("/");
 }
 
 const REGEX_ENDS_WITH_SKIP = /\bskip$/;
@@ -162,7 +204,9 @@ function getDescription(inputFile: string): string {
 /**
  * Given an input file, build a {@link Case} object, taking care to only include the expected output, if such a file actually exists.
  */
-export async function buildItAndWriteAst(inputFile: string): Promise<It> {
+export async function buildItFileAndWriteAst(
+  inputFile: string,
+): Promise<ItFile> {
   const description = getDescription(inputFile);
   const inputAstFile = inputFile.replace(/\.input\.md$/, ".input-ast.json");
   const outputFile = inputFile.replace(/\.input\.md$/, ".output.md");
@@ -200,4 +244,84 @@ export async function buildItAndWriteAst(inputFile: string): Promise<It> {
     }
     throw e;
   }
+}
+
+export async function* recursiveEntries(
+  path: string,
+): AsyncGenerator<Deno.DirEntry> {
+  if (!(await isDirectory(path))) {
+    return [];
+  }
+  for await (const entry of Deno.readDir(path)) {
+    if (entry.isFile) {
+      yield entry;
+    } else if (entry.isDirectory) {
+      yield* recursiveEntries(`${path}/${entry.name}`);
+    }
+  }
+}
+
+/**
+ * Given an input directory, build a {@link Case} object, taking care to only include the expected output, if such a directory actually exists.
+ */
+export async function buildItDirectoryAndWriteAst(
+  baseDirectory: string,
+): Promise<ItDirectory> {
+  const description = getDescription(baseDirectory);
+  const inputDirectory = `${baseDirectory}/input`;
+  /** map of path to file, and its contents */
+  const inputs: Record<string, string> = {};
+  /** map of path to file, and its contents' ast */
+  const inputAsts: Record<string, Nodes> = {};
+  for await (
+    const entry of walk(inputDirectory, {
+      includeDirs: false,
+      match: [/\.md$/],
+    })
+  ) {
+    const inputPath = (entry as WalkEntry).path;
+
+    const contents = await Deno.readTextFile(inputPath);
+    inputs[inputPath] = contents;
+
+    const astPath = inputPath.replace(/\.md$/, ".ast.json");
+    inputAsts[astPath] = markdownToAst(contents);
+  }
+
+  // write ast:s to their own files
+  for (const [astPath, ast] of Object.entries(inputAsts)) {
+    await Deno.writeTextFile(
+      astPath,
+      JSON.stringify(ast, null, 2) + "\n",
+    );
+  }
+
+  const outputDirectory = `${baseDirectory}/output`;
+  if (!await isDirectory(outputDirectory)) {
+    return {
+      skip: true,
+      description,
+      inputDirectory,
+      inputs,
+      inputAsts,
+    };
+  }
+
+  /** map of path to file, and its contents */
+  const outputs: Record<string, string> = {};
+  for await (const entry of recursiveEntries(outputDirectory)) {
+    const path = `${outputDirectory}/${entry.name}`;
+    const contents = await Deno.readTextFile(path);
+    outputs[path] = contents;
+  }
+
+  return {
+    skip: false,
+    description,
+    inputDirectory,
+    inputs,
+    inputAsts,
+    outputDirectory,
+    outputs,
+  };
 }
