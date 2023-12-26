@@ -15,14 +15,40 @@ export type Describe = {
 /**
  * These things are always available in a test case.
  */
-export type CaseInput = {
+export type CaseInputCommon = {
   skip: boolean;
   description: string;
-  inputFile: string;
-  inputAstFile: string;
-  input: string;
-  inputAst: Nodes;
 };
+
+/**
+ * These things are always available in a test case regarding a file.
+ */
+export type CaseInputFile =
+  & CaseInputCommon
+  & {
+    inputFile: string;
+    inputAstFile: string;
+    input: string;
+    inputAst: Nodes;
+  };
+
+/**
+ * These things are always available in a test case regarding a directory.
+ */
+export type CaseInputDirectory =
+  & CaseInputCommon
+  & {
+    inputDirectory: string;
+    inputs: Record<string, string>;
+    inputAsts: Record<string, Nodes>;
+  };
+
+/**
+ * These things are always available in a test case.
+ */
+export type CaseInput =
+  | CaseInputFile
+  | CaseInputDirectory;
 
 /**
  * A test case we skip, because it lacks an expected output file.
@@ -33,18 +59,30 @@ export type ItSkip =
   & CaseInput
   & { skip: true };
 
-/**
- * A test case we run, because it has an expected output file.
- *
- * Used to generate an `it(...)` block in the test runner.
- */
-export type ItRun =
-  & CaseInput
+export type ItRunFile =
+  & CaseInputFile
   & {
     skip: false;
     outputFile: string;
     output: string;
   };
+
+export type ItRunDirectory =
+  & CaseInputDirectory
+  & {
+    skip: false;
+    outputDirectory: string;
+    outputs: Record<string, string>;
+  };
+
+/**
+ * A test case we run, because it has an expected output file/directory.
+ *
+ * Used to generate an `it(...)` block in the test runner.
+ */
+export type ItRun =
+  | ItRunFile
+  | ItRunDirectory;
 
 export type It =
   | ItSkip
@@ -58,12 +96,20 @@ export function isDescribe(c: Case): c is Describe {
   return "cases" in c;
 }
 
+export function isItSkip(c: Case): c is ItSkip {
+  return !isDescribe(c) && c.skip;
+}
+
 export function isItRun(c: Case): c is ItRun {
   return !isDescribe(c) && !c.skip;
 }
 
-export function isItSkip(c: Case): c is ItSkip {
-  return !isDescribe(c) && c.skip;
+export function isItRunFile(c: Case): c is ItRunFile {
+  return isItRun(c) && "outputFile" in c;
+}
+
+export function isItRunDirectory(c: Case): c is ItRunDirectory {
+  return isItRun(c) && "outputDirectory" in c;
 }
 
 export function isIt(c: Case): c is It {

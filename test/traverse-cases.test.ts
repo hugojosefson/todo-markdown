@@ -5,7 +5,8 @@ import {
   buildCaseAndWriteAst,
   Case,
   isDescribe,
-  isItRun,
+  isItRunDirectory,
+  isItRunFile,
   isItSkip,
 } from "./traverse-cases.ts";
 
@@ -18,11 +19,16 @@ function doCase(c: Case): void {
     return;
   }
 
-  if (isItRun(c)) {
-    it(c.description, expectInputToOutput(c.input, c.output));
-  } else if (isItSkip(c)) {
-    it.skip(c.description, () => {});
+  if (isItSkip(c)) {
+    return it.skip(c.description, () => {});
   }
+  if (isItRunFile(c)) {
+    return it(c.description, expectInputToOutput(c.input, c.output));
+  }
+  if (isItRunDirectory(c)) {
+    return it(c.description, () => {/* TODO */});
+  }
+  throw new Error(`Unexpected case: ${JSON.stringify(c)}`);
 }
 const c: Case = await buildCaseAndWriteAst(
   new URL("cases", import.meta.url).pathname,
