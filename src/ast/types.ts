@@ -1,5 +1,6 @@
 import {
   Heading,
+  Link,
   ListItem,
   Node,
   Paragraph,
@@ -29,6 +30,10 @@ export function isHeading<N extends Node>(node: N): node is N & Heading {
 
 export function isListItem(node: Node): node is ListItem {
   return node.type === "listItem";
+}
+
+export function isLink(node: Node): node is Link {
+  return node.type === "link";
 }
 
 function hasListItemBox(

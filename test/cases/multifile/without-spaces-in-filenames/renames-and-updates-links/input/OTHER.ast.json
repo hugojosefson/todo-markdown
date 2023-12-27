@@ -1,0 +1,39 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [
+        {
+          "type": "text",
+          "value": "something-else"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Please see "
+        },
+        {
+          "type": "link",
+          "title": null,
+          "url": "README.md",
+          "children": [
+            {
+              "type": "text",
+              "value": "some readable file"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "value": " for more information."
+        }
+      ]
+    }
+  ]
+}

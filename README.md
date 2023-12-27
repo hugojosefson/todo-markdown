@@ -86,7 +86,7 @@ Use markdown docs, to keep track of todo items.
    - [x] `# [ ]` syntax without a task identifier,
    - [x] task identifier placeholder, via regex, ex
          `\bTODO-(\?+|x+|X+|n+|N+)\b`,
-   - ~~[ ] copied, already existing task identifier.~~
+   - [ ] ~~copied, already existing task identifier.~~
 1. [x] For each text node with a new task, mutates the node to include the next
        identifier.
 1. [x] For each text node with a task identifier, but no box, adds a box.
@@ -104,12 +104,12 @@ Use markdown docs, to keep track of todo items.
        contents of the two files.
 1. [x] When renaming, if a file with the same name already exists, and the
        contents are identical, deletes the file, so that it's not duplicated.
-1. [ ] When renaming, updates links to the renamed file, in all files. Ex
+1. [x] When renaming, updates links to the renamed file, in all files. Ex
        `[Link description](./old-file-name.md)` →
        `[Link description](./new-file-name.md)`.
-1. [ ] When updating links to a renamed file, if the link is to a heading, and
-       the heading is renamed, updates the link to point to the new heading.
-1. [ ] When updating links to a renamed file, if the link text contains the old
+1. [ ] ~~When updating links to a renamed file, if the link is to a heading, and
+       the heading is renamed, updates the link to point to the new heading.~~
+1. [x] When updating links to a renamed file, if the link text contains the old
        file name without file extension, replaces that part of the link text
        with the new file name without file extension.
 

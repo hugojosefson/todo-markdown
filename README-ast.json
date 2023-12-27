@@ -434,7 +434,7 @@
                 {
                   "type": "listItem",
                   "spread": false,
-                  "checked": null,
+                  "checked": false,
                   "children": [
                     {
                       "type": "paragraph",
@@ -444,7 +444,7 @@
                           "children": [
                             {
                               "type": "text",
-                              "value": "[ ] copied, already existing task identifier."
+                              "value": "copied, already existing task identifier."
                             }
                           ]
                         }
@@ -643,7 +643,7 @@
         {
           "type": "listItem",
           "spread": false,
-          "checked": false,
+          "checked": true,
           "children": [
             {
               "type": "paragraph",
@@ -681,8 +681,13 @@
               "type": "paragraph",
               "children": [
                 {
-                  "type": "text",
-                  "value": "When updating links to a renamed file, if the link is to a heading, and\nthe heading is renamed, updates the link to point to the new heading."
+                  "type": "delete",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "When updating links to a renamed file, if the link is to a heading, and\nthe heading is renamed, updates the link to point to the new heading."
+                    }
+                  ]
                 }
               ]
             }
@@ -691,7 +696,7 @@
         {
           "type": "listItem",
           "spread": false,
-          "checked": false,
+          "checked": true,
           "children": [
             {
               "type": "paragraph",

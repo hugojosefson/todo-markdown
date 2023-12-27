@@ -1,0 +1,72 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [
+        {
+          "type": "text",
+          "value": "page with link to heading"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "This is a page with a link to a heading in another file."
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Here is the "
+        },
+        {
+          "type": "link",
+          "title": null,
+          "url": "old%20name.md#heading-2",
+          "children": [
+            {
+              "type": "text",
+              "value": "link to heading 2"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "value": "."
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Here is another "
+        },
+        {
+          "type": "link",
+          "title": null,
+          "url": "old%20name.md#heading-2",
+          "children": [
+            {
+              "type": "text",
+              "value": "URI encoded link to heading 2"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "value": "."
+        }
+      ]
+    }
+  ]
+}

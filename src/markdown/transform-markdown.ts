@@ -1,12 +1,16 @@
-import { Nodes } from "npm:@types/mdast";
+import { Link, Nodes } from "npm:@types/mdast";
 import { walk, WalkEntry } from "std/fs/walk.ts";
 import { astToMarkdown } from "../ast/ast-to-markdown.ts";
 import { extractFirstTopLevelHeadingString } from "../ast/extract-first-top-level-heading.ts";
 import { markdownToAst } from "../ast/markdown-to-ast.ts";
 import { transformNode } from "../ast/transform-node.ts";
-import { not, pipeAsync3, swallow } from "../fn.ts";
+import { isLink, isParent, isText } from "../ast/types.ts";
+import { pipeAsync3, swallow } from "../fn.ts";
 import { ProjectId } from "../strings/project-id.ts";
 import { createNextIdentifierNumberGetter } from "../strings/task-id-number.ts";
+import { basename } from "std/path/basename.ts";
+import { extname } from "std/path/extname.ts";
+import { sequence } from "../regex.ts";
 
 export async function transformMarkdown<PI extends ProjectId = ProjectId>(
   projectId: PI,
@@ -140,6 +144,11 @@ async function transformNodeToOutputCommands<PI extends ProjectId = ProjectId>(
         path: outputPath,
         content: output,
       },
+      {
+        action: "update-links",
+        fromPath: inputPath,
+        toPath: outputPath,
+      },
     ];
   }
 }
@@ -169,7 +178,7 @@ export async function transformMarkdownAsts<
     );
   const outputCommands: TransformOutputCommand[] =
     (await Promise.all(outputCommandsPromises)).flat();
-  const outputCommandsWithUpdatedLinks: DeleteOrWriteFile[] = updateLinks(
+  const outputCommandsWithUpdatedLinks: DeleteOrWriteFile[] = await updateLinks(
     outputCommands,
   );
   return deconflictOutputCommands(outputCommandsWithUpdatedLinks);
@@ -192,15 +201,219 @@ export async function transformMarkdownDirectory<
 }
 
 /**
- * Updates links in the output commands.
- * @param outputCommands The output commands to update links in.
- * @returns The output commands with updated links.
+ * Finds {@link UpdateLinksToFile} commands in the input commands, obeying them by updating Markdown links within the
+ * {@link WriteFile#content} field of all {@link WriteFile} commands (since all {@link WriteFile} commands may have
+ * markdown content with links referring to the renamed path. The {@link WriteFile#content} field is a string of
+ * markdown content, and this function updates all links in that string, so that they point to the correct path.
+ * @param outputCommands The output commands which have content that needs to be updated.
+ * @returns The output command that remain, after processing and filtering out all the {@link UpdateLinksToFile} commands.
  */
-export function updateLinks(
+export async function updateLinks(
   outputCommands: TransformOutputCommand[],
-): DeleteOrWriteFile[] {
-  // just filter out the update-links commands for now. TODO actually implement this
-  return outputCommands.filter(not(isUpdateLinksToFile)) as DeleteOrWriteFile[];
+): Promise<DeleteOrWriteFile[]> {
+  const updateLinksToFileCommands = outputCommands.filter(isUpdateLinksToFile);
+  const writeCommands = outputCommands.filter(isWriteFile);
+
+  const pathUpdatesMap: Map<string, string> = new Map(
+    updateLinksToFileCommands.map((command) =>
+      [command.fromPath, command.toPath] as const
+    ),
+  );
+
+  const updatedWriteCommands = await Promise.all(
+    writeCommands.map(async (command) => ({
+      ...command,
+      content: await updateLinksInMarkdownContent(
+        command.path,
+        command.content,
+        pathUpdatesMap,
+      ),
+    })),
+  );
+
+  return [...updatedWriteCommands, ...outputCommands.filter(isDeleteFile)];
+}
+
+/**
+ * Updates all links in the given markdown content, so that they point to the correct path.
+ * Uses {@link markdownToAst} to parse the markdown content into an AST, and then uses {@link updateLinksInMarkdownAst}
+ * to update the links in the AST, and then uses {@link astToMarkdown} to convert the AST back into markdown content.
+ * @param path The path of the markdown file that the content is from.
+ * @param content The markdown content to update the links in.
+ * @param pathUpdatesMap A map of paths to update, and their new paths.
+ */
+export async function updateLinksInMarkdownContent(
+  path: string,
+  content: string,
+  pathUpdatesMap: Map<string, string>,
+): Promise<string> {
+  const ast = markdownToAst(content);
+  const updatedAst = updateLinksInMarkdownAst(path, ast, pathUpdatesMap);
+  return await astToMarkdown(updatedAst);
+}
+
+/**
+ * Updates all links in the given markdown AST, so that they point to the correct path.
+ * This function does not use {@link transformNode}, because it does not need to transform the AST in that way. Instead, it traverses the AST, and updates all links in the AST.
+ * @param path The path of the markdown file that the AST is from.
+ * @param ast The markdown AST to update the links in.
+ * @param pathUpdatesMap A map of paths to update, and their new paths.
+ */
+export function updateLinksInMarkdownAst<T extends Nodes>(
+  path: string,
+  ast: T,
+  pathUpdatesMap: Map<string, string>,
+): T {
+  if (isLink(ast)) {
+    return updateMarkdownLinkNode(path, ast, pathUpdatesMap) as T;
+  }
+  if (isParent(ast)) {
+    const children = ast.children.map((child) =>
+      updateLinksInMarkdownAst(path, child, pathUpdatesMap)
+    );
+    return {
+      ...ast,
+      children,
+    };
+  }
+  return ast;
+}
+
+/**
+ * Updates the given Markdown link node, so that it points to the correct path.
+ * @param path The path of the markdown file that the link is from.
+ * @param linkNode The link node to update.
+ * @param pathUpdatesMap A map of paths to update, and their new paths.
+ * @returns The updated link node.
+ */
+export function updateMarkdownLinkNode<T extends Link>(
+  path: string,
+  linkNode: T,
+  pathUpdatesMap: Map<string, string>,
+): T {
+  const url = decodeURI((linkNode.url as string).replace(/#.*$/, ""));
+  const fragment = (linkNode.url as string).replace(/^[^#]*/, "");
+  const updatedUrl = updateLink(path, url, pathUpdatesMap);
+  if (updatedUrl === url) {
+    return linkNode;
+  }
+  const uriEncodedUpdatedUrl = encodeURI(updatedUrl) + fragment;
+
+  // If the link node only has one child, and that child is a text node.
+  if (linkNode.children.length === 1) {
+    const child = linkNode.children[0];
+    if (isText(child)) {
+      // text contains the filename of the url, without the extension
+      const extLessUrlBasename = basename(url, extname(url));
+      const extLessUpdatedUrlBasename = basename(
+        updatedUrl,
+        extname(updatedUrl),
+      );
+      const extLessUrlBasenameRegex = sequence(extLessUrlBasename);
+      if (extLessUrlBasenameRegex.test(child.value)) {
+        const updatedText = child.value.replace(
+          extLessUrlBasenameRegex,
+          extLessUpdatedUrlBasename,
+        );
+        return {
+          ...linkNode,
+          url: uriEncodedUpdatedUrl,
+          children: [
+            {
+              ...child,
+              value: updatedText,
+            },
+          ],
+        };
+      }
+    }
+  }
+
+  // Otherwise, we can just update the link node's url.
+  return {
+    ...linkNode,
+    url: uriEncodedUpdatedUrl,
+  };
+}
+
+/**
+ * Updates the given link, so that it points to the correct path.
+ * @param basePathOfLink The path of the markdown file that the link is from.
+ * @param link The link to update.
+ * @param linkUpdates A map from paths to update, to their new path.
+ */
+export function updateLink(
+  basePathOfLink: string,
+  link: string,
+  linkUpdates: Map<string, string>,
+): string {
+  // 1. Cases when we don't need to update the link, and can return it as-is:
+  //   - The link has a protocol
+  //   - The link is only a fragment
+  // 2. We then need to calculate the absolute path of the link, relative to the input markdown file
+  // 3. We then need to check if the absolute path of the link is in the map of paths to update
+  // 4. If it is, then we need to update the link
+  // 5. If it is not, then we can return the link as-is
+
+  if (hasProtocol(link)) {
+    return link;
+  }
+
+  if (isFragment(link)) {
+    return link;
+  }
+
+  const resolvedAbsoluteTarget = resolveAbsoluteTarget(basePathOfLink, link);
+  const targetWasRenamed = linkUpdates.has(resolvedAbsoluteTarget);
+
+  if (targetWasRenamed) {
+    const newAbsoluteTarget = linkUpdates.get(resolvedAbsoluteTarget)!;
+    return getRelative(basePathOfLink, newAbsoluteTarget);
+  }
+
+  return link;
+}
+
+/**
+ * Returns true if the given link has a protocol.
+ * @param link The link to check.
+ * @returns True if the given link has a protocol.
+ */
+export function hasProtocol(link: string): link is `${string}:${string}` {
+  return /^[a-z]+:/.test(link);
+}
+
+/**
+ * Returns true if the given link is only a fragment.
+ * @param link The link to check.
+ * @returns True if the given link is only a fragment.
+ */
+export function isFragment(link: string): link is `#${string}` {
+  return /^#/.test(link);
+}
+
+/**
+ * Returns the absolute path of the link, relative to the input markdown file.
+ * @param basePath The path of the markdown file that the link is from.
+ * @param link The link to get the absolute path of.
+ * @returns The absolute path of the link, relative to the input markdown file.
+ */
+export function resolveAbsoluteTarget(basePath: string, link: string): string {
+  const basePathDirectory = basePath.replace(/\/[^\/]+$/, "");
+  return `${basePathDirectory}/${link}`;
+}
+
+/**
+ * Returns the link, relative to the input markdown file.
+ * @param basePath The path of the markdown file that the link is from.
+ * @param absoluteTarget The absolute path of the link, relative to the input markdown file.
+ * @returns The link, relative to the input markdown file.
+ */
+export function getRelative(basePath: string, absoluteTarget: string): string {
+  const basePathDirectory = basePath.replace(/\/[^\/]+$/, "");
+  return absoluteTarget
+    .replace(basePathDirectory, "")
+    .replace(/^\//, "");
 }
 
 /**
