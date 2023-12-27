@@ -112,6 +112,8 @@ Use markdown docs, to keep track of todo items.
 1. [x] When updating links to a renamed file, if the link text contains the old
        file name without file extension, replaces that part of the link text
        with the new file name without file extension.
+1. [ ] Writes a table of contents between any comments `<!-- toc -->` and
+       `<!-- /toc -->`.
 
 ## Further details
 

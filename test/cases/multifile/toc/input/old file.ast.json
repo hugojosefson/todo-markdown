@@ -1,0 +1,32 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [
+        {
+          "type": "text",
+          "value": "new file"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "This file will be renamed to "
+        },
+        {
+          "type": "inlineCode",
+          "value": "new name.md"
+        },
+        {
+          "type": "text",
+          "value": " in the output."
+        }
+      ]
+    }
+  ]
+}

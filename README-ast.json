@@ -708,6 +708,38 @@
               ]
             }
           ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Writes a table of contents between any comments "
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "<!-- toc -->"
+                },
+                {
+                  "type": "text",
+                  "value": " and\n"
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "<!-- /toc -->"
+                },
+                {
+                  "type": "text",
+                  "value": "."
+                }
+              ]
+            }
+          ]
         }
       ]
     },

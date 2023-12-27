@@ -250,21 +250,6 @@ export async function buildItFileAndWriteAst(
   }
 }
 
-export async function* recursiveEntries(
-  path: string,
-): AsyncGenerator<Deno.DirEntry> {
-  if (!(await isDirectory(path))) {
-    return [];
-  }
-  for await (const entry of Deno.readDir(path)) {
-    if (entry.isFile) {
-      yield entry;
-    } else if (entry.isDirectory) {
-      yield* recursiveEntries(`${path}/${entry.name}`);
-    }
-  }
-}
-
 /**
  * Given an input directory, build a {@link Case} object, taking care to only include the expected output, if such a directory actually exists.
  */
@@ -313,8 +298,13 @@ export async function buildItDirectoryAndWriteAst(
 
   /** map of path to file, and its contents */
   const outputs: DeleteOrWriteFile[] = [];
-  for await (const entry of recursiveEntries(outputDirectory)) {
-    const path = `${outputDirectory}/${entry.name}`;
+  for await (
+    const entry of walk(outputDirectory, {
+      includeDirs: false,
+      match: [/\.md$/],
+    })
+  ) {
+    const path = (entry as WalkEntry).path;
     const content = await Deno.readTextFile(path);
     const ast = markdownToAst(content);
     outputs.push({ action: "write", path, content, ast });
