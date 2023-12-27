@@ -1,6 +1,7 @@
 import { walk, WalkEntry } from "std/fs/walk.ts";
 import { Nodes } from "npm:@types/mdast";
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
+import { DeleteOrWriteFile } from "../src/markdown/transform-markdown.ts";
 
 /**
  * Corresponds to a directory with test cases in it.
@@ -77,7 +78,7 @@ export type ItRunDirectory =
   & {
     skip: false;
     outputDirectory: string;
-    outputs: Record<string, string>;
+    outputs: DeleteOrWriteFile[];
   };
 
 export type ItDirectory =
@@ -308,11 +309,11 @@ export async function buildItDirectoryAndWriteAst(
   }
 
   /** map of path to file, and its contents */
-  const outputs: Record<string, string> = {};
+  const outputs: DeleteOrWriteFile[] = [];
   for await (const entry of recursiveEntries(outputDirectory)) {
     const path = `${outputDirectory}/${entry.name}`;
-    const contents = await Deno.readTextFile(path);
-    outputs[path] = contents;
+    const content = await Deno.readTextFile(path);
+    outputs.push({ action: "write", path, content });
   }
 
   return {

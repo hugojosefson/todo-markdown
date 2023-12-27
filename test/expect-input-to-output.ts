@@ -1,14 +1,13 @@
+import { sortBy } from "std/collections/sort_by.ts";
 import { assertEquals } from "std/assert/assert_equals.ts";
-import { mapValues } from "std/collections/map_values.ts";
-import { mapKeys } from "std/collections/map_keys.ts";
 import { transformMarkdown } from "../mod.ts";
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
 import {
-  DELETE_FILE,
+  DeleteOrWriteFile,
+  getInputPaths,
   transformMarkdownDirectory,
 } from "../src/markdown/transform-markdown.ts";
 import { ProjectId } from "../src/strings/project-id.ts";
-import { isString } from "../src/ast/types.ts";
 
 export function expectInputToOutput(
   input: string,
@@ -24,38 +23,55 @@ export function expectInputToOutput(
 
 export function expectInputDirectoryToOutputs(
   inputDirectory: string,
-  expectedOutputs: Record<string, string>,
+  expectedOutputs: DeleteOrWriteFile[],
   projectId: ProjectId = "TODO",
 ): () => Promise<void> {
   return async () => {
+    const inputPaths = await getInputPaths(inputDirectory.trim());
+    const inputPathsWithRelativePaths = inputPaths
+      .map((inputPath) => inputPath.replace(inputDirectory, ""));
+
     const actualOutputs = await transformMarkdownDirectory(
       projectId,
       inputDirectory.trim(),
     );
-    const actualOutputsWithRelativePaths = mapKeys(
-      actualOutputs,
-      removeLeadingCharacters(inputDirectory.length + 1),
-    );
+    const actualOutputsWithRelativePaths = actualOutputs
+      .map((actualOutput) => ({
+        ...actualOutput,
+        path: actualOutput.path.replace(inputDirectory, ""),
+      }));
 
-    const trimmedExpectedOutputs = mapValues(
-      expectedOutputs,
-      (v: string | typeof DELETE_FILE) => isString(v) ? v.trim() + "\n" : v,
-    );
-    const expectedOutputsWithRelativePaths = mapKeys(
-      trimmedExpectedOutputs,
-      removeLeadingCharacters(inputDirectory.length + 2),
-    );
+    const outputDirectory = inputDirectory.replace(/input$/, "output");
+    const expectedOutputsWithRelativePaths = expectedOutputs
+      .map((expectedOutput) => ({
+        ...expectedOutput,
+        path: expectedOutput.path.replace(
+          outputDirectory,
+          "",
+        ),
+      }));
+
+    const map: Map<string, DeleteOrWriteFile> = new Map([
+      ...inputPathsWithRelativePaths.map((inputPath) =>
+        [inputPath, { action: "delete", path: inputPath }] as const
+      ),
+      ...expectedOutputsWithRelativePaths.map((actualOutput) =>
+        [actualOutput.path, actualOutput] as const
+      ),
+    ]);
+    const andDeletingAllInputFilesFirstOnlyIfTheyAreNotLaterWrittenTo:
+      DeleteOrWriteFile[] = [...map.values()];
 
     assertEquals(
-      actualOutputsWithRelativePaths,
-      {
-        ...mapValues(actualOutputsWithRelativePaths, () => DELETE_FILE),
-        ...expectedOutputsWithRelativePaths,
-      },
+      sortBy(actualOutputsWithRelativePaths, selector),
+      sortBy(
+        andDeletingAllInputFilesFirstOnlyIfTheyAreNotLaterWrittenTo,
+        selector,
+      ),
     );
   };
 }
 
-function removeLeadingCharacters(n: number): (s: string) => string {
-  return (s: string) => s.replace(new RegExp(`^.{${n}}`, "gm"), "");
+function selector(x: DeleteOrWriteFile): string {
+  return JSON.stringify({ action: x.action, path: x.path });
 }

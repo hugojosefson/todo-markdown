@@ -520,6 +520,7 @@
     "https://deno.land/std@0.210.0/assert/equal.ts": "6f81c8a3b12c08bdc3510c8a1293b4db1c083692219d7e3828d2234b448d3d3d",
     "https://deno.land/std@0.210.0/collections/map_keys.ts": "3dd2cf3a940f1432628cb0252b919d268e8bb38fe8bcd78153a440909173ae98",
     "https://deno.land/std@0.210.0/collections/map_values.ts": "00b53e95ca5861b1d34829f4ed7f60974540c54bc9f5a3d119415e03e8275063",
+    "https://deno.land/std@0.210.0/collections/sort_by.ts": "33075b6222942f8000437c6f63e7b12ac294de3faf75c8c71a7eaf3affde03b6",
     "https://deno.land/std@0.210.0/expect/_format.ts": "872f1c3542df2dc85dbb89f65ffd34c38c6c01267f86324a9509fb79526c0e66",
     "https://deno.land/std@0.210.0/expect/_inspect_args.ts": "0225bbc87c64899e5a72dcd4f54ca79ab1e8bd2c3934be2ec78be987cdaf7287",
     "https://deno.land/std@0.210.0/expect/_matchers.ts": "2b3c17830c85a66b6d9d977717454d36375eef3fa7145ef44c6b0dc175b91026",
