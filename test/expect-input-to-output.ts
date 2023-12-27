@@ -4,8 +4,10 @@ import { transformMarkdown } from "../mod.ts";
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
 import {
   DeleteOrWriteFile,
+  getInputAsts,
   getInputPaths,
-  transformMarkdownDirectory,
+  getInputs,
+  transformMarkdownAsts,
 } from "../src/markdown/transform-markdown.ts";
 import { ProjectId } from "../src/strings/project-id.ts";
 
@@ -31,9 +33,12 @@ export function expectInputDirectoryToOutputs(
     const inputPathsWithRelativePaths = inputPaths
       .map((inputPath) => inputPath.replace(inputDirectory, ""));
 
-    const actualOutputs = await transformMarkdownDirectory(
+    const inputs = await getInputs(inputPaths);
+    const inputAsts = getInputAsts(inputs);
+
+    const actualOutputs = await transformMarkdownAsts(
       projectId,
-      inputDirectory.trim(),
+      inputAsts,
     );
     const actualOutputsWithRelativePaths = actualOutputs
       .map((actualOutput) => ({

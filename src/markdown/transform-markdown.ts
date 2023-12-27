@@ -4,7 +4,7 @@ import { astToMarkdown } from "../ast/ast-to-markdown.ts";
 import { extractFirstTopLevelHeadingString } from "../ast/extract-first-top-level-heading.ts";
 import { markdownToAst } from "../ast/markdown-to-ast.ts";
 import { transformNode } from "../ast/transform-node.ts";
-import { not, swallow } from "../fn.ts";
+import { not, pipeAsync3, swallow } from "../fn.ts";
 import { ProjectId } from "../strings/project-id.ts";
 import { createNextIdentifierNumberGetter } from "../strings/task-id-number.ts";
 
@@ -41,10 +41,9 @@ export async function getInputPaths(
   return inputPaths;
 }
 
-async function getInputs(
-  directory: string,
+export async function getInputs(
+  inputPaths: string[],
 ): Promise<Record<string, string>> {
-  const inputPaths = await getInputPaths(directory);
   return Object.fromEntries(
     await Promise.all(
       inputPaths.map(async (inputPath) => [
@@ -55,10 +54,9 @@ async function getInputs(
   );
 }
 
-async function getInputAsts(
-  directory: string,
-): Promise<Record<string, Nodes>> {
-  const inputs = await getInputs(directory);
+export function getInputAsts(
+  inputs: Record<string, string>,
+): Record<string, Nodes> {
   return Object.fromEntries(
     Object.entries(inputs).map(([inputPath, input]) => [
       inputPath,
@@ -146,13 +144,12 @@ async function transformNodeToOutputCommands<PI extends ProjectId = ProjectId>(
   }
 }
 
-export async function transformMarkdownDirectory<
+export async function transformMarkdownAsts<
   PI extends ProjectId = ProjectId,
 >(
   projectId: PI,
-  directory: string,
+  inputAsts: Record<string, Nodes>,
 ): Promise<DeleteOrWriteFile[]> {
-  const inputAsts: Record<string, Nodes> = await getInputAsts(directory);
   const nextIdentifierNumberGetter = createNextIdentifierNumberGetter(
     projectId,
     Object.values(inputAsts),
@@ -176,6 +173,22 @@ export async function transformMarkdownDirectory<
     outputCommands,
   );
   return deconflictOutputCommands(outputCommandsWithUpdatedLinks);
+}
+
+export async function transformMarkdownDirectory<
+  PI extends ProjectId = ProjectId,
+>(
+  projectId: PI,
+  directory: string,
+): Promise<DeleteOrWriteFile[]> {
+  const inputAsts: Record<string, Nodes> = await pipeAsync3(
+    getInputPaths,
+    getInputs,
+    getInputAsts,
+  )(
+    directory,
+  );
+  return await transformMarkdownAsts(projectId, inputAsts);
 }
 
 /**
