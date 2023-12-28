@@ -1,11 +1,20 @@
-import { List, Parent } from "npm:@types/mdast";
+import { relative } from "std/path/relative.ts";
+import { List, Nodes, Parent } from "npm:@types/mdast";
+import { DeleteOrWriteFile, isWriteFile } from "../model/output-command.ts";
+import { sequence } from "../strings/regex.ts";
 
 import { ProjectId } from "../model/project-id.ts";
 import { NextIdentifierNumberGetter } from "../model/task-id-number.ts";
+import { startsWithA } from "../strings/text-type-guard.ts";
 import { transformNode } from "./transform-node.ts";
 import {
+  HtmlCommentEndString,
+  HtmlWithValue,
   isHtmlTocBegin,
   isHtmlTocEnd,
+  isParent,
+  TOC,
+  Toc,
 } from "./node-types.ts";
 
 type Children = Parent["children"];
@@ -30,16 +39,41 @@ export function transformParent<
   nextIdentifierNumberGetter: NextIdentifierNumberGetter,
   parent: T,
 ): T {
+  return {
+    ...parent,
+    children: parent.children.map((child) =>
+      transformNode(projectId, nextIdentifierNumberGetter, child)
+    ),
+  };
+}
+
+/**
+ * Looks through the given output commands, and checks each {@link WriteFile#ast} field for any child node that {@link isHtmlCommentTableOfContentsStart}.
+ * then replace
+ * everything between (exclusive!) that and the next node that isHtmlCommentTableOfContentsEnd(),
+ * with a TableOfContents node.
+ * If a node that isHtmlCommentTableOfContentsEnd() is not found, then insert one immediately after
+ * the TableOfContents node.
+ */
+export function addAnyToc<
+  T extends Nodes,
+>(
+  node: T,
+  basePath: string,
+  tocFilePath: string,
+  outputCommands: DeleteOrWriteFile[],
+): T {
+  if (!isParent(node)) {
+    return node;
+  }
+  const parent = node;
   const children: Children = parent.children;
   if (children.length === 0) {
     return parent;
   }
 
-  // if any child isHtmlCommentTableOfContentsStart(), then replace
-  // everything between (exclusive!) that and the next node that isHtmlCommentTableOfContentsEnd(),
-  // with a TableOfContents node.
-  // If a node that isHtmlCommentTableOfContentsEnd() is not found, then insert one immediately after
-  // the TableOfContents node.
+  const hasTocEnd = children.some(isHtmlTocEnd);
+  // ready to write a toc!
   return {
     ...parent,
     children: children.reduce(
@@ -55,14 +89,22 @@ export function transformParent<
         }
         if (isHtmlTocBegin(child)) {
           return {
-            newChildren: [...newChildren, createTableOfContents()],
-            inToc: true,
+            newChildren: [
+              ...newChildren,
+              child,
+              createTableOfContents(basePath, tocFilePath, outputCommands),
+              {
+                type: "html",
+                value: `<!-- /${TOC} -->`,
+              } satisfies HtmlWithValue<HtmlCommentEndString<Toc>>,
+            ],
+            inToc: hasTocEnd,
           };
         }
         return {
           newChildren: [
             ...newChildren,
-            transformNode(projectId, nextIdentifierNumberGetter, child),
+            child,
           ],
           inToc: false,
         };
@@ -72,7 +114,12 @@ export function transformParent<
   };
 }
 
-function createTableOfContents(): List {
+export function createTableOfContents(
+  basePath: string,
+  tocFilePath: string,
+  outputCommands: DeleteOrWriteFile[],
+): List {
+  const startsWithBasePath = startsWithA(sequence(basePath));
   return {
     type: "list",
     ordered: false,
@@ -83,18 +130,29 @@ function createTableOfContents(): List {
         children: [
           {
             type: "paragraph",
-            children: [
-              {
+            children: outputCommands.filter(isWriteFile).map((writeFile) => {
+              const pathRelativeToBasePath = writeFile.path.replace(
+                startsWithBasePath.regex,
+                "",
+              );
+              const pathRelativeToBasePathWithoutExtension =
+                pathRelativeToBasePath.replace(/\.md$/, "");
+              const writeFilePathRelativeToTocFilePath = relative(
+                tocFilePath,
+                writeFile.path,
+              );
+
+              return {
                 type: "link",
-                url: `link-to-that-page`,
+                url: writeFilePathRelativeToTocFilePath,
                 children: [
                   {
                     type: "text",
-                    value: "Placeholder for Table of Contents items",
+                    value: pathRelativeToBasePathWithoutExtension,
                   },
                 ],
-              },
-            ],
+              };
+            }),
           },
         ],
       },
