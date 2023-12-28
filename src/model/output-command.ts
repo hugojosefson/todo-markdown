@@ -1,3 +1,5 @@
+import { Nodes } from "npm:@types/mdast";
+import { isNode } from "../ast/node-types.ts";
 import { and } from "../fn.ts";
 import { isString } from "../strings/is-string.ts";
 import { createIsRecordWithProperty } from "./record.ts";
@@ -11,7 +13,12 @@ export type DeleteFile = { action: "delete"; path: string };
 /**
  * A command to write a file, with specific content.
  */
-export type WriteFile = { action: "write"; path: string; content: string };
+export type WriteFile = {
+  action: "write";
+  path: string;
+  content: string;
+  ast: Nodes;
+};
 
 /**
  * A command to update any links what point to a path, to point to its new path.
@@ -68,6 +75,10 @@ export const isWriteFile: TypeGuard<WriteFile> = and(
   createIsRecordWithProperty(
     "content",
     isString,
+  ),
+  createIsRecordWithProperty(
+    "ast",
+    isNode,
   ),
 ) as TypeGuard<WriteFile>;
 

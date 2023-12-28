@@ -1,12 +1,13 @@
+import { astToMarkdown } from "../ast/ast-to-markdown.ts";
 import {
   DeleteOrWriteFile,
   isDeleteFile,
   isUpdateLinksToFile,
   isWriteFile,
   OutputCommand,
+  WriteFile,
 } from "../model/output-command.ts";
-
-import { updateLinksInMarkdownContent } from "./update-links-in-markdown-content.ts";
+import { updateLinksInMarkdownAst } from "./update-links-in-markdown-ast.ts";
 
 /**
  * Finds {@link UpdateLinksToFile} commands in the input commands, obeying them by updating Markdown links within the
@@ -29,14 +30,18 @@ export async function updateLinksInOutputCommands(
   );
 
   const updatedWriteCommands = await Promise.all(
-    writeCommands.map(async (command) => ({
-      ...command,
-      content: await updateLinksInMarkdownContent(
+    writeCommands.map(async (command): Promise<WriteFile> => {
+      const ast = updateLinksInMarkdownAst(
         command.path,
-        command.content,
+        command.ast,
         pathUpdatesMap,
-      ),
-    })),
+      );
+      return {
+        ...command,
+        ast,
+        content: await astToMarkdown(ast),
+      };
+    }),
   );
 
   return [...updatedWriteCommands, ...outputCommands.filter(isDeleteFile)];

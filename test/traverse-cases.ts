@@ -316,7 +316,8 @@ export async function buildItDirectoryAndWriteAst(
   for await (const entry of recursiveEntries(outputDirectory)) {
     const path = `${outputDirectory}/${entry.name}`;
     const content = await Deno.readTextFile(path);
-    outputs.push({ action: "write", path, content });
+    const ast = markdownToAst(content);
+    outputs.push({ action: "write", path, content, ast });
   }
 
   return {

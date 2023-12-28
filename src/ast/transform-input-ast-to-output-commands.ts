@@ -36,6 +36,7 @@ export async function transformInputAstToOutputCommands<
         action: "write",
         path: outputPath,
         content: output,
+        ast: outputAst,
       },
     ];
   } else {
@@ -49,6 +50,7 @@ export async function transformInputAstToOutputCommands<
         action: "write",
         path: outputPath,
         content: output,
+        ast: outputAst,
       },
       {
         action: "update-links",

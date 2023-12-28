@@ -1,3 +1,4 @@
+import { markdownToAst } from "../ast/markdown-to-ast.ts";
 import { DeleteOrWriteFile, isWriteFile } from "../model/output-command.ts";
 import { sortUnique } from "../strings/sort-unique.ts";
 
@@ -43,6 +44,7 @@ export function deconflictOutputCommands(
       action: "write",
       path,
       content,
+      ast: markdownToAst(content),
     });
   }
 
