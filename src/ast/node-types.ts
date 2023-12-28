@@ -1,5 +1,6 @@
 import {
   Heading,
+  Html,
   Link,
   ListItem,
   Node,
@@ -33,7 +34,121 @@ export const isParent: TypeGuard<Parent> = and(
   ),
 ) as TypeGuard<Parent>;
 
+/**
+ * A {@link Node} of a specific {@code type}.
+ */
 export type NodeOfType<T extends Node["type"]> = Node & { type: T };
+
+/**
+ * A {@link Html} node with a specific {@code value}.
+ */
+export type HtmlWithValue<T extends string> = Html & { value: T };
+
+/**
+ * Type-guard for {@link Html}.
+ * @param node The node to check.
+ */
+export const isHtml: TypeGuard<Html> = createIsNodeOfType("html");
+
+/**
+ * Creates a {@link TypeGuard} for a {@link HtmlWithValue} with a specific {@code value}.
+ * @param value The value that the {@link HtmlWithValue} should have.
+ */
+export function createIsHtmlWithValue<T extends string>(
+  value: T,
+): TypeGuard<HtmlWithValue<T>> {
+  return and(
+    isHtml,
+    createIsRecordWithProperty(
+      "value",
+      value,
+    ),
+  ) as TypeGuard<HtmlWithValue<T>>;
+}
+
+/**
+ * Identifier for a table of contents.
+ */
+export const TOC = "toc";
+
+/**
+ * Identifier for a table of contents.
+ */
+export type Toc = typeof TOC;
+
+/**
+ * A comment in HTML.
+ */
+export type HtmlCommentString<T extends string> = `<!-- ${T} -->`;
+/**
+ * A comment in HTML, that signifies something ending.
+ */
+export type HtmlCommentEndString<T extends string> = HtmlCommentString<`/${T}`>;
+
+/**
+ * Creates a {@link HtmlCommentString} with a specific {@code comment}.
+ * @param comment The comment to create.
+ */
+export function createHtmlCommentString<T extends string>(
+  comment: T,
+): HtmlCommentString<T> {
+  return `<!-- ${comment} -->`;
+}
+
+/**
+ * Creates a {@link HtmlCommentEndString} with a specific {@code comment}.
+ * @param comment The comment to create.
+ */
+export function createHtmlCommentEndString<T extends string>(
+  comment: T,
+): HtmlCommentEndString<T> {
+  return createHtmlCommentString(`/${comment}`);
+}
+
+/**
+ * Creates a type-guard for a specific {@link HtmlCommentString}.
+ */
+export function createIsHtmlCommentString<T extends string>(
+  comment: T,
+): TypeGuard<HtmlCommentString<T>> {
+  return and(
+    isString,
+    (value: string): value is HtmlCommentString<T> =>
+      value === createHtmlCommentString(comment),
+  ) as TypeGuard<HtmlCommentString<T>>;
+}
+
+/**
+ * Creates a type-guard for a specific {@link HtmlCommentEndString}.
+ */
+export function createIsHtmlCommentEndString<T extends string>(
+  comment: T,
+): TypeGuard<HtmlCommentEndString<T>> {
+  return createIsHtmlCommentString(`/${comment}`);
+}
+
+/**
+ * Type-guard for {@link HtmlCommentString}<{@link Toc}>.
+ */
+export const isTocBeginCommentString: TypeGuard<HtmlCommentString<Toc>> =
+  createIsHtmlCommentString(TOC);
+
+/**
+ * Type-guard for {@link HtmlCommentEndString}<{@link Toc}>.
+ */
+export const isTocEndCommentString: TypeGuard<HtmlCommentEndString<Toc>> =
+  createIsHtmlCommentEndString(TOC);
+
+/**
+ * Type-guard for {@link HtmlWithValue}<{@link HtmlCommentString}<{@link Toc}>>.
+ */
+export const isHtmlTocBegin: TypeGuard<HtmlWithValue<HtmlCommentString<Toc>>> =
+  createIsHtmlWithValue(createHtmlCommentString(TOC));
+/**
+ * Type-guard for {@link HtmlWithValue}<{@link HtmlCommentEndString}<{@link Toc}>>.
+ */
+export const isHtmlTocEnd: TypeGuard<HtmlWithValue<HtmlCommentEndString<Toc>>> =
+  createIsHtmlWithValue(createHtmlCommentEndString(TOC));
 
 /**
  * Type-guard for {@link Heading}.
