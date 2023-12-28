@@ -15,6 +15,7 @@ export async function transformInputAstsToOutputCommands<
   PI extends ProjectId = ProjectId,
 >(
   projectId: PI,
+  _basePath: string,
   inputAsts: InputAsts,
 ): Promise<DeleteOrWriteFile[]> {
   const nextIdentifierNumberGetter = createNextIdentifierNumberGetter(

@@ -26,5 +26,9 @@ export async function transformInputDirectoryToOutputCommands<
   )(
     directory,
   );
-  return await transformInputAstsToOutputCommands(projectId, inputAsts);
+  return await transformInputAstsToOutputCommands(
+    projectId,
+    directory,
+    inputAsts,
+  );
 }

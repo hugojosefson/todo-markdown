@@ -37,8 +37,10 @@ export function expectInputDirectoryToOutputs(
     const inputs = await readTextFilesToInputs(inputPaths);
     const inputAsts = inputsToInputAsts(inputs);
 
+    const outputDirectory = inputDirectory.replace(/input$/, "output");
     const actualOutputs = await transformInputAstsToOutputCommands(
       projectId,
+      outputDirectory,
       inputAsts,
     );
     const actualOutputsWithRelativePaths = actualOutputs
@@ -47,7 +49,6 @@ export function expectInputDirectoryToOutputs(
         path: actualOutput.path.replace(inputDirectory, ""),
       }));
 
-    const outputDirectory = inputDirectory.replace(/input$/, "output");
     const expectedOutputsWithRelativePaths = expectedOutputs
       .map((expectedOutput) => ({
         ...expectedOutput,
