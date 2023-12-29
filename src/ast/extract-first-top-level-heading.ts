@@ -1,14 +1,15 @@
+import { Heading, Nodes } from "npm:@types/mdast";
 import { toString } from "npm:mdast-util-to-string";
-import { Heading, Nodes, Text } from "npm:@types/mdast";
 import { selectAll } from "npm:unist-util-select";
-import { BOX_REGEX } from "../model/box.ts";
-import { startsWithA } from "../strings/text-type-guard.ts";
+import { startsWithABox } from "../model/box.ts";
+import { undefinedIfEmptyString } from "../strings/undefined-if-empty-string.ts";
 
-const startsWithABox: ((x: string | Text) => boolean) & { regex: RegExp } =
-  startsWithA(
-    BOX_REGEX,
-  );
-
+/**
+ * Extracts the first top-level heading string from the given AST.
+ * This is useful for getting the title of a document.
+ * @param ast The AST to extract the first top-level heading string from.
+ * @returns The first top-level heading string from the given AST.
+ */
 export function extractFirstTopLevelHeadingString(
   ast: Nodes,
 ): string | undefined {
@@ -20,20 +21,8 @@ export function extractFirstTopLevelHeadingString(
     heading.depth === 1
   );
   const s = toString(topLevelHeadings.at(0))
-    .replace(
-      startsWithABox.regex,
-      "",
-    )
+    .replace(startsWithABox.regex, "")
     .trim();
 
   return undefinedIfEmptyString(s);
-}
-
-export function undefinedIfEmptyString<T extends string>(
-  s: T,
-): T extends "" ? undefined : T {
-  if (s === "") {
-    return undefined as T extends "" ? undefined : T;
-  }
-  return s as T extends "" ? undefined : T;
 }

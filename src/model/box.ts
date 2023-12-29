@@ -64,7 +64,7 @@ export function createExtractBoxAndTaskId<PI extends ProjectId = ProjectId>(
 /**
  * A {@link TextTypeGuard} that checks if a string starts with a box.
  */
-export const startsWithBox: TextTypeGuard<StringStartingWith<Box>> =
+export const startsWithABox: TextTypeGuard<StringStartingWith<Box>> =
   startsWithA(BOX_REGEX);
 
 /**
@@ -122,5 +122,5 @@ function hasHeadingBox(
     ...PhrasingContent[],
   ];
 } {
-  return isText(heading.children[0]) && startsWithBox(heading.children[0]);
+  return isText(heading.children[0]) && startsWithABox(heading.children[0]);
 }

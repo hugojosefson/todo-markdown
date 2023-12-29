@@ -1,6 +1,10 @@
 import { DeleteOrWriteFile, isDeleteFile } from "../model/output-command.ts";
 import { swallow } from "../fn.ts";
 
+/**
+ * Writes the given outputs to the file system.
+ * @param outputs The outputs to write.
+ */
 export async function writeChanges(
   outputs: DeleteOrWriteFile[],
 ): Promise<void> {
