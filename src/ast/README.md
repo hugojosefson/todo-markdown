@@ -1,3 +1,3 @@
 # src/ast
 
-Things that take AST as input.
+Things that works with the AST, and transforming it.

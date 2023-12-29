@@ -1,1 +1,1 @@
-export { transformAstToMarkdown } from "./src/markdown/transform-ast-to-markdown.ts";
+export { transformInputAstToMarkdown } from "./src/ast/transform-input-ast-to-markdown.ts";

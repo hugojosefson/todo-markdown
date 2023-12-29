@@ -3,14 +3,14 @@
 import { isDirectory } from "../test/traverse-cases.ts";
 import { writeChanges } from "./io/write-changes.ts";
 import {
-  transformMarkdownDirectoryToOutputCommands,
-} from "./markdown/transform-markdown-directory-to-output-commands.ts";
+  transformInputDirectoryToOutputCommands,
+} from "./ast/transform-input-directory-to-output-commands.ts";
 import { isProjectId } from "./model/project-id.ts";
 import { not } from "./fn.ts";
 import { readAllFromStdin } from "./io/read-all-from-stdin.ts";
 import {
-  transformAstToMarkdown,
-} from "./markdown/transform-ast-to-markdown.ts";
+  transformInputAstToMarkdown,
+} from "./ast/transform-input-ast-to-markdown.ts";
 import { markdownToAst } from "./ast/markdown-to-ast.ts";
 
 const projectId = Deno.args.find(isProjectId) ?? "TODO";
@@ -25,7 +25,7 @@ console.error({
 });
 
 if (inputIsDirectory) {
-  const outputs = await transformMarkdownDirectoryToOutputCommands(
+  const outputs = await transformInputDirectoryToOutputCommands(
     projectId,
     filename,
   );
@@ -36,7 +36,7 @@ if (inputIsDirectory) {
     : await Deno.readTextFile(filename);
 
   const inputAst = markdownToAst(input);
-  const output = await transformAstToMarkdown(projectId, inputAst);
+  const output = await transformInputAstToMarkdown(projectId, inputAst);
 
   console.log(output);
 }

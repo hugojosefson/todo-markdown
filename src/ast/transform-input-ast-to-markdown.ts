@@ -1,6 +1,6 @@
 import { Nodes } from "npm:@types/mdast";
-import { astToMarkdown } from "../ast/ast-to-markdown.ts";
-import { transformNode } from "../ast/transform-node.ts";
+import { astToMarkdown } from "./ast-to-markdown.ts";
+import { transformNode } from "./transform-node.ts";
 import { ProjectId } from "../model/project-id.ts";
 import { createNextIdentifierNumberGetter } from "../model/task-id-number.ts";
 
@@ -10,7 +10,9 @@ import { createNextIdentifierNumberGetter } from "../model/task-id-number.ts";
  * @param ast The AST to transform.
  * @param otherAstsToConsiderForIdentifierNumbers Other ASTs to consider when generating task IDs. This is useful when you want to generate task IDs that are unique across multiple files.
  */
-export async function transformAstToMarkdown<PI extends ProjectId = ProjectId>(
+export async function transformInputAstToMarkdown<
+  PI extends ProjectId = ProjectId,
+>(
   projectId: PI,
   ast: Nodes,
   otherAstsToConsiderForIdentifierNumbers: Nodes[] = [],

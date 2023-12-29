@@ -1,21 +1,21 @@
-import { Nodes } from "npm:@types/mdast";
+import { InputAsts } from "../model/input-asts.ts";
 import { DeleteOrWriteFile, OutputCommand } from "../model/output-command.ts";
 import { ProjectId } from "../model/project-id.ts";
 import { createNextIdentifierNumberGetter } from "../model/task-id-number.ts";
-import { deconflictOutputCommands } from "./deconflict-output-commands.ts";
-import { transformNodeToOutputCommands } from "./transform-node-to-output-commands.ts";
-import { updateLinksInOutputCommands } from "./update-links-in-output-commands.ts";
+import { deconflictOutputCommands } from "../markdown/deconflict-output-commands.ts";
+import { transformInputAstToOutputCommands } from "./transform-input-ast-to-output-commands.ts";
+import { updateLinksInOutputCommands } from "../markdown/update-links-in-output-commands.ts";
 
 /**
  * Transforms multiple input ASTs from a directory, and outputs the result as {@link DeleteOrWriteFile} commands.
  * @param projectId The project ID to use for identifying and generating task IDs.
  * @param inputAsts The input ASTs to transform.
  */
-export async function transformAstsToOutputCommands<
+export async function transformInputAstsToOutputCommands<
   PI extends ProjectId = ProjectId,
 >(
   projectId: PI,
-  inputAsts: Record<string, Nodes>,
+  inputAsts: InputAsts,
 ): Promise<DeleteOrWriteFile[]> {
   const nextIdentifierNumberGetter = createNextIdentifierNumberGetter(
     projectId,
@@ -27,7 +27,7 @@ export async function transformAstsToOutputCommands<
       inputAsts,
     )
     .map(async ([inputPath, inputAst]) =>
-      await transformNodeToOutputCommands(
+      await transformInputAstToOutputCommands(
         projectId,
         nextIdentifierNumberGetter,
         inputPath,

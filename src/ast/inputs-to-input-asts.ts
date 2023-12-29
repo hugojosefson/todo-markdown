@@ -1,4 +1,4 @@
-import { markdownToAst } from "../ast/markdown-to-ast.ts";
+import { markdownToAst } from "./markdown-to-ast.ts";
 import { InputAsts } from "../model/input-asts.ts";
 
 import { Inputs } from "../model/inputs.ts";

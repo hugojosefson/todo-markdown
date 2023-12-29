@@ -1,6 +1,7 @@
 import { walk, WalkEntry } from "std/fs/walk.ts";
 import { Nodes } from "npm:@types/mdast";
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
+import { InputAsts } from "../src/model/input-asts.ts";
 import { DeleteOrWriteFile } from "../src/model/output-command.ts";
 
 import { Inputs } from "../src/model/inputs.ts";
@@ -44,7 +45,7 @@ export type CaseInputDirectory =
   & {
     inputDirectory: string;
     inputs: Inputs;
-    inputAsts: Record<string, Nodes>;
+    inputAsts: InputAsts;
   };
 
 /**
@@ -275,7 +276,7 @@ export async function buildItDirectoryAndWriteAst(
   /** map of path to file, and its contents */
   const inputs: Inputs = {};
   /** map of path to file, and its contents' ast */
-  const inputAsts: Record<string, Nodes> = {};
+  const inputAsts: InputAsts = {};
   for await (
     const entry of walk(inputDirectory, {
       includeDirs: false,
