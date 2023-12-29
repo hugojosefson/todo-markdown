@@ -1,15 +1,17 @@
 export type DeleteFile = { action: "delete"; path: string };
 export type WriteFile = { action: "write"; path: string; content: string };
-export type DeleteOrWriteFile = DeleteFile | WriteFile;
 export type UpdateLinksToFile = {
   action: "update-links";
   fromPath: string;
   toPath: string;
 };
 
-export type OutputCommand =
+export type DeleteOrWriteFile =
   | DeleteFile
-  | WriteFile
+  | WriteFile;
+
+export type OutputCommand =
+  | DeleteOrWriteFile
   | UpdateLinksToFile;
 
 export function isDeleteFile(

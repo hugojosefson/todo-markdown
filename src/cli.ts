@@ -6,7 +6,7 @@ import { not } from "./fn.ts";
 import { readAllFromStdin } from "./io/read-all-from-stdin.ts";
 import {
   transformAstToMarkdown,
-  transformMarkdownDirectory,
+  transformMarkdownDirectoryToOutputCommands,
   writeChanges,
 } from "./markdown/transform-ast-to-markdown.ts";
 import { markdownToAst } from "./ast/markdown-to-ast.ts";
@@ -23,7 +23,10 @@ console.error({
 });
 
 if (inputIsDirectory) {
-  const outputs = await transformMarkdownDirectory(projectId, filename);
+  const outputs = await transformMarkdownDirectoryToOutputCommands(
+    projectId,
+    filename,
+  );
   await writeChanges(outputs);
 } else {
   const input = shouldReadFromStdin

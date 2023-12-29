@@ -3,6 +3,8 @@ import { Nodes } from "npm:@types/mdast";
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
 import { DeleteOrWriteFile } from "../src/commands/output-command.ts";
 
+import { Inputs } from "../src/markdown/inputs.ts";
+
 /**
  * Corresponds to a directory with test cases in it.
  *
@@ -41,7 +43,7 @@ export type CaseInputDirectory =
   & CaseInputCommon
   & {
     inputDirectory: string;
-    inputs: Record<string, string>;
+    inputs: Inputs;
     inputAsts: Record<string, Nodes>;
   };
 
@@ -271,7 +273,7 @@ export async function buildItDirectoryAndWriteAst(
   const description = getDescription(baseDirectory);
   const inputDirectory = `${baseDirectory}/input`;
   /** map of path to file, and its contents */
-  const inputs: Record<string, string> = {};
+  const inputs: Inputs = {};
   /** map of path to file, and its contents' ast */
   const inputAsts: Record<string, Nodes> = {};
   for await (

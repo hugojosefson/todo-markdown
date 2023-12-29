@@ -3,10 +3,10 @@ import { assertEquals } from "std/assert/assert_equals.ts";
 import { transformAstToMarkdown } from "../mod.ts";
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
 import { DeleteOrWriteFile } from "../src/commands/output-command.ts";
-import { getInputPaths } from "../src/io/get-input-paths.ts";
-import { getInputs } from "../src/io/get-inputs.ts";
-import { getInputAsts } from "../src/markdown/get-input-asts.ts";
-import { transformMarkdownAsts } from "../src/markdown/transform-ast-to-markdown.ts";
+import { getMarkdownFilePathsInDirectory } from "../src/io/get-markdown-file-paths-in-directory.ts";
+import { readTextFilesToInputs } from "../src/io/read-text-files-to-inputs.ts";
+import { inputsToInputAsts } from "../src/markdown/inputs-to-input-asts.ts";
+import { transformAstsToOutputCommands } from "../src/markdown/transform-ast-to-markdown.ts";
 import { ProjectId } from "../src/strings/project-id.ts";
 
 export function expectInputToOutput(
@@ -27,14 +27,16 @@ export function expectInputDirectoryToOutputs(
   projectId: ProjectId = "TODO",
 ): () => Promise<void> {
   return async () => {
-    const inputPaths = await getInputPaths(inputDirectory.trim());
+    const inputPaths = await getMarkdownFilePathsInDirectory(
+      inputDirectory.trim(),
+    );
     const inputPathsWithRelativePaths = inputPaths
       .map((inputPath) => inputPath.replace(inputDirectory, ""));
 
-    const inputs = await getInputs(inputPaths);
-    const inputAsts = getInputAsts(inputs);
+    const inputs = await readTextFilesToInputs(inputPaths);
+    const inputAsts = inputsToInputAsts(inputs);
 
-    const actualOutputs = await transformMarkdownAsts(
+    const actualOutputs = await transformAstsToOutputCommands(
       projectId,
       inputAsts,
     );

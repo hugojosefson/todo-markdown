@@ -1,6 +1,10 @@
 import { walk, WalkEntry } from "std/fs/walk.ts";
 
-export async function getInputPaths(
+/**
+ * Returns the paths of all {@code .md} files in the given directory.
+ * @param directory the directory to search
+ */
+export async function getMarkdownFilePathsInDirectory(
   directory: string,
 ): Promise<string[]> {
   const inputPaths: string[] = [];

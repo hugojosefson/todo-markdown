@@ -14,14 +14,14 @@ import {
   OutputCommand,
 } from "../commands/output-command.ts";
 import { pipeAsync3, swallow } from "../fn.ts";
-import { getInputPaths } from "../io/get-input-paths.ts";
-import { getInputs } from "../io/get-inputs.ts";
+import { getMarkdownFilePathsInDirectory } from "../io/get-markdown-file-paths-in-directory.ts";
+import { readTextFilesToInputs } from "../io/read-text-files-to-inputs.ts";
 import { sequence } from "../regex.ts";
 import { hasProtocol } from "../strings/has-protocol.ts";
 import { isFragment } from "../strings/is-fragment.ts";
 import { ProjectId } from "../strings/project-id.ts";
 import { createNextIdentifierNumberGetter } from "../strings/task-id-number.ts";
-import { getInputAsts } from "./get-input-asts.ts";
+import { inputsToInputAsts } from "./inputs-to-input-asts.ts";
 
 /**
  * Transforms a single AST, and outputs the result as markdown.
@@ -101,7 +101,12 @@ export async function transformNodeToOutputCommands<
   }
 }
 
-export async function transformMarkdownAsts<
+/**
+ * Transforms multiple input ASTs from a directory, and outputs the result as {@link DeleteOrWriteFile} commands.
+ * @param projectId The project ID to use for identifying and generating task IDs.
+ * @param inputAsts The input ASTs to transform.
+ */
+export async function transformAstsToOutputCommands<
   PI extends ProjectId = ProjectId,
 >(
   projectId: PI,
@@ -132,20 +137,25 @@ export async function transformMarkdownAsts<
   return deconflictOutputCommands(outputCommandsWithUpdatedLinks);
 }
 
-export async function transformMarkdownDirectory<
+/**
+ * Transforms all markdown files in the given directory, and outputs the result as {@link DeleteOrWriteFile} commands.
+ * @param projectId The project ID to use for identifying and generating task IDs.
+ * @param directory The directory to transform.
+ */
+export async function transformMarkdownDirectoryToOutputCommands<
   PI extends ProjectId = ProjectId,
 >(
   projectId: PI,
   directory: string,
 ): Promise<DeleteOrWriteFile[]> {
   const inputAsts: Record<string, Nodes> = await pipeAsync3(
-    getInputPaths,
-    getInputs,
-    getInputAsts,
+    getMarkdownFilePathsInDirectory,
+    readTextFilesToInputs,
+    inputsToInputAsts,
   )(
     directory,
   );
-  return await transformMarkdownAsts(projectId, inputAsts);
+  return await transformAstsToOutputCommands(projectId, inputAsts);
 }
 
 /**

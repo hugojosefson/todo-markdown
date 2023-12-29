@@ -9,10 +9,10 @@ export function pipe<T>(...fns: ((x: T) => T)[]): (x: T) => T {
 }
 
 /**
- * Compose async functions from right to left. This function takes in a variable number of async functions
+ * Compose async functions from right to left. This function takes in a̶ ̶v̶a̶r̶i̶a̶b̶l̶e̶ ̶n̶u̶m̶b̶e̶r̶ ̶o̶f̶ **3** async functions
  * and returns a new async function that applies these async functions from right to left.
  * @returns an async function that applies the input async functions from right to left
- * @note This function only supports exactly 3 functions.
+ * @note This function only supports exactly 3 input functions.
  */
 export function pipeAsync3<A, B, C, D>(
   fnA: (args: A) => B | Promise<B>,
