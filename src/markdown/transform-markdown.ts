@@ -1,16 +1,27 @@
 import { Link, Nodes } from "npm:@types/mdast";
-import { walk, WalkEntry } from "std/fs/walk.ts";
+import { basename } from "std/path/basename.ts";
+import { extname } from "std/path/extname.ts";
 import { astToMarkdown } from "../ast/ast-to-markdown.ts";
 import { extractFirstTopLevelHeadingString } from "../ast/extract-first-top-level-heading.ts";
 import { markdownToAst } from "../ast/markdown-to-ast.ts";
 import { transformNode } from "../ast/transform-node.ts";
 import { isLink, isParent, isText } from "../ast/types.ts";
+import {
+  DeleteOrWriteFile,
+  isDeleteFile,
+  isUpdateLinksToFile,
+  isWriteFile,
+  OutputCommand,
+} from "../commands/output-command.ts";
 import { pipeAsync3, swallow } from "../fn.ts";
+import { getInputPaths } from "../io/get-input-paths.ts";
+import { getInputs } from "../io/get-inputs.ts";
+import { sequence } from "../regex.ts";
+import { hasProtocol } from "../strings/has-protocol.ts";
+import { isFragment } from "../strings/is-fragment.ts";
 import { ProjectId } from "../strings/project-id.ts";
 import { createNextIdentifierNumberGetter } from "../strings/task-id-number.ts";
-import { basename } from "std/path/basename.ts";
-import { extname } from "std/path/extname.ts";
-import { sequence } from "../regex.ts";
+import { getInputAsts } from "./get-input-asts.ts";
 
 export async function transformMarkdown<PI extends ProjectId = ProjectId>(
   projectId: PI,
@@ -30,83 +41,14 @@ export async function transformMarkdown<PI extends ProjectId = ProjectId>(
   );
 }
 
-export async function getInputPaths(
-  directory: string,
-): Promise<string[]> {
-  const inputPaths: string[] = [];
-  for await (
-    const inputWalkEntry of walk(directory, {
-      includeDirs: false,
-      match: [/\.md$/],
-    })
-  ) {
-    inputPaths.push((inputWalkEntry as WalkEntry).path);
-  }
-  return inputPaths;
-}
-
-export async function getInputs(
-  inputPaths: string[],
-): Promise<Record<string, string>> {
-  return Object.fromEntries(
-    await Promise.all(
-      inputPaths.map(async (inputPath) => [
-        inputPath,
-        await Deno.readTextFile(inputPath),
-      ]),
-    ),
-  );
-}
-
-export function getInputAsts(
-  inputs: Record<string, string>,
-): Record<string, Nodes> {
-  return Object.fromEntries(
-    Object.entries(inputs).map(([inputPath, input]) => [
-      inputPath,
-      markdownToAst(input),
-    ]),
-  );
-}
-
-export type DeleteFile = { action: "delete"; path: string };
-export type WriteFile = { action: "write"; path: string; content: string };
-export type DeleteOrWriteFile = DeleteFile | WriteFile;
-export type UpdateLinksToFile = {
-  action: "update-links";
-  fromPath: string;
-  toPath: string;
-};
-
-export function isDeleteFile(
-  output: TransformOutputCommand,
-): output is DeleteFile {
-  return output.action === "delete";
-}
-
-export function isWriteFile(
-  output: TransformOutputCommand,
-): output is WriteFile {
-  return output.action === "write";
-}
-
-export function isUpdateLinksToFile(
-  output: TransformOutputCommand,
-): output is UpdateLinksToFile {
-  return output.action === "update-links";
-}
-
-export type TransformOutputCommand =
-  | DeleteFile
-  | WriteFile
-  | UpdateLinksToFile;
-
-async function transformNodeToOutputCommands<PI extends ProjectId = ProjectId>(
+export async function transformNodeToOutputCommands<
+  PI extends ProjectId = ProjectId,
+>(
   projectId: PI,
   nextIdentifierNumberGetter: () => number,
   inputPath: string,
   inputAst: Nodes,
-): Promise<TransformOutputCommand[]> {
+): Promise<OutputCommand[]> {
   const outputAst = transformNode(
     projectId,
     nextIdentifierNumberGetter,
@@ -164,7 +106,7 @@ export async function transformMarkdownAsts<
     Object.values(inputAsts),
   );
 
-  const outputCommandsPromises: Promise<TransformOutputCommand[]>[] = Object
+  const outputCommandsPromises: Promise<OutputCommand[]>[] = Object
     .entries(
       inputAsts,
     )
@@ -176,7 +118,7 @@ export async function transformMarkdownAsts<
         inputAst,
       )
     );
-  const outputCommands: TransformOutputCommand[] =
+  const outputCommands: OutputCommand[] =
     (await Promise.all(outputCommandsPromises)).flat();
   const outputCommandsWithUpdatedLinks: DeleteOrWriteFile[] = await updateLinks(
     outputCommands,
@@ -209,7 +151,7 @@ export async function transformMarkdownDirectory<
  * @returns The output command that remain, after processing and filtering out all the {@link UpdateLinksToFile} commands.
  */
 export async function updateLinks(
-  outputCommands: TransformOutputCommand[],
+  outputCommands: OutputCommand[],
 ): Promise<DeleteOrWriteFile[]> {
   const updateLinksToFileCommands = outputCommands.filter(isUpdateLinksToFile);
   const writeCommands = outputCommands.filter(isWriteFile);
@@ -372,24 +314,6 @@ export function updateLink(
   }
 
   return link;
-}
-
-/**
- * Returns true if the given link has a protocol.
- * @param link The link to check.
- * @returns True if the given link has a protocol.
- */
-export function hasProtocol(link: string): link is `${string}:${string}` {
-  return /^[a-z]+:/.test(link);
-}
-
-/**
- * Returns true if the given link is only a fragment.
- * @param link The link to check.
- * @returns True if the given link is only a fragment.
- */
-export function isFragment(link: string): link is `#${string}` {
-  return /^#/.test(link);
 }
 
 /**

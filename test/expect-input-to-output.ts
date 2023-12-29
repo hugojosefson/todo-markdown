@@ -2,13 +2,11 @@ import { sortBy } from "std/collections/sort_by.ts";
 import { assertEquals } from "std/assert/assert_equals.ts";
 import { transformMarkdown } from "../mod.ts";
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
-import {
-  DeleteOrWriteFile,
-  getInputAsts,
-  getInputPaths,
-  getInputs,
-  transformMarkdownAsts,
-} from "../src/markdown/transform-markdown.ts";
+import { DeleteOrWriteFile } from "../src/commands/output-command.ts";
+import { getInputPaths } from "../src/io/get-input-paths.ts";
+import { getInputs } from "../src/io/get-inputs.ts";
+import { getInputAsts } from "../src/markdown/get-input-asts.ts";
+import { transformMarkdownAsts } from "../src/markdown/transform-markdown.ts";
 import { ProjectId } from "../src/strings/project-id.ts";
 
 export function expectInputToOutput(

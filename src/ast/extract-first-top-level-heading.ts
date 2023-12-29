@@ -1,12 +1,13 @@
 import { toString } from "npm:mdast-util-to-string";
-import { Heading, Nodes } from "npm:@types/mdast";
+import { Heading, Nodes, Text } from "npm:@types/mdast";
 import { selectAll } from "npm:unist-util-select";
 import { startsWithA } from "../regex.ts";
 import { BOX_REGEX } from "../strings/box.ts";
 
-const startsWithABox = startsWithA(
-  BOX_REGEX,
-);
+const startsWithABox: ((x: string | Text) => boolean) & { regex: RegExp } =
+  startsWithA(
+    BOX_REGEX,
+  );
 
 export function extractFirstTopLevelHeadingString(
   ast: Nodes,
