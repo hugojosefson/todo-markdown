@@ -6,7 +6,8 @@ import { DeleteOrWriteFile } from "../src/commands/output-command.ts";
 import { getMarkdownFilePathsInDirectory } from "../src/io/get-markdown-file-paths-in-directory.ts";
 import { readTextFilesToInputs } from "../src/io/read-text-files-to-inputs.ts";
 import { inputsToInputAsts } from "../src/markdown/inputs-to-input-asts.ts";
-import { transformAstsToOutputCommands } from "../src/markdown/transform-ast-to-markdown.ts";
+
+import { transformAstsToOutputCommands } from "../src/markdown/transform-asts-to-output-commands.ts";
 import { ProjectId } from "../src/strings/project-id.ts";
 
 export function expectInputToOutput(
