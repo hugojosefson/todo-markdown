@@ -1,5 +1,5 @@
-import { hasProtocol } from "../strings/has-protocol.ts";
-import { isFragment } from "../strings/is-fragment.ts";
+import { hasProtocol } from "../model/has-protocol.ts";
+import { isFragment } from "../model/is-fragment.ts";
 import { resolveAbsoluteTarget } from "../strings/resolve-absolute-target.ts";
 import { resolveRelative } from "../strings/resolve-relative.ts";
 

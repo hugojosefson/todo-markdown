@@ -1,10 +1,7 @@
 import { Nodes } from "npm:@types/mdast";
-import {
-  DeleteOrWriteFile,
-  OutputCommand,
-} from "../commands/output-command.ts";
-import { ProjectId } from "../strings/project-id.ts";
-import { createNextIdentifierNumberGetter } from "../strings/task-id-number.ts";
+import { DeleteOrWriteFile, OutputCommand } from "../model/output-command.ts";
+import { ProjectId } from "../model/project-id.ts";
+import { createNextIdentifierNumberGetter } from "../model/task-id-number.ts";
 import { deconflictOutputCommands } from "./deconflict-output-commands.ts";
 import { transformNodeToOutputCommands } from "./transform-node-to-output-commands.ts";
 import { updateLinksInOutputCommands } from "./update-links-in-output-commands.ts";

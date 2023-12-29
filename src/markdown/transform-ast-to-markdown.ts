@@ -1,8 +1,8 @@
 import { Nodes } from "npm:@types/mdast";
 import { astToMarkdown } from "../ast/ast-to-markdown.ts";
 import { transformNode } from "../ast/transform-node.ts";
-import { ProjectId } from "../strings/project-id.ts";
-import { createNextIdentifierNumberGetter } from "../strings/task-id-number.ts";
+import { ProjectId } from "../model/project-id.ts";
+import { createNextIdentifierNumberGetter } from "../model/task-id-number.ts";
 
 /**
  * Transforms a single AST, and outputs the result as markdown.

@@ -5,7 +5,7 @@ import { writeChanges } from "./io/write-changes.ts";
 import {
   transformMarkdownDirectoryToOutputCommands,
 } from "./markdown/transform-markdown-directory-to-output-commands.ts";
-import { isProjectId } from "./strings/project-id.ts";
+import { isProjectId } from "./model/project-id.ts";
 import { not } from "./fn.ts";
 import { readAllFromStdin } from "./io/read-all-from-stdin.ts";
 import {

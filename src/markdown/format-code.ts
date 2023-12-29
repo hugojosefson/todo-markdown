@@ -1,6 +1,6 @@
 import { run } from "run_simple";
-import { global, groups, sequence } from "../regex.ts";
-import { BOX_REGEX } from "../strings/box.ts";
+import { global, groups, sequence } from "../strings/regex.ts";
+import { BOX_REGEX } from "../model/box.ts";
 
 export async function formatCode(
   ext: "md" | "json" | "jsonc" | "ipynb" | "ts" | "tsx" | "js" | "jsx",

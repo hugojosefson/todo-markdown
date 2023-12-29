@@ -1,3 +1,3 @@
 # src/strings
 
-Functions to manipulate, check, type strings.
+Utility functions for working with strings.

@@ -1,9 +1,9 @@
 import { Nodes } from "npm:@types/mdast";
-import { DeleteOrWriteFile } from "../commands/output-command.ts";
+import { DeleteOrWriteFile } from "../model/output-command.ts";
 import { pipeAsync3 } from "../fn.ts";
 import { getMarkdownFilePathsInDirectory } from "../io/get-markdown-file-paths-in-directory.ts";
 import { readTextFilesToInputs } from "../io/read-text-files-to-inputs.ts";
-import { ProjectId } from "../strings/project-id.ts";
+import { ProjectId } from "../model/project-id.ts";
 import { inputsToInputAsts } from "./inputs-to-input-asts.ts";
 
 import { transformAstsToOutputCommands } from "./transform-asts-to-output-commands.ts";

@@ -1,9 +1,9 @@
 import { ListItem } from "npm:@types/mdast";
-import { startsWithA } from "../regex.ts";
-import { ProjectId } from "../strings/project-id.ts";
-import { NextIdentifierNumberGetter } from "../strings/task-id-number.ts";
-import { createTaskIdPlaceholderRegex } from "../strings/task-id-placeholder.ts";
-import { createTaskIdRegex } from "../strings/task-id.ts";
+import { ProjectId } from "../model/project-id.ts";
+import { NextIdentifierNumberGetter } from "../model/task-id-number.ts";
+import { createTaskIdPlaceholderRegex } from "../model/task-id-placeholder.ts";
+import { createTaskIdRegex } from "../model/task-id.ts";
+import { startsWithA } from "../strings/text-type-guard.ts";
 import { replaceFirstChildParagraphTextValue } from "./replace-first-child-paragraph-text-value.ts";
 import { replaceFirstChildTextValue } from "./replace-first-child-text-value.ts";
 import {

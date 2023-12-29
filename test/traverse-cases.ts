@@ -1,9 +1,9 @@
 import { walk, WalkEntry } from "std/fs/walk.ts";
 import { Nodes } from "npm:@types/mdast";
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
-import { DeleteOrWriteFile } from "../src/commands/output-command.ts";
+import { DeleteOrWriteFile } from "../src/model/output-command.ts";
 
-import { Inputs } from "../src/markdown/inputs.ts";
+import { Inputs } from "../src/model/inputs.ts";
 
 /**
  * Corresponds to a directory with test cases in it.

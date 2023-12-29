@@ -1,6 +1,6 @@
 import { Node } from "npm:@types/mdast";
-import { ProjectId } from "../strings/project-id.ts";
-import { NextIdentifierNumberGetter } from "../strings/task-id-number.ts";
+import { ProjectId } from "../model/project-id.ts";
+import { NextIdentifierNumberGetter } from "../model/task-id-number.ts";
 import { replaceHeading } from "./replace-heading.ts";
 import { replaceListItem } from "./replace-list-item.ts";
 import { replaceParent } from "./replace-parent.ts";

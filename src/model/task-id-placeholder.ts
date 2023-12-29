@@ -1,5 +1,10 @@
+import {
+  containsA,
+  isOnlyA,
+  TextTypeGuard,
+} from "../strings/text-type-guard.ts";
 import { PROJECT_ID_REGEX, ProjectId } from "./project-id.ts";
-import { containsA, isA, sequence, TypeGuard } from "../regex.ts";
+import { sequence } from "../strings/regex.ts";
 import {
   TASK_ID_NUMBER_PLACEHOLDER_REGEX,
   TaskIdNumberPlaceholder,
@@ -18,8 +23,8 @@ export type TaskIdPlaceholder<PI extends ProjectId = ProjectId> =
   `${PI}-${TaskIdNumberPlaceholder}`;
 export function createIsTaskIdPlaceholder<PI extends ProjectId = ProjectId>(
   projectId: PI | RegExp = PROJECT_ID_REGEX,
-): TypeGuard<TaskIdPlaceholder<PI>> {
-  return isA<
+): TextTypeGuard<TaskIdPlaceholder<PI>> {
+  return isOnlyA<
     TaskIdPlaceholder
   >(createTaskIdPlaceholderRegex(projectId));
 }

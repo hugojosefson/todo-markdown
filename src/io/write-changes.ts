@@ -1,4 +1,4 @@
-import { DeleteOrWriteFile, isDeleteFile } from "../commands/output-command.ts";
+import { DeleteOrWriteFile, isDeleteFile } from "../model/output-command.ts";
 import { swallow } from "../fn.ts";
 
 export async function writeChanges(

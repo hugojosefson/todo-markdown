@@ -1,17 +1,16 @@
+import { capture, sequence } from "../strings/regex.ts";
 import {
-  capture,
-  isA,
-  sequence,
+  isOnlyA,
   startsWithA,
-  type TypeGuard,
-} from "../regex.ts";
+  TextTypeGuard,
+} from "../strings/text-type-guard.ts";
 import { PROJECT_ID_REGEX, ProjectId } from "./project-id.ts";
 import { createTaskIdPlaceholderRegex } from "./task-id-placeholder.ts";
 import { createTaskIdRegex, TaskId } from "./task-id.ts";
 
 export type BoxContents = " " | "x";
 export const BOX_CONTENTS_REGEX = /(?<boxContents>[ x])/;
-export const isBoxContents: TypeGuard<BoxContents> = isA<BoxContents>(
+export const isBoxContents: TextTypeGuard<BoxContents> = isOnlyA<BoxContents>(
   BOX_CONTENTS_REGEX,
 );
 
@@ -20,7 +19,7 @@ export const BOX_REGEX = capture(
   "box",
   sequence("[", BOX_CONTENTS_REGEX, "]"),
 );
-export const isBox: TypeGuard<Box> = isA<Box>(BOX_REGEX);
+export const isBox: TextTypeGuard<Box> = isOnlyA<Box>(BOX_REGEX);
 
 export type BoxAndTaskId = `${Box} ${TaskId}`;
 export function createBoxAndTaskIdRegex<PI extends ProjectId = ProjectId>(
@@ -38,15 +37,15 @@ export function createBoxAndTaskIdPlaceholderRegex<
 
 export function createIsBoxAndTaskId(
   projectId: ProjectId | RegExp = PROJECT_ID_REGEX,
-): TypeGuard<BoxAndTaskId> {
-  return isA<BoxAndTaskId>(
+): TextTypeGuard<BoxAndTaskId> {
+  return isOnlyA<BoxAndTaskId>(
     createBoxAndTaskIdRegex(projectId),
   );
 }
 
 export function createExtractBoxAndTaskId(
   projectId: ProjectId | RegExp = PROJECT_ID_REGEX,
-): TypeGuard<BoxAndTaskId> {
+): TextTypeGuard<BoxAndTaskId> {
   return startsWithA<
     BoxAndTaskId
   >(createBoxAndTaskIdRegex(projectId));

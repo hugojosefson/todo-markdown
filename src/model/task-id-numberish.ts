@@ -1,4 +1,9 @@
-import { containsA, isA, or, TypeGuard } from "../regex.ts";
+import { or } from "../strings/regex.ts";
+import {
+  containsA,
+  isOnlyA,
+  TextTypeGuard,
+} from "../strings/text-type-guard.ts";
 import {
   TASK_ID_NUMBER_PLACEHOLDER_REGEX,
   TaskIdNumberPlaceholder,
@@ -10,7 +15,7 @@ export const TASK_ID_NUMBERISH_REGEX = or(
   TASK_ID_NUMBER_REGEX,
   TASK_ID_NUMBER_PLACEHOLDER_REGEX,
 );
-export const isTaskIdNumberish: TypeGuard<TaskIdNumberish> = isA<
+export const isTaskIdNumberish: TextTypeGuard<TaskIdNumberish> = isOnlyA<
   TaskIdNumberish
 >(
   TASK_ID_NUMBERISH_REGEX,

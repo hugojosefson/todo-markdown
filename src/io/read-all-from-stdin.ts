@@ -1,3 +1,7 @@
+/**
+ * Read all data from stdin.
+ * @returns A promise that resolves to a string with all data from stdin
+ */
 export async function readAllFromStdin(): Promise<string> {
   const decoder = new TextDecoder();
   const strings: string[] = [];

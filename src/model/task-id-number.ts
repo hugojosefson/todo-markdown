@@ -1,5 +1,10 @@
 import { reduceToLargestNumber } from "../numbers.ts";
-import { containsA, extractA, isA, TypeGuard } from "../regex.ts";
+import { extractA } from "../strings/extract-a.ts";
+import {
+  containsA,
+  isOnlyA,
+  TextTypeGuard,
+} from "../strings/text-type-guard.ts";
 import { ProjectId } from "./project-id.ts";
 import { createExtractTaskId } from "./task-id.ts";
 
@@ -9,7 +14,9 @@ import { isString } from "run_simple/src/fn.ts";
 
 export const TASK_ID_NUMBER_REGEX = /(?<taskIdNumber>\d+)/u;
 export type TaskIdNumber = `{number}`;
-export const isTaskIdNumber: TypeGuard<TaskIdNumber> = isA<TaskIdNumber>(
+export const isTaskIdNumber: TextTypeGuard<TaskIdNumber> = isOnlyA<
+  TaskIdNumber
+>(
   TASK_ID_NUMBER_REGEX,
 );
 export const containsTaskIdNumber = containsA<TaskIdNumber>(

@@ -2,8 +2,8 @@ import { Nodes } from "npm:@types/mdast";
 import { astToMarkdown } from "../ast/ast-to-markdown.ts";
 import { extractFirstTopLevelHeadingString } from "../ast/extract-first-top-level-heading.ts";
 import { transformNode } from "../ast/transform-node.ts";
-import { OutputCommand } from "../commands/output-command.ts";
-import { ProjectId } from "../strings/project-id.ts";
+import { OutputCommand } from "../model/output-command.ts";
+import { ProjectId } from "../model/project-id.ts";
 
 export async function transformNodeToOutputCommands<
   PI extends ProjectId = ProjectId,

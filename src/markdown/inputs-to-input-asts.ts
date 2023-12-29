@@ -1,7 +1,7 @@
 import { markdownToAst } from "../ast/markdown-to-ast.ts";
-import { InputAsts } from "./input-asts.ts";
+import { InputAsts } from "../model/input-asts.ts";
 
-import { Inputs } from "./inputs.ts";
+import { Inputs } from "../model/inputs.ts";
 
 /**
  * Converts an {@link Inputs} record of Markdown text files to an {@link InputAsts} record of ASTs.

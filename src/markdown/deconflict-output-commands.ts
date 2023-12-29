@@ -1,4 +1,4 @@
-import { DeleteOrWriteFile, isWriteFile } from "../commands/output-command.ts";
+import { DeleteOrWriteFile, isWriteFile } from "../model/output-command.ts";
 import { sortUnique } from "../strings/sort-unique.ts";
 
 /**

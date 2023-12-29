@@ -1,6 +1,6 @@
 import { Link } from "npm:@types/mdast";
 import { isText } from "../ast/types.ts";
-import { sequence } from "../regex.ts";
+import { sequence } from "../strings/regex.ts";
 import { basename } from "std/path/basename.ts";
 import { extname } from "std/path/extname.ts";
 import { updateLink } from "./update-link.ts";

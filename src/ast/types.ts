@@ -8,8 +8,9 @@ import {
   PhrasingContent,
   Text,
 } from "npm:@types/mdast";
-import { StartsWith, startsWithA } from "../regex.ts";
-import { Box, BOX_REGEX } from "../strings/box.ts";
+import { Box, BOX_REGEX } from "../model/box.ts";
+import { StringStartingWith } from "../strings/string-types.ts";
+import { startsWithA } from "../strings/text-type-guard.ts";
 
 export function isString(value: unknown): value is string {
   return typeof value === "string";
@@ -51,7 +52,10 @@ export const startsWithBox = startsWithA(BOX_REGEX);
 function hasHeadingBox(
   heading: Heading,
 ): heading is Heading & {
-  children: [{ type: "text"; value: StartsWith<Box> }, ...PhrasingContent[]];
+  children: [
+    { type: "text"; value: StringStartingWith<Box> },
+    ...PhrasingContent[],
+  ];
 } {
   return isText(heading.children[0]) && startsWithBox(heading.children[0]);
 }
@@ -62,7 +66,10 @@ export function hasBox(
 export function hasBox(
   heading: Heading,
 ): heading is Heading & {
-  children: [{ type: "text"; value: StartsWith<Box> }, ...PhrasingContent[]];
+  children: [
+    { type: "text"; value: StringStartingWith<Box> },
+    ...PhrasingContent[],
+  ];
 };
 export function hasBox<T extends ListItem | Heading>(node: T): boolean {
   if (isHeading(node)) {

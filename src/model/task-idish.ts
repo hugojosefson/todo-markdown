@@ -1,4 +1,9 @@
-import { containsA, isA, or, TypeGuard } from "../regex.ts";
+import { or } from "../strings/regex.ts";
+import {
+  containsA,
+  isOnlyA,
+  TextTypeGuard,
+} from "../strings/text-type-guard.ts";
 import { PROJECT_ID_REGEX, ProjectId } from "./project-id.ts";
 import {
   createTaskIdPlaceholderRegex,
@@ -19,8 +24,8 @@ export function createTaskIdishRegex<PI extends ProjectId = ProjectId>(
 }
 export function createIsTaskIdish(
   projectId: ProjectId | RegExp = PROJECT_ID_REGEX,
-): TypeGuard<TaskIdish> {
-  return isA<TaskIdish>(
+): TextTypeGuard<TaskIdish> {
+  return isOnlyA<TaskIdish>(
     createTaskIdishRegex(projectId),
   );
 }

@@ -4,7 +4,7 @@ import {
   isUpdateLinksToFile,
   isWriteFile,
   OutputCommand,
-} from "../commands/output-command.ts";
+} from "../model/output-command.ts";
 
 import { updateLinksInMarkdownContent } from "./update-links-in-markdown-content.ts";
 

@@ -1,8 +1,8 @@
 import { toString } from "npm:mdast-util-to-string";
 import { Heading, Nodes, Text } from "npm:@types/mdast";
 import { selectAll } from "npm:unist-util-select";
-import { startsWithA } from "../regex.ts";
-import { BOX_REGEX } from "../strings/box.ts";
+import { BOX_REGEX } from "../model/box.ts";
+import { startsWithA } from "../strings/text-type-guard.ts";
 
 const startsWithABox: ((x: string | Text) => boolean) & { regex: RegExp } =
   startsWithA(

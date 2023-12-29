@@ -1,4 +1,4 @@
-import { Inputs } from "../markdown/inputs.ts";
+import { Inputs } from "../model/inputs.ts";
 
 /**
  * Reads the given Markdown text files, and returns a record of their paths and contents.
