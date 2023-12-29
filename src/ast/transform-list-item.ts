@@ -1,19 +1,30 @@
 import { ListItem } from "npm:@types/mdast";
+import { hasBox } from "../model/box.ts";
 import { ProjectId } from "../model/project-id.ts";
 import { NextIdentifierNumberGetter } from "../model/task-id-number.ts";
-import { createTaskIdPlaceholderRegex } from "../model/task-id-placeholder.ts";
-import { createTaskIdRegex } from "../model/task-id.ts";
-import { startsWithA } from "../strings/text-type-guard.ts";
-import { replaceFirstChildParagraphTextValue } from "./replace-first-child-paragraph-text-value.ts";
-import { replaceFirstChildTextValue } from "./replace-first-child-text-value.ts";
 import {
-  hasBox,
-  isParagraph,
+  createTaskIdPlaceholderRegex,
+  TaskIdPlaceholder,
+} from "../model/task-id-placeholder.ts";
+import { createTaskIdRegex } from "../model/task-id.ts";
+import { StringStartingWith } from "../strings/string-types.ts";
+import { startsWithA, TextTypeGuard } from "../strings/text-type-guard.ts";
+import { transformNodeReplaceFirstChildParagraphTextValue } from "./transform-node-replace-first-child-paragraph-text-value.ts";
+import { transformNodeReplaceFirstChildTextValue } from "./transform-node-replace-first-child-text-value.ts";
+import { isParagraph } from "./node-types.ts";
+import {
   isWithFirstChildParagraphWithText,
   isWithFirstChildText,
-} from "./types.ts";
+} from "./with-first-child.ts";
 
-export function replaceListItem<
+/**
+ * Transforms a {@link ListItem}.
+ * @param projectId The project identifier to use.
+ * @param nextIdentifierNumberGetter The function to use to get the next identifier number.
+ * @param listItem The list item to transform.
+ * @returns The transformed list item.
+ */
+export function transformListItem<
   T extends ListItem,
   PI extends ProjectId = ProjectId,
 >(
@@ -21,8 +32,12 @@ export function replaceListItem<
   nextIdentifierNumberGetter: NextIdentifierNumberGetter,
   listItem: T,
 ): T {
-  const startsWithTaskId = startsWithA(createTaskIdRegex(projectId));
-  const startsWithTaskIdPlaceholder = startsWithA(
+  const startsWithTaskId: TextTypeGuard<StringStartingWith<PI>> = startsWithA(
+    createTaskIdRegex(projectId),
+  );
+  const startsWithTaskIdPlaceholder: TextTypeGuard<
+    StringStartingWith<TaskIdPlaceholder<PI>>
+  > = startsWithA(
     createTaskIdPlaceholderRegex(projectId),
   );
 
@@ -39,7 +54,7 @@ export function replaceListItem<
 
       if (startsWithTaskIdPlaceholder(listItem.children[0])) {
         // ...and starts with an unidentified placeholder task id, replace with new task id
-        return replaceFirstChildTextValue(
+        return transformNodeReplaceFirstChildTextValue(
           listItem,
           startsWithTaskIdPlaceholder.regex,
           () => `${projectId}-${nextIdentifierNumberGetter()}`,
@@ -47,7 +62,7 @@ export function replaceListItem<
       }
 
       // ...and doesn't start with a task id, add task id
-      return replaceFirstChildTextValue(
+      return transformNodeReplaceFirstChildTextValue(
         listItem,
         /^/,
         () => `${projectId}-${nextIdentifierNumberGetter()} `,
@@ -66,7 +81,7 @@ export function replaceListItem<
       if (startsWithTaskIdPlaceholder(listItem.children[0])) {
         // ...and starts with an unidentified placeholder task id, replace with new task id, and add box
         return {
-          ...replaceFirstChildTextValue(
+          ...transformNodeReplaceFirstChildTextValue(
             listItem,
             startsWithTaskIdPlaceholder.regex,
             () => `${projectId}-${nextIdentifierNumberGetter()}`,
@@ -90,7 +105,7 @@ export function replaceListItem<
 
       if (startsWithTaskIdPlaceholder(listItem.children[0].children[0])) {
         // ...and starts with an unidentified placeholder task id, replace with new task id
-        return replaceFirstChildParagraphTextValue(
+        return transformNodeReplaceFirstChildParagraphTextValue(
           listItem,
           startsWithTaskIdPlaceholder.regex,
           () => `${projectId}-${nextIdentifierNumberGetter()}`,
@@ -98,7 +113,7 @@ export function replaceListItem<
       }
 
       // ...and doesn't start with a task id, add task id
-      return replaceFirstChildParagraphTextValue(
+      return transformNodeReplaceFirstChildParagraphTextValue(
         listItem,
         /^/,
         () => `${projectId}-${nextIdentifierNumberGetter()} `,
@@ -117,7 +132,7 @@ export function replaceListItem<
       if (startsWithTaskIdPlaceholder(listItem.children[0].children[0])) {
         // ...and starts with an unidentified placeholder task id, replace with new task id, and add box
         return {
-          ...replaceFirstChildParagraphTextValue(
+          ...transformNodeReplaceFirstChildParagraphTextValue(
             listItem,
             startsWithTaskIdPlaceholder.regex,
             () => `${projectId}-${nextIdentifierNumberGetter()}`,

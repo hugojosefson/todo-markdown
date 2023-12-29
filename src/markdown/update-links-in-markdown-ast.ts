@@ -1,5 +1,5 @@
 import { Nodes } from "npm:@types/mdast";
-import { isLink, isParent } from "../ast/types.ts";
+import { isLink, isParent } from "../ast/node-types.ts";
 
 import { updateMarkdownLinkNode } from "./update-markdown-link-node.ts";
 

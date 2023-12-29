@@ -1,10 +1,11 @@
-import { replaceFirstChildTextValue } from "./replace-first-child-text-value.ts";
+import { transformNodeReplaceFirstChildTextValue } from "./transform-node-replace-first-child-text-value.ts";
+
 import {
   EligibleParentNodes,
   WithFirstChildParagraphWithText,
-} from "./types.ts";
+} from "./with-first-child.ts";
 
-export function replaceFirstChildParagraphTextValue<
+export function transformNodeReplaceFirstChildParagraphTextValue<
   T extends WithFirstChildParagraphWithText<EligibleParentNodes>,
 >(
   node: T,
@@ -12,7 +13,7 @@ export function replaceFirstChildParagraphTextValue<
   replacer: string | ((substring: string, ...args: unknown[]) => string),
 ): T {
   const paragraph = node.children[0];
-  const replacedParagraph = replaceFirstChildTextValue(
+  const replacedParagraph = transformNodeReplaceFirstChildTextValue(
     paragraph,
     find,
     replacer,

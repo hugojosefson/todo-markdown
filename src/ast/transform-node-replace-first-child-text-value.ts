@@ -1,6 +1,8 @@
-import { EligibleParentNodes, isString, WithFirstChildText } from "./types.ts";
+import { isString } from "../strings/is-string.ts";
 
-export function replaceFirstChildTextValue<
+import { EligibleParentNodes, WithFirstChildText } from "./with-first-child.ts";
+
+export function transformNodeReplaceFirstChildTextValue<
   T extends WithFirstChildText<EligibleParentNodes>,
 >(
   node: T,
