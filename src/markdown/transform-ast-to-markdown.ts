@@ -23,7 +23,13 @@ import { ProjectId } from "../strings/project-id.ts";
 import { createNextIdentifierNumberGetter } from "../strings/task-id-number.ts";
 import { getInputAsts } from "./get-input-asts.ts";
 
-export async function transformMarkdown<PI extends ProjectId = ProjectId>(
+/**
+ * Transforms a single AST, and outputs the result as markdown.
+ * @param projectId The project ID to use for identifying and generating task IDs.
+ * @param ast The AST to transform.
+ * @param otherAstsToConsiderForIdentifierNumbers Other ASTs to consider when generating task IDs. This is useful when you want to generate task IDs that are unique across multiple files.
+ */
+export async function transformAstToMarkdown<PI extends ProjectId = ProjectId>(
   projectId: PI,
   ast: Nodes,
   otherAstsToConsiderForIdentifierNumbers: Nodes[] = [],

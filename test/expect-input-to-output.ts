@@ -1,12 +1,12 @@
 import { sortBy } from "std/collections/sort_by.ts";
 import { assertEquals } from "std/assert/assert_equals.ts";
-import { transformMarkdown } from "../mod.ts";
+import { transformAstToMarkdown } from "../mod.ts";
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
 import { DeleteOrWriteFile } from "../src/commands/output-command.ts";
 import { getInputPaths } from "../src/io/get-input-paths.ts";
 import { getInputs } from "../src/io/get-inputs.ts";
 import { getInputAsts } from "../src/markdown/get-input-asts.ts";
-import { transformMarkdownAsts } from "../src/markdown/transform-markdown.ts";
+import { transformMarkdownAsts } from "../src/markdown/transform-ast-to-markdown.ts";
 import { ProjectId } from "../src/strings/project-id.ts";
 
 export function expectInputToOutput(
@@ -16,7 +16,7 @@ export function expectInputToOutput(
 ): () => Promise<void> {
   return async () => {
     const inputAst = markdownToAst(input.trim() + "\n");
-    const result = await transformMarkdown(projectId, inputAst);
+    const result = await transformAstToMarkdown(projectId, inputAst);
     assertEquals(result, expectedOutput.trim() + "\n");
   };
 }

@@ -5,10 +5,10 @@ import { isProjectId } from "./strings/project-id.ts";
 import { not } from "./fn.ts";
 import { readAllFromStdin } from "./io/read-all-from-stdin.ts";
 import {
-  transformMarkdown,
+  transformAstToMarkdown,
   transformMarkdownDirectory,
   writeChanges,
-} from "./markdown/transform-markdown.ts";
+} from "./markdown/transform-ast-to-markdown.ts";
 import { markdownToAst } from "./ast/markdown-to-ast.ts";
 
 const projectId = Deno.args.find(isProjectId) ?? "TODO";
@@ -31,7 +31,7 @@ if (inputIsDirectory) {
     : await Deno.readTextFile(filename);
 
   const inputAst = markdownToAst(input);
-  const output = await transformMarkdown(projectId, inputAst);
+  const output = await transformAstToMarkdown(projectId, inputAst);
 
   console.log(output);
 }
