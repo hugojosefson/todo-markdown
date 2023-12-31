@@ -45,28 +45,28 @@ export function transformHeading<
     // if heading doesn't start with text, return as is
     return heading;
   }
-  const startsWithBoxAndTaskId: TextTypeGuard<
+  const startsWithABoxAndTaskId: TextTypeGuard<
     StringStartingWith<BoxAndTaskId<PI>>
   > = startsWithA(
     createBoxAndTaskIdRegex(projectId),
   );
-  if (startsWithBoxAndTaskId(heading.children[0])) {
+  if (startsWithABoxAndTaskId(heading.children[0])) {
     // if heading has both box and proper task id, return as is
     return heading;
   }
 
-  const startsWithBoxAndTaskIdPlaceholder: TextTypeGuard<
+  const startsWithABoxAndTaskIdPlaceholder: TextTypeGuard<
     StringStartingWith<BoxAndTaskIdPlaceholder<PI>>
   > = startsWithA(
     createBoxAndTaskIdPlaceholderRegex(
       projectId,
     ),
   );
-  if (startsWithBoxAndTaskIdPlaceholder(heading.children[0])) {
+  if (startsWithABoxAndTaskIdPlaceholder(heading.children[0])) {
     // if heading has box, and unidentified placeholder task id, replace with new task id
     return transformNodeReplaceFirstChildTextValue(
       heading,
-      startsWithBoxAndTaskIdPlaceholder.regex,
+      startsWithABoxAndTaskIdPlaceholder.regex,
       (...args) =>
         `${
           groups<"box">(args).box
@@ -74,39 +74,39 @@ export function transformHeading<
     );
   }
 
-  const startsWithTaskId: TextTypeGuard<StringStartingWith<TaskId<PI>>> =
+  const startsWithATaskId: TextTypeGuard<StringStartingWith<TaskId<PI>>> =
     startsWithA(createTaskIdRegex(projectId));
-  if (startsWithTaskId(heading.children[0])) {
+  if (startsWithATaskId(heading.children[0])) {
     // if heading already has task id, but no box, add box
     return transformNodeReplaceFirstChildTextValue(
       heading,
-      startsWithTaskId.regex,
+      startsWithATaskId.regex,
       (...args) => `[ ] ${groups<"taskId">(args).taskId}`,
     );
   }
 
-  const startsWithTaskIdPlaceholder: TextTypeGuard<
+  const startsWithATaskIdPlaceholder: TextTypeGuard<
     StringStartingWith<TaskIdPlaceholder<PI>>
   > = startsWithA(
     createTaskIdPlaceholderRegex(projectId),
   );
-  if (startsWithTaskIdPlaceholder(heading.children[0])) {
+  if (startsWithATaskIdPlaceholder(heading.children[0])) {
     // if heading has unidentified placeholder task id, replace with new task id, and add box
     return transformNodeReplaceFirstChildTextValue(
       heading,
-      startsWithTaskIdPlaceholder.regex,
+      startsWithATaskIdPlaceholder.regex,
       () => `[ ] ${projectId}-${nextIdentifierNumberGetter()}`,
     );
   }
 
-  const startsWithBox: TextTypeGuard<StringStartingWith<Box>> = startsWithA(
+  const startsWithABox: TextTypeGuard<StringStartingWith<Box>> = startsWithA(
     BOX_REGEX,
   );
-  if (startsWithBox(heading.children[0])) {
+  if (startsWithABox(heading.children[0])) {
     // if heading has box, but no task id, add task id
     return transformNodeReplaceFirstChildTextValue(
       heading,
-      startsWithBox.regex,
+      startsWithABox.regex,
       (...args) =>
         `${
           groups<"box">(args).box

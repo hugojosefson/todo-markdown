@@ -16,7 +16,7 @@ import { createTaskIdRegex, TaskId } from "./task-id.ts";
 
 export type BoxContents = " " | "x";
 export const BOX_CONTENTS_REGEX = /(?<boxContents>[ x])/;
-export const isBoxContents: TextTypeGuard<BoxContents> = isOnlyA<BoxContents>(
+export const isABoxContents: TextTypeGuard<BoxContents> = isOnlyA<BoxContents>(
   BOX_CONTENTS_REGEX,
 );
 
@@ -25,7 +25,7 @@ export const BOX_REGEX = capture(
   "box",
   sequence("[", BOX_CONTENTS_REGEX, "]"),
 );
-export const isBox: TextTypeGuard<Box> = isOnlyA<Box>(BOX_REGEX);
+export const isABox: TextTypeGuard<Box> = isOnlyA<Box>(BOX_REGEX);
 
 export type BoxAndTaskId<PI extends ProjectId = ProjectId> = `${Box} ${TaskId<
   PI
@@ -45,20 +45,12 @@ export function createBoxAndTaskIdPlaceholderRegex<
   return sequence(BOX_REGEX, " ", createTaskIdPlaceholderRegex(projectId));
 }
 
-export function createIsBoxAndTaskId<PI extends ProjectId = ProjectId>(
+export function createIsABoxAndTaskId<PI extends ProjectId = ProjectId>(
   projectId: PI | RegExp = PROJECT_ID_REGEX,
 ): TextTypeGuard<BoxAndTaskId<PI>> {
   return isOnlyA<BoxAndTaskId<PI>>(
     createBoxAndTaskIdRegex(projectId),
   );
-}
-
-export function createExtractBoxAndTaskId<PI extends ProjectId = ProjectId>(
-  projectId: PI | RegExp = PROJECT_ID_REGEX,
-): TextTypeGuard<BoxAndTaskId<PI>> {
-  return startsWithA<
-    BoxAndTaskId<PI>
-  >(createBoxAndTaskIdRegex(projectId));
 }
 
 /**
@@ -71,14 +63,14 @@ export const startsWithABox: TextTypeGuard<StringStartingWith<Box>> =
  * Returns true if the given {@link ListItem} has a box.
  * @param listItem The list item to check.
  */
-export function hasBox(
+export function hasABox(
   listItem: ListItem,
 ): listItem is ListItem & { checked: boolean };
 /**
  * Returns true if the given {@link Heading} has a box in its first child.
  * @param heading The heading to check.
  */
-export function hasBox(
+export function hasABox(
   heading: Heading,
 ): heading is Heading & {
   children: [
@@ -90,12 +82,12 @@ export function hasBox(
  * Returns true if the given {@link ListItem} or {@link Heading} has a box.
  * @param node The node to check.
  */
-export function hasBox<T extends ListItem | Heading>(node: T): boolean {
+export function hasABox<T extends ListItem | Heading>(node: T): boolean {
   if (isHeading(node)) {
-    return hasHeadingBox(node);
+    return hasHeadingABox(node);
   }
   if (isListItem(node)) {
-    return hasListItemBox(node);
+    return hasListItemABox(node);
   }
   return false;
 }
@@ -104,7 +96,7 @@ export function hasBox<T extends ListItem | Heading>(node: T): boolean {
  * Type-guard for {@link ListItem} that definitely has a box.
  * @param listItem The list item to check.
  */
-function hasListItemBox(
+function hasListItemABox(
   listItem: ListItem,
 ): listItem is ListItem & { checked: boolean } {
   return listItem.checked === true || listItem.checked === false;
@@ -114,7 +106,7 @@ function hasListItemBox(
  * Returns true if the given heading has a first child that is a text node, and that starts with a box.
  * @param heading The heading to check.
  */
-function hasHeadingBox(
+function hasHeadingABox(
   heading: Heading,
 ): heading is Heading & {
   children: [

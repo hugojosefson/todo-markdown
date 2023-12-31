@@ -1,5 +1,6 @@
 import merge from "npm:regex-merge";
 import { pipe } from "../fn.ts";
+import { isString } from "./is-string.ts";
 
 /**
  * Prefixes a regex with `^`, so that it only matches the start of a string.
@@ -11,7 +12,7 @@ import { pipe } from "../fn.ts";
  * ```
  */
 export const startWith = <R extends RegExp>(regex: R): R =>
-  sequence(/^/, regex);
+  sequence(/^/, regex) as R & { source: `^${R["source"]}` };
 
 /**
  * Suffices a regex with `$`, so that it only matches the end of a string.
@@ -22,14 +23,18 @@ export const startWith = <R extends RegExp>(regex: R): R =>
  * // regex is /a$/
  * ```
  */
-export const endWith: <R extends RegExp>(regex: R) => R = <R extends RegExp>(
+export const endWith = <R extends RegExp>(
   regex: R,
-): R => sequence(regex, /$/);
+): R => sequence(regex, /$/) as R & { source: `${R["source"]}$` };
 
 /**
  * Surrounds a regex with `^` and `$`, so that it only matches the entire string.
  */
-export const only = pipe(startWith, endWith);
+export const only: <R extends RegExp>(
+  x: R,
+) => R & { source: `^${R["source"]}$` } = pipe(startWith, endWith) as <
+  R extends RegExp,
+>(x: R) => R & { source: `^${R["source"]}$` };
 
 /**
  * Returns a regex that matches any of the given regexes.
@@ -67,6 +72,10 @@ export function sequence<A extends RegExp, B extends RegExp>(
   firstRegex: A | string,
   ...restRegexes: Array<B | string>
 ): A & B {
+  if (restRegexes.length === 0 && !isString(firstRegex)) {
+    // fast-path for when there's only one regex
+    return firstRegex as A & B;
+  }
   return merge(firstRegex, ...restRegexes);
 }
 

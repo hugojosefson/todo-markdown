@@ -21,7 +21,7 @@ export function createTaskIdPlaceholderRegex(
 }
 export type TaskIdPlaceholder<PI extends ProjectId = ProjectId> =
   `${PI}-${TaskIdNumberPlaceholder}`;
-export function createIsTaskIdPlaceholder<PI extends ProjectId = ProjectId>(
+export function createIsATaskIdPlaceholder<PI extends ProjectId = ProjectId>(
   projectId: PI | RegExp = PROJECT_ID_REGEX,
 ): TextTypeGuard<TaskIdPlaceholder<PI>> {
   return isOnlyA<

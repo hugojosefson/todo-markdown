@@ -38,12 +38,17 @@ export type WithFirstChild<
 /**
  * The {@link _Parent} nodes that are eligible for {@link WithFirstChild}.
  */
-export type EligibleParentNodes = Heading | ListItem | Paragraph;
+export type EligibleParentNodes =
+  | Heading
+  | ListItem
+  | Paragraph;
 
 /**
  * The child {@link _Node} types that are eligible for {@link WithFirstChild}.
  */
-export type EligibleNodes = EligibleParentNodes | Text;
+export type EligibleNodes =
+  | EligibleParentNodes
+  | Text;
 
 /**
  * A {@link _Parent} node that has a first child that is a {@link Text}.

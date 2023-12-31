@@ -22,7 +22,7 @@ export function createTaskIdishRegex<PI extends ProjectId = ProjectId>(
     createTaskIdPlaceholderRegex(projectId),
   );
 }
-export function createIsTaskIdish(
+export function createIsATaskIdish(
   projectId: ProjectId | RegExp = PROJECT_ID_REGEX,
 ): TextTypeGuard<TaskIdish> {
   return isOnlyA<TaskIdish>(

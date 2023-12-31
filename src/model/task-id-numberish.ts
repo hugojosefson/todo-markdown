@@ -15,11 +15,11 @@ export const TASK_ID_NUMBERISH_REGEX = or(
   TASK_ID_NUMBER_REGEX,
   TASK_ID_NUMBER_PLACEHOLDER_REGEX,
 );
-export const isTaskIdNumberish: TextTypeGuard<TaskIdNumberish> = isOnlyA<
+export const isATaskIdNumberish: TextTypeGuard<TaskIdNumberish> = isOnlyA<
   TaskIdNumberish
 >(
   TASK_ID_NUMBERISH_REGEX,
 );
-export const containsTaskIdNumberish = containsA<TaskIdNumberish>(
+export const containsATaskIdNumberish = containsA<TaskIdNumberish>(
   TASK_ID_NUMBERISH_REGEX,
 );

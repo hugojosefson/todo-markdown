@@ -1,5 +1,5 @@
 import { ListItem } from "npm:@types/mdast";
-import { hasBox } from "../model/box.ts";
+import { hasABox } from "../model/box.ts";
 import { ProjectId } from "../model/project-id.ts";
 import { NextIdentifierNumberGetter } from "../model/task-id-number.ts";
 import {
@@ -32,10 +32,10 @@ export function transformListItem<
   nextIdentifierNumberGetter: NextIdentifierNumberGetter,
   listItem: T,
 ): T {
-  const startsWithTaskId: TextTypeGuard<StringStartingWith<PI>> = startsWithA(
+  const startsWithATaskId: TextTypeGuard<StringStartingWith<PI>> = startsWithA(
     createTaskIdRegex(projectId),
   );
-  const startsWithTaskIdPlaceholder: TextTypeGuard<
+  const startsWithATaskIdPlaceholder: TextTypeGuard<
     StringStartingWith<TaskIdPlaceholder<PI>>
   > = startsWithA(
     createTaskIdPlaceholderRegex(projectId),
@@ -44,19 +44,19 @@ export function transformListItem<
   if (isWithFirstChildText(listItem)) {
     // if list item has text...
 
-    if (hasBox(listItem)) {
+    if (hasABox(listItem)) {
       // ...and has a box...
 
-      if (startsWithTaskId(listItem.children[0])) {
+      if (startsWithATaskId(listItem.children[0])) {
         // ...and starts with a proper task id, return as is
         return listItem;
       }
 
-      if (startsWithTaskIdPlaceholder(listItem.children[0])) {
+      if (startsWithATaskIdPlaceholder(listItem.children[0])) {
         // ...and starts with an unidentified placeholder task id, replace with new task id
         return transformNodeReplaceFirstChildTextValue(
           listItem,
-          startsWithTaskIdPlaceholder.regex,
+          startsWithATaskIdPlaceholder.regex,
           () => `${projectId}-${nextIdentifierNumberGetter()}`,
         );
       }
@@ -70,7 +70,7 @@ export function transformListItem<
     } else {
       // ...and doesn't have a box...
 
-      if (startsWithTaskId(listItem.children[0])) {
+      if (startsWithATaskId(listItem.children[0])) {
         // ...and starts with a proper task id, add a box
         return {
           ...listItem,
@@ -78,12 +78,12 @@ export function transformListItem<
         };
       }
 
-      if (startsWithTaskIdPlaceholder(listItem.children[0])) {
+      if (startsWithATaskIdPlaceholder(listItem.children[0])) {
         // ...and starts with an unidentified placeholder task id, replace with new task id, and add box
         return {
           ...transformNodeReplaceFirstChildTextValue(
             listItem,
-            startsWithTaskIdPlaceholder.regex,
+            startsWithATaskIdPlaceholder.regex,
             () => `${projectId}-${nextIdentifierNumberGetter()}`,
           ),
           checked: false,
@@ -95,19 +95,19 @@ export function transformListItem<
   } else if (isWithFirstChildParagraphWithText(listItem)) {
     // if list item has paragraph with text...
 
-    if (hasBox(listItem)) {
+    if (hasABox(listItem)) {
       // ...and has a box...
 
-      if (startsWithTaskId(listItem.children[0].children[0])) {
+      if (startsWithATaskId(listItem.children[0].children[0])) {
         // ...and starts with a proper task id, return as is
         return listItem;
       }
 
-      if (startsWithTaskIdPlaceholder(listItem.children[0].children[0])) {
+      if (startsWithATaskIdPlaceholder(listItem.children[0].children[0])) {
         // ...and starts with an unidentified placeholder task id, replace with new task id
         return transformNodeReplaceFirstChildParagraphTextValue(
           listItem,
-          startsWithTaskIdPlaceholder.regex,
+          startsWithATaskIdPlaceholder.regex,
           () => `${projectId}-${nextIdentifierNumberGetter()}`,
         );
       }
@@ -121,7 +121,7 @@ export function transformListItem<
     } else {
       // ...and doesn't have a box...
 
-      if (startsWithTaskId(listItem.children[0].children[0])) {
+      if (startsWithATaskId(listItem.children[0].children[0])) {
         // ...and starts with a proper task id, add a box
         return {
           ...listItem,
@@ -129,12 +129,12 @@ export function transformListItem<
         };
       }
 
-      if (startsWithTaskIdPlaceholder(listItem.children[0].children[0])) {
+      if (startsWithATaskIdPlaceholder(listItem.children[0].children[0])) {
         // ...and starts with an unidentified placeholder task id, replace with new task id, and add box
         return {
           ...transformNodeReplaceFirstChildParagraphTextValue(
             listItem,
-            startsWithTaskIdPlaceholder.regex,
+            startsWithATaskIdPlaceholder.regex,
             () => `${projectId}-${nextIdentifierNumberGetter()}`,
           ),
           checked: false,
@@ -146,7 +146,7 @@ export function transformListItem<
   } else {
     // if list item doesn't start with paragraph or text...
 
-    if (hasBox(listItem)) {
+    if (hasABox(listItem)) {
       // ...and has a box...
 
       if (isParagraph(listItem.children[0])) {

@@ -90,3 +90,14 @@ export function swallow<
     return Promise.reject(reason);
   };
 }
+
+export function isFunction<T extends (...args: unknown[]) => unknown>(
+  value: unknown,
+  // deno-lint-ignore ban-types
+): value is T & Function {
+  return typeof value === "function";
+}
+
+export function always<T>(value: T): () => T {
+  return () => value;
+}

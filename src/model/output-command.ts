@@ -1,3 +1,8 @@
+import { and } from "../fn.ts";
+import { isString } from "../strings/is-string.ts";
+import { createIsRecordWithProperty } from "./record.ts";
+import { TypeGuard } from "./type-guard.ts";
+
 /**
  * A command to delete a file.
  */
@@ -36,28 +41,51 @@ export type OutputCommand =
  * Type-guard for DeleteFile.
  * @param output The output command to check.
  */
-export function isDeleteFile(
-  output: OutputCommand,
-): output is DeleteFile {
-  return output.action === "delete";
-}
+export const isDeleteFile: TypeGuard<DeleteFile> = and(
+  createIsRecordWithProperty(
+    "action",
+    "delete",
+  ),
+  createIsRecordWithProperty(
+    "path",
+    isString,
+  ),
+) as TypeGuard<DeleteFile>;
 
 /**
  * Type-guard for WriteFile.
  * @param output The output command to check.
  */
-export function isWriteFile(
-  output: OutputCommand,
-): output is WriteFile {
-  return output.action === "write";
-}
+export const isWriteFile: TypeGuard<WriteFile> = and(
+  createIsRecordWithProperty(
+    "action",
+    "write",
+  ),
+  createIsRecordWithProperty(
+    "path",
+    isString,
+  ),
+  createIsRecordWithProperty(
+    "content",
+    isString,
+  ),
+) as TypeGuard<WriteFile>;
 
 /**
  * Type-guard for UpdateLinksToFile.
  * @param output The output command to check.
  */
-export function isUpdateLinksToFile(
-  output: OutputCommand,
-): output is UpdateLinksToFile {
-  return output.action === "update-links";
-}
+export const isUpdateLinksToFile: TypeGuard<UpdateLinksToFile> = and(
+  createIsRecordWithProperty(
+    "action",
+    "update-links",
+  ),
+  createIsRecordWithProperty(
+    "fromPath",
+    isString,
+  ),
+  createIsRecordWithProperty(
+    "toPath",
+    isString,
+  ),
+) as TypeGuard<UpdateLinksToFile>;

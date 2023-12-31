@@ -14,15 +14,15 @@ import { isString } from "run_simple/src/fn.ts";
 
 export const TASK_ID_NUMBER_REGEX = /(?<taskIdNumber>\d+)/u;
 export type TaskIdNumber = `{number}`;
-export const isTaskIdNumber: TextTypeGuard<TaskIdNumber> = isOnlyA<
+export const isATaskIdNumber: TextTypeGuard<TaskIdNumber> = isOnlyA<
   TaskIdNumber
 >(
   TASK_ID_NUMBER_REGEX,
 );
-export const containsTaskIdNumber = containsA<TaskIdNumber>(
+export const containsATaskIdNumber = containsA<TaskIdNumber>(
   TASK_ID_NUMBER_REGEX,
 );
-export const extractTaskIdNumber = extractA<TaskIdNumber>(
+export const extractATaskIdNumber = extractA<TaskIdNumber>(
   TASK_ID_NUMBER_REGEX,
 );
 
@@ -43,7 +43,7 @@ export function getMaxIdentifierNumber<PI extends ProjectId = ProjectId>(
     .map(createExtractTaskId(projectId))
     .filter(isString)
     .map((x) => x!)
-    .map(extractTaskIdNumber)
+    .map(extractATaskIdNumber)
     .filter(isString)
     .map((x) => x!)
     .map((taskIdNumber) => parseInt(taskIdNumber, 10))

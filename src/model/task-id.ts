@@ -22,7 +22,7 @@ export function createTaskIdRegex<PI extends ProjectId = ProjectId>(
 }
 export type TaskId<PI extends ProjectId = ProjectId> = `${PI}-${TaskIdNumber}`;
 
-export function createIsTaskId<PI extends ProjectId = ProjectId>(
+export function createIsATaskId<PI extends ProjectId = ProjectId>(
   projectId: PI | RegExp = PROJECT_ID_REGEX,
 ): TextTypeGuard<TaskId<PI>> {
   return isOnlyA<TaskId<PI>>(createTaskIdRegex(projectId));

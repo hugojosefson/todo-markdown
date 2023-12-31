@@ -1,5 +1,5 @@
 import { hasProtocol } from "../model/has-protocol.ts";
-import { isFragment } from "../model/is-fragment.ts";
+import { isAFragment } from "../model/fragment.ts";
 import { resolveAbsoluteTarget } from "../strings/resolve-absolute-target.ts";
 import { resolveRelative } from "../strings/resolve-relative.ts";
 
@@ -26,7 +26,7 @@ export function updateLink(
     return link;
   }
 
-  if (isFragment(link)) {
+  if (isAFragment(link)) {
     return link;
   }
 

@@ -1,13 +1,15 @@
 import { Text } from "npm:@types/mdast";
-import { only, startWith } from "./regex.ts";
+import { TypeGuard } from "../model/type-guard.ts";
+import { isString } from "./is-string.ts";
+import { only, sequence, startWith } from "./regex.ts";
 import { StringContaining } from "./string-types.ts";
 
 /**
  * TextTypeGuard is a function that takes an argument `x` of type `string | Text`.
- * If the `x` is a `string`, the function returns `x is T`.
- * If the `x` is a `Text`, the function returns `x is Text & { value: T }`.
+ * If the `x` is a `string`, the function returns `x is V`.
+ * If the `x` is a `Text`, the function returns `x is Text & { value: V }`.
  * It also has a property `regex` that is the regex that the function uses to
- * check if `x` is of type `T`.
+ * check if `x` is of type `V`.
  */
 export type TextTypeGuard<
   T extends string,
@@ -50,12 +52,14 @@ export const isOnlyA = <
   X extends (string | Text) = (string | Text),
   R extends boolean = X extends string ? (X extends T ? true : false)
     : (X extends Text & { value: T } ? true : false),
->(regex: RegExp): TextTypeGuard<T, X, R> => {
-  const effectiveRegex = only(regex);
-  return Object.assign(
-    (x: X): R => effectiveRegex.test(typeof x === "string" ? x : x.value) as R,
-    { regex: effectiveRegex },
-  );
+>(regex: RegExp | T): TextTypeGuard<T, X, R> => {
+  return matchesA(only(sequence(regex))) as TextTypeGuard<T, X, R>;
+};
+
+export const isOnly = <
+  T extends string,
+>(prefix: RegExp | T): StringTypeGuard<T> => {
+  return matches(only(sequence(prefix))) as StringTypeGuard<T>;
 };
 
 /**
@@ -65,16 +69,27 @@ export const isOnlyA = <
  */
 export const containsA: <T extends string>(
   regex: RegExp,
-) => TextTypeGuardContaining<T> = <
+) => TextTypeGuardContaining<`${string}${T}${string}`> = <
   T extends string,
   X extends (string | Text) = (string | Text),
   R extends boolean = X extends string ? (X extends T ? true : false)
     : (X extends Text & { value: T } ? true : false),
->(regex: RegExp): TextTypeGuardContaining<T, X, R> => {
-  return Object.assign(
-    (x: X): R => regex.test(typeof x === "string" ? x : x.value) as R,
-    { regex },
-  );
+>(
+  regex: RegExp | T,
+): TextTypeGuardContaining<`${string}${T}${string}`, X, R> => {
+  return matchesA(sequence(regex)) as TextTypeGuardContaining<
+    `${string}${T}${string}`,
+    X,
+    R
+  >;
+};
+
+export const contains: <T extends string>(
+  prefix: RegExp | T,
+) => StringTypeGuard<`${string}${T}${string}`> = <
+  T extends string,
+>(prefix: RegExp | T): StringTypeGuard<`${string}${T}${string}`> => {
+  return matches(sequence(prefix)) as StringTypeGuard<`${string}${T}${string}`>;
 };
 
 /**
@@ -92,11 +107,46 @@ export const startsWithA = <
   T extends string,
   X extends (string | Text) = (string | Text),
   R extends boolean = X extends string ? (X extends T ? true : false)
-    : (X extends Text & { value: T } ? true : false),
->(regex: RegExp): TextTypeGuard<T, X, R> => {
-  const effectiveRegex: RegExp = startWith(regex);
+    : (X extends Text & { value: `${T}${string}` } ? true : false),
+>(regex: RegExp): TextTypeGuard<`${T}${string}`, X, R> => {
+  return matchesA(startWith(regex)) as TextTypeGuard<`${T}${string}`, X, R>;
+};
+
+export const startsWith: <T extends string>(
+  prefix: RegExp | T,
+) => StringTypeGuard<`${T}${string}`> = <
+  T extends string,
+>(prefix: RegExp | T): StringTypeGuard<`${T}${string}`> => {
+  return matches(startWith(sequence(prefix))) as StringTypeGuard<
+    `${T}${string}`
+  >;
+};
+
+export type StringTypeGuard<
+  T extends string,
+> = TypeGuard<T> & { regex: RegExp };
+
+export function matches<T extends string>(
+  regex: RegExp | T,
+): StringTypeGuard<T> {
+  const effectiveRegex = sequence(regex);
   return Object.assign(
-    (x: X): R => effectiveRegex.test(typeof x === "string" ? x : x.value) as R,
+    (x: unknown): boolean => isString(x) && effectiveRegex.test(x),
+    { regex: effectiveRegex },
+  ) as StringTypeGuard<T>;
+}
+
+export function matchesA<
+  T extends string,
+  X extends (string | Text) = (string | Text),
+  R extends boolean = X extends string ? (X extends T ? true : false)
+    : (X extends Text & { value: T } ? true : false),
+>(
+  regex: RegExp | T,
+): TextTypeGuard<T, X, R> {
+  const effectiveRegex = sequence(regex);
+  return Object.assign(
+    (x: X): R => effectiveRegex.test(isString(x) ? x : x.value) as R,
     { regex: effectiveRegex },
   );
-};
+}
