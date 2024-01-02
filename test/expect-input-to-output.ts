@@ -40,7 +40,7 @@ export function expectInputDirectoryToOutputs(
     const outputDirectory = inputDirectory.replace(/input$/, "output");
     const actualOutputs = await transformInputAstsToOutputCommands(
       projectId,
-      outputDirectory,
+      inputDirectory,
       inputAsts,
     );
     const actualOutputsWithRelativePaths = actualOutputs
