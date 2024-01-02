@@ -1,3 +1,4 @@
+import { isFunction } from "../fn.ts";
 import { isString } from "../strings/is-string.ts";
 import { isOnly } from "../strings/text-type-guard.ts";
 import { TypeGuard } from "./type-guard.ts";
@@ -17,13 +18,17 @@ export function createIsRecord<K extends string, V>(
       return false;
     }
 
-    const effectiveKeyTypeGuard: TypeGuard<K> = isString(keyTypeGuard)
-      ? isOnly(keyTypeGuard)
-      : keyTypeGuard as TypeGuard<K>;
+    const effectiveKeyTypeGuard: TypeGuard<K> =
+      isFunction<TypeGuard<K>>(keyTypeGuard)
+        ? keyTypeGuard as TypeGuard<K>
+        : isOnly(keyTypeGuard);
 
-    const effectiveValueTypeGuard: TypeGuard<V> = isString(valueTypeGuard)
-      ? isOnly(valueTypeGuard)
-      : valueTypeGuard as TypeGuard<V>;
+    const effectiveValueTypeGuard: TypeGuard<V> =
+      isFunction<TypeGuard<V>>(valueTypeGuard)
+        ? valueTypeGuard as TypeGuard<V>
+        : isString(valueTypeGuard)
+        ? isOnly(valueTypeGuard)
+        : (x: unknown): x is V => valueTypeGuard === x;
 
     // check that at least some key(s) match. use Array.some
     const matchingKeys = Object.keys(value).filter(effectiveKeyTypeGuard);

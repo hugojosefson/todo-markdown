@@ -58,8 +58,8 @@ export const isOnlyA = <
 
 export const isOnly = <
   T extends string,
->(prefix: RegExp | T): StringTypeGuard<T> => {
-  return matches(only(sequence(prefix))) as StringTypeGuard<T>;
+>(value: RegExp | T): StringTypeGuard<T> => {
+  return matches(only(sequence(value))) as StringTypeGuard<T>;
 };
 
 /**

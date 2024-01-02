@@ -1,5 +1,6 @@
 import { Heading, ListItem, PhrasingContent } from "npm:@types/mdast";
 import { isHeading, isListItem, isText } from "../ast/node-types.ts";
+import { isWithFirstChildText } from "../ast/with-first-child.ts";
 import { capture, sequence } from "../strings/regex.ts";
 import { StringStartingWith } from "../strings/string-types.ts";
 import {
@@ -20,7 +21,7 @@ export const isABoxContents: TextTypeGuard<BoxContents> = isOnlyA<BoxContents>(
   BOX_CONTENTS_REGEX,
 );
 
-export type Box = `^[${BoxContents}]`;
+export type Box = `[${BoxContents}]`;
 export const BOX_REGEX = capture(
   "box",
   sequence("[", BOX_CONTENTS_REGEX, "]"),
@@ -115,4 +116,47 @@ function hasHeadingABox(
   ];
 } {
   return isText(heading.children[0]) && startsWithABox(heading.children[0]);
+}
+
+export type Checked = boolean | null;
+
+export function extractBoxChecked(
+  node: ListItem | Heading | undefined,
+): Checked {
+  if (!node) {
+    return null;
+  }
+  if (isHeading(node)) {
+    return extractHeadingBoxChecked(node);
+  }
+  if (isListItem(node)) {
+    return extractListItemBoxChecked(node);
+  }
+  return null;
+}
+
+export function extractBoxCheckedFromString(s: string): Checked {
+  const { boxContents } = startsWithABox.regex.exec(s)?.groups ?? {};
+  if (boxContents === " ") {
+    return false;
+  }
+  if (boxContents === "x") {
+    return true;
+  }
+  return null;
+}
+
+function extractHeadingBoxChecked(
+  heading: Heading,
+): Checked {
+  if (isWithFirstChildText(heading)) {
+    return extractBoxCheckedFromString(heading.children[0].value);
+  }
+  return null;
+}
+
+function extractListItemBoxChecked(
+  listItem: ListItem,
+): Checked {
+  return listItem.checked ?? null;
 }

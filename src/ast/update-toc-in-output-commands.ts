@@ -1,6 +1,7 @@
 import { List, Nodes, Parent } from "npm:@types/mdast";
 import { dirname } from "std/path/dirname.ts";
 import { relative } from "std/path/relative.ts";
+import { extractBoxChecked, hasABox } from "../model/box.ts";
 import {
   DeleteFile,
   DeleteOrWriteFile,
@@ -12,6 +13,7 @@ import { sequence } from "../strings/regex.ts";
 
 import { startsWith } from "../strings/text-type-guard.ts";
 import { astToMarkdown } from "./ast-to-markdown.ts";
+import { extractFirstTopLevelHeading } from "./extract-first-top-level-heading.ts";
 import {
   HtmlCommentEndString,
   HtmlCommentString,
@@ -106,7 +108,7 @@ export function addAnyToc<
             newChildren: [
               ...newChildren,
               tocBegin,
-              createTableOfContents(basePath, filePath, commands),
+              ...createTableOfContents(basePath, filePath, commands),
               tocEnd,
             ],
             inToc: hasTocEnd,
@@ -129,82 +131,128 @@ export function createTableOfContents(
   basePath: string,
   filePath: string,
   commands: WriteFile[],
-): List {
+): Children {
   const startsWithBasePath = startsWith(sequence(basePath, "/"));
-  return {
-    type: "list",
-    ordered: false,
-    start: null,
-    spread: false,
-    children: commands
-      .map((writeFile) => {
-        const pathRelativeToBasePath = writeFile.path.replace(
-          startsWithBasePath.regex,
-          "",
-        );
-        const pathRelativeToBasePathWithoutExtension = pathRelativeToBasePath
-          .replace(/\.md$/, "");
-        const writeFilePathRelativeToTocFilePath = relative(
-          dirname(filePath),
-          writeFile.path,
-        );
+  const listItems = commands
+    .map((writeFile) => {
+      const pathRelativeToBasePath = writeFile.path.replace(
+        startsWithBasePath.regex,
+        "",
+      );
+      const pathRelativeToBasePathWithoutExtension = pathRelativeToBasePath
+        .replace(/\.md$/, "");
+      const writeFilePathRelativeToTocFilePath = relative(
+        dirname(filePath),
+        writeFile.path,
+      );
 
-        return {
-          type: "listItem",
-          checked: null,
-          spread: false,
-          children: [{
-            type: "paragraph",
-            children: [
-              {
-                type: "link",
-                title: null,
-                url: writeFilePathRelativeToTocFilePath.split("/").map(
-                  encodeURIComponent,
-                ).join("/"),
-                children: [
-                  {
-                    type: "text",
-                    value: pathRelativeToBasePathWithoutExtension,
-                  },
-                ],
-              },
-              ...(
-                // output " _(this file)_" if the file is the same as the toc file
-                writeFile.path === filePath
-                  ? [{
-                    type: "text",
-                    value: " ",
-                  }, {
-                    type: "emphasis",
-                    children: [
-                      {
-                        type: "text",
-                        value: "(this file)",
-                      },
-                    ],
-                  }]
-                  : []
-              ),
-            ],
-          }],
-        };
-      })
-      .toSorted((a, b) => {
-        if (
-          isParent(a) && isParent(b) && isParent(a.children[0]) &&
-          isParent(b.children[0]) && isLink(a.children[0].children[0]) &&
-          isLink(b.children[0].children[0])
-        ) {
-          return new Intl.Collator("en", {
-            numeric: true,
-          })
-            .compare(
-              a.children[0].children[0].url,
-              b.children[0].children[0].url,
-            );
-        }
-        return 0;
-      }) as List["children"],
-  };
+      const topLevelHeading = extractFirstTopLevelHeading(writeFile.ast);
+      const checked = extractBoxChecked(topLevelHeading);
+      return {
+        type: "listItem",
+        checked,
+        spread: false,
+        children: [{
+          type: "paragraph",
+          children: [
+            {
+              type: "link",
+              title: null,
+              url: writeFilePathRelativeToTocFilePath.split("/").map(
+                encodeURIComponent,
+              ).join("/"),
+              children: [
+                {
+                  type: "text",
+                  value: pathRelativeToBasePathWithoutExtension,
+                },
+              ],
+            },
+            ...(
+              // output " _(this file)_" if the file is the same as the toc file
+              writeFile.path === filePath
+                ? [{
+                  type: "text",
+                  value: " ",
+                }, {
+                  type: "emphasis",
+                  children: [
+                    {
+                      type: "text",
+                      value: "(this file)",
+                    },
+                  ],
+                }]
+                : []
+            ),
+          ],
+        }],
+      };
+    })
+    .toSorted((a, b) => {
+      if (
+        isParent(a) && isParent(b) && isParent(a.children[0]) &&
+        isParent(b.children[0]) && isLink(a.children[0].children[0]) &&
+        isLink(b.children[0].children[0])
+      ) {
+        return new Intl.Collator("en", {
+          numeric: true,
+        })
+          .compare(
+            a.children[0].children[0].url,
+            b.children[0].children[0].url,
+          );
+      }
+      return 0;
+    }) as List["children"];
+
+  const listItemsWithBox = listItems.filter((listItem) => hasABox(listItem));
+  const listItemsWithoutBox = listItems.filter((listItem) =>
+    !hasABox(listItem)
+  );
+
+  const tasksChildren: Children = listItemsWithBox.length === 0 ? [] : [
+    {
+      type: "heading",
+      depth: 2,
+      children: [
+        {
+          type: "text",
+          value: "Tasks",
+        },
+      ],
+    },
+    {
+      type: "list",
+      ordered: false,
+      start: null,
+      spread: false,
+      children: listItemsWithBox,
+    },
+  ];
+
+  const otherChildren: Children = listItemsWithoutBox.length === 0 ? [] : [
+    {
+      type: "heading",
+      depth: 2,
+      children: [
+        {
+          type: "text",
+          value: "Other files",
+        },
+      ],
+    },
+    {
+      type: "list",
+      ordered: false,
+      start: null,
+      spread: false,
+      children: listItemsWithoutBox,
+    },
+  ];
+
+  return [
+    ...tasksChildren,
+    ...otherChildren,
+  ];
 }
