@@ -196,10 +196,13 @@ export function createTableOfContents(
           isParent(b.children[0]) && isLink(a.children[0].children[0]) &&
           isLink(b.children[0].children[0])
         ) {
-          return a.children[0].children[0].url <
-              b.children[0].children[0].url
-            ? -1
-            : 1;
+          return new Intl.Collator("en", {
+            numeric: true,
+          })
+            .compare(
+              a.children[0].children[0].url,
+              b.children[0].children[0].url,
+            );
         }
         return 0;
       }) as List["children"],
