@@ -740,6 +740,22 @@
               ]
             }
           ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "If all sub-tasks of a task are completed, marks the task as completed."
+                }
+              ]
+            }
+          ]
         }
       ]
     },

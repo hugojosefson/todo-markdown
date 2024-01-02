@@ -114,6 +114,7 @@ Use markdown docs, to keep track of todo items.
        with the new file name without file extension.
 1. [x] Writes a table of contents between any comments `<!-- toc -->` and
        `<!-- /toc -->`.
+1. [ ] If all sub-tasks of a task are completed, marks the task as completed.
 
 ## Further details
 
