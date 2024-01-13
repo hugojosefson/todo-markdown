@@ -28,8 +28,10 @@ export function pipeAsync3<A, B, C, D>(
  * @param fn the function to negate
  * @returns a function that negates the result of the input function
  */
-export function not<T>(fn: (x: T) => boolean): (x: T) => boolean {
-  return (x) => !fn(x);
+export function not<T, R extends boolean>(
+  fn: (x: T) => R,
+): (x: T) => R extends true ? false : true {
+  return (x) => !fn(x) as R extends true ? false : true;
 }
 
 /**
@@ -60,6 +62,16 @@ export function or<T>(...fns: ((x: T) => boolean)[]): (x: T) => boolean {
  */
 export function boolify<T>(fn: (x: T) => unknown): (x: T) => boolean {
   return (x) => !!fn(x);
+}
+
+/**
+ * Converts a function's return value to a string. This function takes in a function that returns a value,
+ * and returns a new function that converts the result of the input function to a string.
+ * @param fn the function whose return value is to be converted to a string
+ * @returns a function that converts the result of the input function to a string
+ */
+export function stringify<T>(fn: (x: T) => unknown): (x: T) => string {
+  return (x) => `${fn(x)}`;
 }
 
 /**

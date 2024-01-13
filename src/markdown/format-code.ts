@@ -12,15 +12,20 @@ export async function formatCode(
   ext: "md" | "json" | "jsonc" | "ipynb" | "ts" | "tsx" | "js" | "jsx",
   code: string,
 ): Promise<string> {
-  return (await run([Deno.execPath(), "fmt", "--ext", ext, "-"], {
-    stdin: removeBackslashBeforeBox(code.trim()),
-  })).trimEnd() + "\n";
+  return removeBackslashBeforeBox(
+    await run([Deno.execPath(), "fmt", "--ext", ext, "-"], {
+      stdin: code.trim(),
+    }),
+  ).trimEnd() + "\n";
 }
 
 export function removeBackslashBeforeBox(code: string): string {
   return code.replaceAll(
     global(sequence(/(?<hashOrDash>[#-] )/, "\\", BOX_REGEX)),
     (...args) =>
-      `${groups<"hashOrDash">(args).hashOrDash} ${groups<"box">(args).box} `,
+      [
+        groups<"hashOrDash">(args).hashOrDash,
+        groups<"box">(args).box,
+      ].join(""),
   );
 }

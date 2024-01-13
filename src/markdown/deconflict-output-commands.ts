@@ -21,7 +21,7 @@ export function deconflictOutputCommands(
   > = Object.groupBy(
     possiblyConflictingOutputCommands,
     (command) => command.path,
-  );
+  ) as Record<DeleteOrWriteFile["action"], DeleteOrWriteFile[]>;
 
   for (const [path, commands] of Object.entries(commandsByPath)) {
     // If there is only one command, then there is no conflict.

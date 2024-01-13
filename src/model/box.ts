@@ -1,7 +1,7 @@
 import { Heading, ListItem, PhrasingContent } from "npm:@types/mdast";
 import { isHeading, isListItem, isText } from "../ast/node-types.ts";
 import { isWithFirstChildText } from "../ast/with-first-child.ts";
-import { capture, sequence } from "../strings/regex.ts";
+import { capture, optional, sequence } from "../strings/regex.ts";
 import { StringStartingWith } from "../strings/string-types.ts";
 import {
   isOnlyA,
@@ -15,8 +15,8 @@ import {
 } from "./task-id-placeholder.ts";
 import { createTaskIdRegex, TaskId } from "./task-id.ts";
 
-export type BoxContents = " " | "x";
-export const BOX_CONTENTS_REGEX = /(?<boxContents>[ x])/;
+export type BoxContents = " " | "x" | "…";
+export const BOX_CONTENTS_REGEX = /(?<boxContents>[ x…])/u;
 export const isABoxContents: TextTypeGuard<BoxContents> = isOnlyA<BoxContents>(
   BOX_CONTENTS_REGEX,
 );
@@ -24,7 +24,13 @@ export const isABoxContents: TextTypeGuard<BoxContents> = isOnlyA<BoxContents>(
 export type Box = `[${BoxContents}]`;
 export const BOX_REGEX = capture(
   "box",
-  sequence("[", BOX_CONTENTS_REGEX, "]"),
+  sequence(
+    optional("\\"),
+    "[",
+    BOX_CONTENTS_REGEX,
+    optional("\\"),
+    "]",
+  ),
 );
 export const isABox: TextTypeGuard<Box> = isOnlyA<Box>(BOX_REGEX);
 
@@ -122,7 +128,7 @@ export type Checked = boolean | null;
 
 export function extractBoxChecked(
   node: ListItem | Heading | undefined,
-): Checked {
+): Checked | "…" {
   if (!node) {
     return null;
   }
@@ -135,10 +141,13 @@ export function extractBoxChecked(
   return null;
 }
 
-export function extractBoxCheckedFromString(s: string): Checked {
+export function extractBoxCheckedFromString(s: string): Checked | "…" {
   const { boxContents } = startsWithABox.regex.exec(s)?.groups ?? {};
   if (boxContents === " ") {
     return false;
+  }
+  if (boxContents === "…") {
+    return "…";
   }
   if (boxContents === "x") {
     return true;
@@ -148,7 +157,7 @@ export function extractBoxCheckedFromString(s: string): Checked {
 
 function extractHeadingBoxChecked(
   heading: Heading,
-): Checked {
+): Checked | "…" {
   if (isWithFirstChildText(heading)) {
     return extractBoxCheckedFromString(heading.children[0].value);
   }

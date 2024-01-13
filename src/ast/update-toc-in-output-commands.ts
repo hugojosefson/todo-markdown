@@ -1,7 +1,7 @@
-import { List, Nodes, Parent } from "npm:@types/mdast";
+import { List, ListItem, Nodes, Parent } from "npm:@types/mdast";
 import { dirname } from "std/path/dirname.ts";
 import { relative } from "std/path/relative.ts";
-import { extractBoxChecked, hasABox } from "../model/box.ts";
+import { extractBoxChecked, hasABox, startsWithABox } from "../model/box.ts";
 import {
   DeleteFile,
   DeleteOrWriteFile,
@@ -21,10 +21,12 @@ import {
   isHtmlTocBegin,
   isHtmlTocEnd,
   isLink,
+  isListItem,
   isParent,
   TOC,
   Toc,
 } from "./node-types.ts";
+import { isWithFirstChildParagraphWithText } from "./with-first-child.ts";
 
 type Children = Parent["children"];
 type Child = Children[number];
@@ -148,13 +150,22 @@ export function createTableOfContents(
 
       const topLevelHeading = extractFirstTopLevelHeading(writeFile.ast);
       const checked = extractBoxChecked(topLevelHeading);
+      const isInProgress = checked === "…";
       return {
         type: "listItem",
-        checked,
+        checked: isInProgress ? null : checked,
         spread: false,
         children: [{
           type: "paragraph",
           children: [
+            ...(
+              isInProgress
+                ? [{
+                  type: "text",
+                  value: "[…] ",
+                }]
+                : []
+            ),
             {
               type: "link",
               title: null,
@@ -206,9 +217,14 @@ export function createTableOfContents(
       return 0;
     }) as List["children"];
 
-  const listItemsWithBox = listItems.filter((listItem) => hasABox(listItem));
+  const hasBoxOrInProgress = (listItem: ListItem) =>
+    hasABox(listItem) ||
+    (isListItem(listItem) && listItem.checked === null &&
+      isWithFirstChildParagraphWithText(listItem) &&
+      startsWithABox(listItem.children[0].children[0].value));
+  const listItemsWithBox = listItems.filter(hasBoxOrInProgress);
   const listItemsWithoutBox = listItems.filter((listItem) =>
-    !hasABox(listItem)
+    !hasBoxOrInProgress(listItem)
   );
 
   const tasksChildren: Children = listItemsWithBox.length === 0 ? [] : [

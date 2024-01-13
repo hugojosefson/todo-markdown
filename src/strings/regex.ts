@@ -79,6 +79,30 @@ export function sequence<A extends RegExp, B extends RegExp>(
   return merge(firstRegex, ...restRegexes);
 }
 
+export function optional<
+  R extends RegExp,
+  A extends (R | string),
+>(regex: A): A extends string ? (R & { source: `(${A})?` })
+  : (R & { source: `(${R["source"]})?` }) {
+  const isFromString = isString(regex);
+  const source = isFromString ? sequence(regex).source : regex.source;
+  const flags = isFromString ? "" : regex.flags;
+  return new RegExp(`${parenthesize(source)}?`, flags) as A extends string
+    ? (R & { source: `(${A})?` })
+    : (R & { source: `(${R["source"]})?` });
+}
+
+/**
+ * Adds parentheses around a regex if it doesn't already have them.
+ * @param regex the regex to parenthesize
+ */
+export function parenthesize<R extends string>(regex: R): `(${R})` {
+  if (regex.startsWith("(") && regex.endsWith(")")) {
+    return regex as `(${R})`;
+  }
+  return `(${regex})` as `(${R})`;
+}
+
 /**
  * Returns a regex with the global flag set.
  * @param regex the regex to make global
