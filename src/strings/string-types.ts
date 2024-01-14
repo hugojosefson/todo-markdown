@@ -10,3 +10,5 @@ export type StringContaining<T extends string> = `{string}${T}{string}`;
  * A string that ends with a specific string.
  */
 export type StringEndingWith<T extends string> = `${string}${T}`;
+
+export type StringParenthesized<T extends string> = `(${T})`;

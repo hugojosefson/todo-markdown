@@ -1,6 +1,13 @@
 import merge from "npm:regex-merge";
 import { pipe } from "../fn.ts";
 import { isString } from "./is-string.ts";
+import { StringParenthesized } from "./string-types.ts";
+
+export type RegexSequence<A extends RegExp, B extends RegExp> =
+  & A
+  & B
+  & { source: `${A["source"]}${B["source"]}` }
+  & { flags: `${A["flags"]}${B["flags"]}` };
 
 /**
  * Prefixes a regex with `^`, so that it only matches the start of a string.
@@ -11,8 +18,12 @@ import { isString } from "./is-string.ts";
  * // regex is /^a/
  * ```
  */
-export const startWith = <R extends RegExp>(regex: R): R =>
-  sequence(/^/, regex) as R & { source: `^${R["source"]}` };
+export const startWith: <R extends RegExp>(
+  regex: R,
+) => RegexSequence<RegExp & { source: "^" }, R> = <R extends RegExp>(
+  regex: R,
+): RegexSequence<RegExp & { source: "^" }, R> =>
+  sequence(/^/, regex) as RegexSequence<RegExp & { source: "^" }, R>;
 
 /**
  * Suffices a regex with `$`, so that it only matches the end of a string.
@@ -23,9 +34,12 @@ export const startWith = <R extends RegExp>(regex: R): R =>
  * // regex is /a$/
  * ```
  */
-export const endWith = <R extends RegExp>(
+export const endWith: <R extends RegExp>(
   regex: R,
-): R => sequence(regex, /$/) as R & { source: `${R["source"]}$` };
+) => RegexSequence<R, RegExp & { source: "$" }> = <R extends RegExp>(
+  regex: R,
+): RegexSequence<R, RegExp & { source: "$" }> =>
+  sequence(regex, /$/) as RegexSequence<R, RegExp & { source: "$" }>;
 
 /**
  * Surrounds a regex with `^` and `$`, so that it only matches the entire string.
@@ -36,6 +50,12 @@ export const only: <R extends RegExp>(
   R extends RegExp,
 >(x: R) => R & { source: `^${R["source"]}$` };
 
+export type RegexOr<A extends RegExp, B extends RegExp> =
+  & A
+  & B
+  & { source: `${A["source"]}|${B["source"]}` }
+  & { flags: `${A["flags"]}${B["flags"]}` };
+
 /**
  * Returns a regex that matches any of the given regexes.
  * @param firstRegex the first regex
@@ -45,9 +65,9 @@ export const only: <R extends RegExp>(
 export function or<A extends RegExp, B extends RegExp>(
   firstRegex: A | string,
   ...restRegexes: Array<B | string>
-): A | B {
+): RegexOr<A, B> {
   if (restRegexes.length === 0) {
-    return sequence(firstRegex);
+    return sequence(firstRegex) as RegexOr<A, B>;
   }
   const [next, ...rest] = restRegexes;
   const restOred = or(next, ...rest);
@@ -71,37 +91,51 @@ export function or<A extends RegExp, B extends RegExp>(
 export function sequence<A extends RegExp, B extends RegExp>(
   firstRegex: A | string,
   ...restRegexes: Array<B | string>
-): A & B {
+): RegexSequence<A, B> {
   if (restRegexes.length === 0 && !isString(firstRegex)) {
     // fast-path for when there's only one regex
-    return firstRegex as A & B;
+    return firstRegex as RegexSequence<A, B>;
   }
   return merge(firstRegex, ...restRegexes);
 }
 
+export type RegexParenthesized<A extends RegExp | string> = A extends string
+  ? (RegExp & { source: `(${A})` })
+  : A extends RegExp ? (A & { source: `(${A["source"]})` })
+  : never;
+
+export type RegexOptional<A extends RegExp | string> = A extends string
+  ? (RegExp & { source: `(${A})?` })
+  : A extends RegExp ? (A & { source: `(${A["source"]})?` })
+  : never;
+
 export function optional<
   R extends RegExp,
   A extends (R | string),
->(regex: A): A extends string ? (R & { source: `(${A})?` })
-  : (R & { source: `(${R["source"]})?` }) {
+>(regex: A): RegexOptional<R> {
   const isFromString = isString(regex);
   const source = isFromString ? sequence(regex).source : regex.source;
   const flags = isFromString ? "" : regex.flags;
-  return new RegExp(`${parenthesize(source)}?`, flags) as A extends string
-    ? (R & { source: `(${A})?` })
-    : (R & { source: `(${R["source"]})?` });
+  return new RegExp(`${parenthesize(source)}?`, flags) as RegexOptional<R>;
 }
 
 /**
  * Adds parentheses around a regex if it doesn't already have them.
  * @param regex the regex to parenthesize
  */
-export function parenthesize<R extends string>(regex: R): `(${R})` {
+export function parenthesize<R extends string>(
+  regex: R,
+): StringParenthesized<R> {
   if (regex.startsWith("(") && regex.endsWith(")")) {
-    return regex as `(${R})`;
+    return regex as StringParenthesized<R>;
   }
-  return `(${regex})` as `(${R})`;
+  return `(${regex})` as StringParenthesized<R>;
 }
+
+export type RegexGlobal<A extends RegExp> =
+  & RegExp
+  & { source: `${A["source"]}` }
+  & { flags: `${A["flags"]}g` };
 
 /**
  * Returns a regex with the global flag set.
@@ -113,8 +147,8 @@ export function parenthesize<R extends string>(regex: R): `(${R})` {
  * // regex is /a/g
  * ```
  */
-export function global<R extends RegExp>(regex: R): R {
-  return new RegExp(regex.source, `${regex.flags}g`) as R;
+export function global<R extends RegExp>(regex: R): RegexGlobal<R> {
+  return new RegExp(regex.source, `${regex.flags}g`) as RegexGlobal<R>;
 }
 
 /**
