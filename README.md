@@ -115,8 +115,42 @@ Use markdown docs, to keep track of todo items.
 1. [x] Writes a table of contents between any comments `<!-- toc -->` and
        `<!-- /toc -->`.
 1. [ ] If all sub-tasks of a task are completed, marks the task as completed.
+1. [ ] Does not write unchanged files.
+1. [ ] Finds mentions of tasks, and links to the task.
+1. [ ] Updates link text, if the linked task is renamed.
+1. [ ] Directory can be a task, its data in `index.md`.
+
+- [ ] Renames the directory, instead of renaming `index.md`.
+
+1. [ ] Writes a shallow index to pages+dirs, between any comments
+       `<!-- index -->` and `<!-- /index -->`.
+
+### Task defined in a heading
+
+- [ ] `listItem`s are the `includes` of any parent task (heading or `listItem`).
+- [ ] Interprets and updates task sub-headings:
+  - [ ] `Do ${currentTaskId} after`
+  - [ ] `Do ${currentTaskId} before`
+  - [ ] `Description`, or text paragraph immediately following a task heading.
+
+### Task defined in a `listItem`
+
+- [ ] `listItem`s are the `includes` of any parent task (heading or `listItem`).
+- [ ] Interprets and updates task sub-`listItem[checked=null]`s
+  - [ ] `Do ${currentTaskId} after` | `Do after`
+    - `otherTaskId1`
+    - `otherTaskId2`
+    - …
+  - [ ] `Do ${currentTaskId} before` | `Do before`
+    - `otherTaskId3`
+    - `otherTaskId4`
+    - …
 
 ## Further details
+
+### Task model
+
+See [src/model/task.ts](./src/model/task.ts).
 
 ### Where to find task identifiers
 
