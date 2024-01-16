@@ -751,55 +751,7 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "If all sub-tasks of a task are completed, marks the task as completed."
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "listItem",
-          "spread": false,
-          "checked": false,
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "type": "text",
                   "value": "Does not write unchanged files."
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "listItem",
-          "spread": false,
-          "checked": false,
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "type": "text",
-                  "value": "Finds mentions of tasks, and links to the task."
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "listItem",
-          "spread": false,
-          "checked": false,
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "type": "text",
-                  "value": "Updates link text, if the linked task is renamed."
                 }
               ]
             }
@@ -826,49 +778,41 @@
                   "value": "."
                 }
               ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "list",
-      "ordered": false,
-      "start": null,
-      "spread": false,
-      "children": [
-        {
-          "type": "listItem",
-          "spread": false,
-          "checked": false,
-          "children": [
+            },
             {
-              "type": "paragraph",
+              "type": "list",
+              "ordered": false,
+              "start": null,
+              "spread": false,
               "children": [
                 {
-                  "type": "text",
-                  "value": "Renames the directory, instead of renaming "
-                },
-                {
-                  "type": "inlineCode",
-                  "value": "index.md"
-                },
-                {
-                  "type": "text",
-                  "value": "."
+                  "type": "listItem",
+                  "spread": false,
+                  "checked": false,
+                  "children": [
+                    {
+                      "type": "paragraph",
+                      "children": [
+                        {
+                          "type": "text",
+                          "value": "Renames the directory, instead of renaming "
+                        },
+                        {
+                          "type": "inlineCode",
+                          "value": "index.md"
+                        },
+                        {
+                          "type": "text",
+                          "value": "."
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }
           ]
-        }
-      ]
-    },
-    {
-      "type": "list",
-      "ordered": true,
-      "start": 1,
-      "spread": false,
-      "children": [
+        },
         {
           "type": "listItem",
           "spread": false,
@@ -906,6 +850,88 @@
     {
       "type": "heading",
       "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Features requiring a task model"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "start": 1,
+      "spread": false,
+      "children": [
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "If all sub-tasks of a task are completed, marks the task as completed."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Finds mentions of tasks, and links to the task's file."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Finds mentions of tasks, and links to the task's file, and the task's\nheading."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": false,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Updates link text, if the linked task is renamed."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "depth": 4,
       "children": [
         {
           "type": "text",
@@ -1035,7 +1061,7 @@
     },
     {
       "type": "heading",
-      "depth": 3,
+      "depth": 4,
       "children": [
         {
           "type": "text",
