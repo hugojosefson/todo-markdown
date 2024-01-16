@@ -114,7 +114,7 @@ Use markdown docs, to keep track of todo items.
        with the new file name without file extension.
 1. [x] Writes a table of contents between any comments `<!-- toc -->` and
        `<!-- /toc -->`.
-1. [ ] Does not write unchanged files.
+1. [x] Does not write unchanged files.
 1. [ ] Directory can be a task, its data in `index.md`.
    - [ ] Renames the directory, instead of renaming `index.md`.
 1. [ ] Writes a shallow index to pages+dirs, between any comments

@@ -34,6 +34,12 @@ export function not<T, R extends boolean>(
   return (x) => !fn(x) as R extends true ? false : true;
 }
 
+export function notAsync<T, R extends boolean>(
+  fn: (x: T) => Promise<R> | R,
+): (x: T) => Promise<R extends true ? false : true> {
+  return async (x) => !(await fn(x)) as R extends true ? false : true;
+}
+
 /**
  * Returns true if all given functions return true. This function takes in a variable number of functions,
  * and returns a new function that returns true if all input functions return true.
@@ -44,6 +50,19 @@ export function and<T>(...fns: ((x: T) => boolean)[]): (x: T) => boolean {
   return (x) => fns.every((fn) => fn(x));
 }
 
+export function andAsync<T>(
+  ...fns: ((x: T) => Promise<boolean> | boolean)[]
+): (x: T) => Promise<boolean> {
+  return async (x) => {
+    for (const fn of fns) {
+      if (!(await fn(x))) {
+        return false;
+      }
+    }
+    return true;
+  };
+}
+
 /**
  * Returns true if any given function returns true. This function takes in a variable number of functions,
  * and returns a new function that returns true if any input function returns true.
@@ -52,6 +71,19 @@ export function and<T>(...fns: ((x: T) => boolean)[]): (x: T) => boolean {
  */
 export function or<T>(...fns: ((x: T) => boolean)[]): (x: T) => boolean {
   return (x) => fns.some((fn) => fn(x));
+}
+
+export function orAsync<T>(
+  ...fns: ((x: T) => Promise<boolean> | boolean)[]
+): (x: T) => Promise<boolean> {
+  return async (x) => {
+    for (const fn of fns) {
+      if (await fn(x)) {
+        return true;
+      }
+    }
+    return false;
+  };
 }
 
 /**

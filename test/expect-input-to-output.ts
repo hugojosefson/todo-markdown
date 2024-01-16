@@ -1,13 +1,18 @@
-import { sortBy } from "std/collections/sort_by.ts";
 import { assertEquals } from "std/assert/assert_equals.ts";
+import { sortBy } from "std/collections/sort_by.ts";
 import { transformInputAstToMarkdown } from "../mod.ts";
-import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
-import { DeleteOrWriteFile } from "../src/model/output-command.ts";
-import { getMarkdownFilePathsInDirectory } from "../src/io/get-markdown-file-paths-in-directory.ts";
-import { readTextFilesToInputs } from "../src/io/read-text-files-to-inputs.ts";
 import { inputsToInputAsts } from "../src/ast/inputs-to-input-asts.ts";
+import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
 
 import { transformInputAstsToOutputCommands } from "../src/ast/transform-input-asts-to-output-commands.ts";
+import { not, or } from "../src/fn.ts";
+import { getMarkdownFilePathsInDirectory } from "../src/io/get-markdown-file-paths-in-directory.ts";
+import { readTextFilesToInputs } from "../src/io/read-text-files-to-inputs.ts";
+import {
+  DeleteOrWriteFile,
+  isDeleteFile,
+  isWriteFile,
+} from "../src/model/output-command.ts";
 import { ProjectId } from "../src/model/project-id.ts";
 
 export function expectInputToOutput(
@@ -48,6 +53,25 @@ export function expectInputDirectoryToOutputs(
         ...actualOutput,
         path: actualOutput.path.replace(inputDirectory, ""),
       }));
+    const inputsWithRelativePaths = Object.fromEntries(
+      Object.entries(inputs)
+        .map(([inputPath, input]) => [
+          inputPath.replace(inputDirectory, ""),
+          input,
+        ]),
+    );
+
+    const isUnnecessaryWriteFile = (expectedOutput: DeleteOrWriteFile) =>
+      isWriteFile(expectedOutput) &&
+      expectedOutput.content === inputsWithRelativePaths[expectedOutput.path];
+    const isUnnecessaryDeleteFile = (expectedOutput: DeleteOrWriteFile) =>
+      isDeleteFile(expectedOutput) &&
+      !inputsWithRelativePaths[expectedOutput.path];
+    const isUnnecessaryOutput = or(
+      isUnnecessaryWriteFile,
+      isUnnecessaryDeleteFile,
+    );
+    const isNecessaryOutput = not(isUnnecessaryOutput);
 
     const expectedOutputsWithRelativePaths = expectedOutputs
       .map((expectedOutput) => ({
@@ -58,16 +82,16 @@ export function expectInputDirectoryToOutputs(
         ),
       }));
 
-    const map: Map<string, DeleteOrWriteFile> = new Map([
-      ...inputPathsWithRelativePaths.map((inputPath) =>
-        [inputPath, { action: "delete", path: inputPath }] as const
-      ),
-      ...expectedOutputsWithRelativePaths.map((actualOutput) =>
-        [actualOutput.path, actualOutput] as const
-      ),
-    ]);
     const andDeletingAllInputFilesFirstOnlyIfTheyAreNotLaterWrittenTo:
-      DeleteOrWriteFile[] = [...map.values()];
+      DeleteOrWriteFile[] = [...new Map([
+        ...inputPathsWithRelativePaths
+          .map((inputPath) =>
+            [inputPath, { action: "delete", path: inputPath }] as const
+          ),
+        ...expectedOutputsWithRelativePaths
+          .map((actualOutput) => [actualOutput.path, actualOutput] as const),
+      ]).values()]
+        .filter(isNecessaryOutput);
 
     assertEquals(
       sortBy(actualOutputsWithRelativePaths, selector),

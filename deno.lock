@@ -8,6 +8,7 @@
       "npm:mdast-util-to-markdown@2.1.0": "npm:mdast-util-to-markdown@2.1.0",
       "npm:mdast-util-to-string@4.0.0": "npm:mdast-util-to-string@4.0.0",
       "npm:micromark-extension-gfm@3.0.0": "npm:micromark-extension-gfm@3.0.0",
+      "npm:p-filter@4.1.0": "npm:p-filter@4.1.0",
       "npm:ramda@0.29.1": "npm:ramda@0.29.1",
       "npm:regex-merge@2.0.0": "npm:regex-merge@2.0.0",
       "npm:unist-util-select@5.1.0": "npm:unist-util-select@5.1.0"
@@ -448,6 +449,16 @@
         "dependencies": {
           "boolbase": "boolbase@1.0.0"
         }
+      },
+      "p-filter@4.1.0": {
+        "integrity": "sha512-37/tPdZ3oJwHaS3gNJdenCDB3Tz26i9sjhnguBtvN0vYlRIiDNnvTWkuh+0hETV9rLPdJ3rlL3yVOYPIAnM8rw==",
+        "dependencies": {
+          "p-map": "p-map@7.0.1"
+        }
+      },
+      "p-map@7.0.1": {
+        "integrity": "sha512-2wnaR0XL/FDOj+TgpDuRb2KTjLnu3Fma6b1ZUwGY7LcqenMcvP/YFpjpbPKY6WVGsbuJZRuoUz8iPrt8ORnAFw==",
+        "dependencies": {}
       },
       "ramda@0.29.1": {
         "integrity": "sha512-OfxIeWzd4xdUNxlWhgFazxsA/nl3mS4/jGZI5n00uWOoSSFRhC1b6gl6xvmzUamgmqELraWp0J/qqVlXYPDPyA==",
