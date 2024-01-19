@@ -102,6 +102,7 @@ export async function transformInputAstsToOutputCommands<
     .map(async ([inputPath, inputAst]) =>
       await transformInputAstToOutputCommands(
         projectId,
+        basePath,
         nextIdentifierNumberGetter,
         inputPath,
         inputAst,

@@ -1,9 +1,11 @@
 import { Link } from "npm:@types/mdast";
-import { isText } from "../ast/node-types.ts";
+import { isText } from "./node-types.ts";
 import { sequence } from "../strings/regex.ts";
-import { basename } from "std/path/basename.ts";
-import { extname } from "std/path/extname.ts";
-import { updateLink } from "./update-link.ts";
+import { updateLink } from "../markdown/update-link.ts";
+import {
+  INPUT_PATH_FILENAME_REGEX,
+  INPUT_PATH_INDEX_MD_REGEX,
+} from "./transform-input-ast-to-output-commands.ts";
 
 /**
  * Updates the given Markdown link node, so that it points to the correct path.
@@ -30,11 +32,8 @@ export function updateMarkdownLinkNode<T extends Link>(
     const child = linkNode.children[0];
     if (isText(child)) {
       // text contains the filename of the url, without the extension
-      const extLessUrlBasename = basename(url, extname(url));
-      const extLessUpdatedUrlBasename = basename(
-        updatedUrl,
-        extname(updatedUrl),
-      );
+      const extLessUrlBasename = taskFileBasename(url);
+      const extLessUpdatedUrlBasename = taskFileBasename(updatedUrl);
       const extLessUrlBasenameRegex = sequence(extLessUrlBasename);
       if (extLessUrlBasenameRegex.test(child.value)) {
         const updatedText = child.value.replace(
@@ -60,4 +59,18 @@ export function updateMarkdownLinkNode<T extends Link>(
     ...linkNode,
     url: uriEncodedUpdatedUrl,
   };
+}
+
+function taskFileBasename(url: string): string {
+  const match: RegExpExecArray | null = INPUT_PATH_INDEX_MD_REGEX.exec(url);
+  if (match?.groups?.name) {
+    return match.groups?.name;
+  }
+
+  const match2: RegExpExecArray | null = INPUT_PATH_FILENAME_REGEX.exec(url);
+  if (match2?.groups?.name) {
+    return match2.groups?.name;
+  }
+
+  throw new Error(`Invalid path: ${url}`);
 }

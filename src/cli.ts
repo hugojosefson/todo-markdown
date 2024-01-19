@@ -25,9 +25,10 @@ console.error({
 });
 
 if (inputIsDirectory) {
+  const absoluteDirectory = await Deno.realPath(filename);
   const outputs = await transformInputDirectoryToOutputCommands(
     projectId,
-    filename,
+    absoluteDirectory,
   );
   await writeChanges(outputs);
 } else {

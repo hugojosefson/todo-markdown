@@ -1,6 +1,6 @@
 import { Nodes, Parent } from "npm:@types/mdast";
-import { isLink, isParent } from "../ast/node-types.ts";
-import { transformNode as _transformNode } from "../ast/transform-node.ts";
+import { isLink, isParent } from "./node-types.ts";
+import { transformNode as _transformNode } from "./transform-node.ts";
 import { updateMarkdownLinkNode } from "./update-markdown-link-node.ts";
 
 /**

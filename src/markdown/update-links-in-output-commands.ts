@@ -7,7 +7,7 @@ import {
   OutputCommand,
   WriteFile,
 } from "../model/output-command.ts";
-import { updateLinksInMarkdownAst } from "./update-links-in-markdown-ast.ts";
+import { updateLinksInMarkdownAst } from "../ast/update-links-in-markdown-ast.ts";
 
 /**
  * Finds {@link UpdateLinksToFile} commands in the input commands, obeying them by updating Markdown links within the
