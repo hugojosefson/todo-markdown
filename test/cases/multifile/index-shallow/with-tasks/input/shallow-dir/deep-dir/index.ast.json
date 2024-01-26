@@ -1,0 +1,32 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [
+        {
+          "type": "text",
+          "value": "deep-dir"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "This deep directory has an "
+        },
+        {
+          "type": "inlineCode",
+          "value": "index.md"
+        },
+        {
+          "type": "text",
+          "value": " file, but should not be included in the\nshallow index."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [
+        {
+          "type": "text",
+          "value": "shallow-dir"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "This is a shallowly placed directory, with an "
+        },
+        {
+          "type": "inlineCode",
+          "value": "index.md"
+        },
+        {
+          "type": "text",
+          "value": " file."
+        }
+      ]
+    }
+  ]
+}

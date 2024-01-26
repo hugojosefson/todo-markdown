@@ -1,0 +1,166 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [
+        {
+          "type": "text",
+          "value": "index-shallow test"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "This tests the shallow index feature."
+        }
+      ]
+    },
+    {
+      "type": "html",
+      "value": "<!-- index -->"
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "This will be replaced with a shallow index."
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "link",
+          "title": null,
+          "url": "shallow-dir/index.md",
+          "children": [
+            {
+              "type": "text",
+              "value": "📁 shallow-dir"
+            }
+          ]
+        },
+        {
+          "type": "break"
+        },
+        {
+          "type": "link",
+          "title": null,
+          "url": "shallow-dir2/index.md",
+          "children": [
+            {
+              "type": "text",
+              "value": "📁 shallow-dir2"
+            }
+          ]
+        },
+        {
+          "type": "break"
+        },
+        {
+          "type": "link",
+          "title": null,
+          "url": "shallow-file.md",
+          "children": [
+            {
+              "type": "text",
+              "value": "📄 shallow-file"
+            }
+          ]
+        },
+        {
+          "type": "break"
+        },
+        {
+          "type": "link",
+          "title": null,
+          "url": "shallow-file2.md",
+          "children": [
+            {
+              "type": "text",
+              "value": "📄 shallow-file2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "link",
+          "title": null,
+          "url": "shallow-dir/index.md",
+          "children": [
+            {
+              "type": "text",
+              "value": "📁 shallow-dir"
+            }
+          ]
+        },
+        {
+          "type": "break"
+        },
+        {
+          "type": "link",
+          "title": null,
+          "url": "shallow-dir2/index.md",
+          "children": [
+            {
+              "type": "text",
+              "value": "📁 shallow-dir2"
+            }
+          ]
+        },
+        {
+          "type": "break"
+        },
+        {
+          "type": "link",
+          "title": null,
+          "url": "shallow-file.md",
+          "children": [
+            {
+              "type": "text",
+              "value": "📄 shallow-file"
+            }
+          ]
+        },
+        {
+          "type": "break"
+        },
+        {
+          "type": "link",
+          "title": null,
+          "url": "shallow-file2.md",
+          "children": [
+            {
+              "type": "text",
+              "value": "📄 shallow-file2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "html",
+      "value": "<!-- /index -->"
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "This comes after the shallow index."
+        }
+      ]
+    }
+  ]
+}

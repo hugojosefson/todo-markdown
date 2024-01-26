@@ -1,4 +1,6 @@
+import pFilter from "npm:p-filter";
 import { notAsync, orAsync } from "../fn.ts";
+import { addMissingIndexFiles } from "../markdown/add-missing-index-files.ts";
 import { deconflictOutputCommands } from "../markdown/deconflict-output-commands.ts";
 import { updateLinksInOutputCommands } from "../markdown/update-links-in-output-commands.ts";
 import { InputAsts } from "../model/input-asts.ts";
@@ -10,9 +12,8 @@ import {
 } from "../model/output-command.ts";
 import { ProjectId } from "../model/project-id.ts";
 import { createNextIdentifierNumberGetter } from "../model/task-id-number.ts";
+import { updateIndexInOutputCommands } from "./index/update-index-in-output-commands.ts";
 import { transformInputAstToOutputCommands } from "./transform-input-ast-to-output-commands.ts";
-import { updateTocInOutputCommands } from "./update-toc-in-output-commands.ts";
-import pFilter from "npm:p-filter";
 
 /**
  * Filters out {@link DeleteOrWriteFile} commands that do not change the file,
@@ -117,10 +118,13 @@ export async function transformInputAstsToOutputCommands<
   const deconflictedOutputCommands = deconflictOutputCommands(
     outputCommandsWithUpdatedLinks,
   );
-  const outputCommandsWithToc = await updateTocInOutputCommands(
+  const outputCommandsWithAddedMissingIndexFiles = addMissingIndexFiles(
     basePath,
     deconflictedOutputCommands,
   );
+  const outputCommandsWithShallowIndex = await updateIndexInOutputCommands(
+    outputCommandsWithAddedMissingIndexFiles,
+  );
 
-  return await withOnlyChangedFiles(outputCommandsWithToc);
+  return await withOnlyChangedFiles(outputCommandsWithShallowIndex);
 }

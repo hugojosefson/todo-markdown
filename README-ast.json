@@ -712,30 +712,35 @@
         {
           "type": "listItem",
           "spread": false,
-          "checked": true,
+          "checked": false,
           "children": [
             {
               "type": "paragraph",
               "children": [
                 {
-                  "type": "text",
-                  "value": "Writes a table of contents between any comments "
-                },
-                {
-                  "type": "inlineCode",
-                  "value": "<!-- toc -->"
-                },
-                {
-                  "type": "text",
-                  "value": " and\n"
-                },
-                {
-                  "type": "inlineCode",
-                  "value": "<!-- /toc -->"
-                },
-                {
-                  "type": "text",
-                  "value": "."
+                  "type": "delete",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "Writes a table of contents between any comments "
+                    },
+                    {
+                      "type": "inlineCode",
+                      "value": "<!-- toc -->"
+                    },
+                    {
+                      "type": "text",
+                      "value": " and\n"
+                    },
+                    {
+                      "type": "inlineCode",
+                      "value": "<!-- /toc -->"
+                    },
+                    {
+                      "type": "text",
+                      "value": "."
+                    }
+                  ]
                 }
               ]
             }
@@ -816,14 +821,14 @@
         {
           "type": "listItem",
           "spread": false,
-          "checked": false,
+          "checked": true,
           "children": [
             {
               "type": "paragraph",
               "children": [
                 {
                   "type": "text",
-                  "value": "Writes a shallow index to pages+dirs, between any comments\n"
+                  "value": "Writes a shallow index to pages+dirs/index.md, between any comments\n"
                 },
                 {
                   "type": "inlineCode",
@@ -840,6 +845,38 @@
                 {
                   "type": "text",
                   "value": "."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": true,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "If non-empty directory has no "
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "index.md"
+                },
+                {
+                  "type": "text",
+                  "value": ", creates one with a heading\n"
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "# ${directoryName}"
+                },
+                {
+                  "type": "text",
+                  "value": " and a shallow index."
                 }
               ]
             }

@@ -112,13 +112,15 @@ Use markdown docs, to keep track of todo items.
 1. [x] When updating links to a renamed file, if the link text contains the old
        file name without file extension, replaces that part of the link text
        with the new file name without file extension.
-1. [x] Writes a table of contents between any comments `<!-- toc -->` and
-       `<!-- /toc -->`.
+1. [ ] ~~Writes a table of contents between any comments `<!-- toc -->` and
+       `<!-- /toc -->`.~~
 1. [x] Does not write unchanged files.
 1. [x] Directory can be a task, its data in `index.md`.
    - [x] Renames the directory, instead of renaming `index.md`.
-1. [ ] Writes a shallow index to pages+dirs, between any comments
+1. [x] Writes a shallow index to pages+dirs/index.md, between any comments
        `<!-- index -->` and `<!-- /index -->`.
+1. [x] If non-empty directory has no `index.md`, creates one with a heading
+       `# ${directoryName}` and a shallow index.
 
 ### Features requiring a task model
 

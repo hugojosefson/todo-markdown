@@ -67,14 +67,14 @@ export function createIsHtmlWithValue<T extends string>(
 }
 
 /**
- * Identifier for a table of contents.
+ * Identifier for a shallow index.
  */
-export const TOC = "toc";
+export const INDEX = "index";
 
 /**
- * Identifier for a table of contents.
+ * Identifier for a shallow index.
  */
-export type Toc = typeof TOC;
+export type Index = typeof INDEX;
 
 /**
  * A comment in HTML.
@@ -128,27 +128,30 @@ export function createIsHtmlCommentEndString<T extends string>(
 }
 
 /**
- * Type-guard for {@link HtmlCommentString}<{@link Toc}>.
+ * Type-guard for {@link HtmlCommentString}<{@link Index}>.
  */
-export const isTocBeginCommentString: TypeGuard<HtmlCommentString<Toc>> =
-  createIsHtmlCommentString(TOC);
+export const isIndexBeginCommentString: TypeGuard<HtmlCommentString<Index>> =
+  createIsHtmlCommentString(INDEX);
 
 /**
- * Type-guard for {@link HtmlCommentEndString}<{@link Toc}>.
+ * Type-guard for {@link HtmlCommentEndString}<{@link Index}>.
  */
-export const isTocEndCommentString: TypeGuard<HtmlCommentEndString<Toc>> =
-  createIsHtmlCommentEndString(TOC);
+export const isIndexEndCommentString: TypeGuard<HtmlCommentEndString<Index>> =
+  createIsHtmlCommentEndString(INDEX);
 
 /**
- * Type-guard for {@link HtmlWithValue}<{@link HtmlCommentString}<{@link Toc}>>.
+ * Type-guard for {@link HtmlWithValue}<{@link HtmlCommentString}<{@link Index}>>.
  */
-export const isHtmlTocBegin: TypeGuard<HtmlWithValue<HtmlCommentString<Toc>>> =
-  createIsHtmlWithValue(createHtmlCommentString(TOC));
+export const isHtmlIndexBegin: TypeGuard<
+  HtmlWithValue<HtmlCommentString<Index>>
+> = createIsHtmlWithValue(createHtmlCommentString(INDEX));
+
 /**
- * Type-guard for {@link HtmlWithValue}<{@link HtmlCommentEndString}<{@link Toc}>>.
+ * Type-guard for {@link HtmlWithValue}<{@link HtmlCommentEndString}<{@link Index}>>.
  */
-export const isHtmlTocEnd: TypeGuard<HtmlWithValue<HtmlCommentEndString<Toc>>> =
-  createIsHtmlWithValue(createHtmlCommentEndString(TOC));
+export const isHtmlIndexEnd: TypeGuard<
+  HtmlWithValue<HtmlCommentEndString<Index>>
+> = createIsHtmlWithValue(createHtmlCommentEndString(INDEX));
 
 /**
  * Type-guard for {@link Heading}.
