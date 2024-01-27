@@ -1371,7 +1371,7 @@
       "children": [
         {
           "type": "text",
-          "value": "See "
+          "value": "See also "
         },
         {
           "type": "link",
@@ -1387,6 +1387,258 @@
         {
           "type": "text",
           "value": "."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Connection between task model and markdown"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "depth": 4,
+      "children": [
+        {
+          "type": "text",
+          "value": "How a task refers to its position in the markdown"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "depth": 5,
+      "children": [
+        {
+          "type": "text",
+          "value": "Requirements"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "start": null,
+      "spread": false,
+      "children": [
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "We must be able to convert from "
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "DeleteOrWriteFiles[]"
+                },
+                {
+                  "type": "text",
+                  "value": ", which includes each\nfile's AST and file path, to the task model."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "We must be able to convert from the task model to "
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "DeleteOrWriteFiles[]"
+                },
+                {
+                  "type": "text",
+                  "value": ",\nwhich includes each file's AST and file path."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "The conversion from "
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "DeleteOrWriteFiles[]"
+                },
+                {
+                  "type": "text",
+                  "value": " to task model and back to\n"
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "DeleteOrWriteFiles[]"
+                },
+                {
+                  "type": "text",
+                  "value": ", must be idempotent."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "spread": false,
+          "checked": null,
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "The conversion from task model to "
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "DeleteOrWriteFiles[]"
+                },
+                {
+                  "type": "text",
+                  "value": " and back to task\nmodel, must be idempotent."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "depth": 5,
+      "children": [
+        {
+          "type": "text",
+          "value": "Implementation"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "The task model is not a concrete thing, but a "
+        },
+        {
+          "type": "inlineCode",
+          "value": "Proxy"
+        },
+        {
+          "type": "text",
+          "value": " around the\n"
+        },
+        {
+          "type": "inlineCode",
+          "value": "DeleteOrWriteFiles[]"
+        },
+        {
+          "type": "text",
+          "value": " model."
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "All read accesses to the task model, are converted to read accesses into the\n"
+        },
+        {
+          "type": "inlineCode",
+          "value": "DeleteOrWriteFiles[]"
+        },
+        {
+          "type": "text",
+          "value": " model. All write accesses to the task model, are\nconverted to write accesses into the "
+        },
+        {
+          "type": "inlineCode",
+          "value": "DeleteOrWriteFiles[]"
+        },
+        {
+          "type": "text",
+          "value": " model."
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "When accessing a property of the model, it returns a "
+        },
+        {
+          "type": "inlineCode",
+          "value": "Proxy"
+        },
+        {
+          "type": "text",
+          "value": " that knows what\npart of the "
+        },
+        {
+          "type": "inlineCode",
+          "value": "DeleteOrWriteFiles[]"
+        },
+        {
+          "type": "text",
+          "value": " model it refers to."
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Thus, after having made any changes to the task model, we need not convert\nanything, because all changes were really already made to the\n"
+        },
+        {
+          "type": "inlineCode",
+          "value": "DeleteOrWriteFiles[]"
+        },
+        {
+          "type": "text",
+          "value": " model. We can then simply convert the\n"
+        },
+        {
+          "type": "inlineCode",
+          "value": "DeleteOrWriteFiles[]"
+        },
+        {
+          "type": "text",
+          "value": " model to markdown."
         }
       ]
     },

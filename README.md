@@ -155,7 +155,39 @@ Use markdown docs, to keep track of todo items.
 
 ### Task model
 
-See [src/model/task.ts](./src/model/task.ts).
+See also [src/model/task.ts](./src/model/task.ts).
+
+### Connection between task model and markdown
+
+#### How a task refers to its position in the markdown
+
+##### Requirements
+
+- We must be able to convert from `DeleteOrWriteFiles[]`, which includes each
+  file's AST and file path, to the task model.
+- We must be able to convert from the task model to `DeleteOrWriteFiles[]`,
+  which includes each file's AST and file path.
+- The conversion from `DeleteOrWriteFiles[]` to task model and back to
+  `DeleteOrWriteFiles[]`, must be idempotent.
+- The conversion from task model to `DeleteOrWriteFiles[]` and back to task
+  model, must be idempotent.
+
+##### Implementation
+
+The task model is not a concrete thing, but a `Proxy` around the
+`DeleteOrWriteFiles[]` model.
+
+All read accesses to the task model, are converted to read accesses into the
+`DeleteOrWriteFiles[]` model. All write accesses to the task model, are
+converted to write accesses into the `DeleteOrWriteFiles[]` model.
+
+When accessing a property of the model, it returns a `Proxy` that knows what
+part of the `DeleteOrWriteFiles[]` model it refers to.
+
+Thus, after having made any changes to the task model, we need not convert
+anything, because all changes were really already made to the
+`DeleteOrWriteFiles[]` model. We can then simply convert the
+`DeleteOrWriteFiles[]` model to markdown.
 
 ### Where to find task identifiers
 
