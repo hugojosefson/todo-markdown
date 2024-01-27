@@ -2,9 +2,12 @@ import { Heading, Nodes } from "npm:@types/mdast";
 import { toString } from "npm:mdast-util-to-string";
 import { selectAll } from "npm:unist-util-select";
 import { and } from "../fn.ts";
-import { startsWithABox } from "../model/box.ts";
+import { createBoxAndTaskIdRegex, startsWithABox } from "../model/box.ts";
+import { ProjectId } from "../model/project-id.ts";
 import { createIsRecordWithProperty } from "../model/record.ts";
 import { TypeGuard } from "../model/type-guard.ts";
+import { startWith } from "../strings/regex.ts";
+import { startsWithA } from "../strings/text-type-guard.ts";
 import { undefinedIfEmptyString } from "../strings/undefined-if-empty-string.ts";
 import { isHeading } from "./node-types.ts";
 
@@ -30,6 +33,16 @@ export function extractFirstTopLevelHeadingString(
     .trim();
 
   return undefinedIfEmptyString(s);
+}
+
+export function createExtractHeadingString<PI extends ProjectId>(
+  projectId: PI,
+): (heading: Heading) => string {
+  const boxAndTaskId = startWith(createBoxAndTaskIdRegex(projectId));
+  return (heading: Heading) =>
+    toString(heading)
+      .replace(boxAndTaskId, "")
+      .trim();
 }
 
 /**

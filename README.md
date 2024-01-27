@@ -161,19 +161,6 @@ See also [src/model/task.ts](./src/model/task.ts).
 
 #### How a task refers to its position in the markdown
 
-##### Requirements
-
-- We must be able to convert from `DeleteOrWriteFiles[]`, which includes each
-  file's AST and file path, to the task model.
-- We must be able to convert from the task model to `DeleteOrWriteFiles[]`,
-  which includes each file's AST and file path.
-- The conversion from `DeleteOrWriteFiles[]` to task model and back to
-  `DeleteOrWriteFiles[]`, must be idempotent.
-- The conversion from task model to `DeleteOrWriteFiles[]` and back to task
-  model, must be idempotent.
-
-##### Implementation
-
 The task model is not a concrete thing, but a `Proxy` around the
 `DeleteOrWriteFiles[]` model.
 
