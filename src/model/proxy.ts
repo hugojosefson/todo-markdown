@@ -57,6 +57,7 @@ import {
   Heading,
   ListItem,
   Node,
+  Nodes,
   Paragraph,
   Parent,
   RootContent,
@@ -80,7 +81,6 @@ import { only, optional, or, sequence } from "../strings/regex.ts";
 import { StringStartingWith } from "../strings/string-types.ts";
 import {
   isOnly,
-  isOnlyA,
   startsWithA,
   TextTypeGuard,
 } from "../strings/text-type-guard.ts";
@@ -98,9 +98,10 @@ import {
   TaskId,
 } from "./task-id.ts";
 import { Task } from "./task.ts";
-import { TypeGuard } from "./type-guard.ts";
+import { isBoolean, isTripleEqual, TypeGuard } from "./type-guard.ts";
 import { createTaskIdPlaceholderRegex } from "./task-id-placeholder.ts";
 import { prop } from "../objects.ts";
+import { createIsRecordWithProperty } from "./record.ts";
 
 export type TasksById<PI extends ProjectId> = Record<TaskId<PI>, Task<PI>>;
 
@@ -121,7 +122,7 @@ export type TasksById<PI extends ProjectId> = Record<TaskId<PI>, Task<PI>>;
  */
 export function _findTaskDefinitionsInAst<PI extends ProjectId>(
   _projectId: PI,
-  _ast: Parent,
+  _ast: Nodes,
 ): TasksById<PI> {
   throw new Error("Not implemented");
 }
@@ -254,6 +255,7 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
     readonly projectId: PI,
     readonly heading: WithFirstChildText<Heading>,
     readonly surroundingAst: Parent,
+    readonly getTaskLookuper: (taskId: TaskId<PI>) => Task<PI> | undefined,
   ) {
     this.extractTaskId = createExtractTaskId(this.projectId);
     this.extractHeadingString = createExtractHeadingString(this.projectId);
@@ -375,6 +377,54 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
       includesHeading,
       this.surroundingAst,
     );
+  }
+
+  get readyToStart(): Readonly<boolean> {
+    if (this.done) {
+      return false;
+    }
+
+    if (this.inProgress) {
+      return false;
+    }
+
+    const doAfter: TaskId<PI>[] = this.doAfter;
+    if (doAfter.length === 0) {
+      return true;
+    }
+
+    const tasks = doAfter
+      .map(this.getTaskLookuper)
+      .filter(createIsRecordWithProperty("done", isBoolean)) as Record<
+        "done",
+        boolean
+      >[];
+
+    return tasks
+      .map(prop("done"))
+      .every(isTripleEqual(true));
+  }
+
+  get inProgress(): Readonly<boolean> {
+    if (this.done) {
+      return false;
+    }
+
+    const includes: TaskId<PI>[] = this.includes;
+    if (includes.length === 0) {
+      return false;
+    }
+
+    const tasks = includes
+      .map(this.getTaskLookuper)
+      .filter(createIsRecordWithProperty("done", isBoolean)) as Record<
+        "done",
+        boolean
+      >[];
+
+    return tasks
+      .map(prop("done"))
+      .some(isTripleEqual(true));
   }
 
   static create<PI extends ProjectId>(

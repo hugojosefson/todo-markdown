@@ -1,4 +1,13 @@
 /**
+ * The identity function. This function takes in a value and returns it.
+ * @param x the value to return
+ * @returns the input value
+ */
+export function identity<T>(x: T): T {
+  return x;
+}
+
+/**
  * Compose functions from right to left. This function takes in a variable number of functions
  * and returns a new function that applies these functions from right to left.
  * @param fns the functions to compose
