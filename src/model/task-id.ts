@@ -1,8 +1,5 @@
 import { extractA } from "../strings/extract-a.ts";
-import {
-  StringContaining,
-  StringStartingWith,
-} from "../strings/string-types.ts";
+import { StringContaining } from "../strings/string-types.ts";
 import {
   containsA,
   isOnlyA,

@@ -7,7 +7,6 @@ import { ProjectId } from "../model/project-id.ts";
 import { createIsRecordWithProperty } from "../model/record.ts";
 import { TypeGuard } from "../model/type-guard.ts";
 import { startWith } from "../strings/regex.ts";
-import { startsWithA } from "../strings/text-type-guard.ts";
 import { undefinedIfEmptyString } from "../strings/undefined-if-empty-string.ts";
 import { isHeading } from "./node-types.ts";
 

@@ -2,6 +2,7 @@ import {
   Heading,
   Html,
   Link,
+  List,
   ListItem,
   Node,
   Paragraph,
@@ -158,6 +159,12 @@ export const isHtmlIndexEnd: TypeGuard<
  * @param node The node to check.
  */
 export const isHeading: TypeGuard<Heading> = createIsNodeOfType("heading");
+
+/**
+ * Type-guard for {@link List}.
+ * @param node The node to check.
+ */
+export const isList: TypeGuard<List> = createIsNodeOfType("list");
 
 /**
  * Type-guard for {@link ListItem}.

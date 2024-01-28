@@ -53,18 +53,37 @@ anything, because all changes were really already made to the
 
  */
 
-import { Heading, Node, Paragraph, Parent, Text } from "npm:@types/mdast";
+import {
+  Heading,
+  ListItem,
+  Node,
+  Paragraph,
+  Parent,
+  RootContent,
+  Text,
+} from "npm:@types/mdast";
+import { astToMarkdown } from "../ast/ast-to-markdown.ts";
 import { createExtractHeadingString } from "../ast/extract-first-top-level-heading.ts";
-import { isHeading, isParagraph } from "../ast/node-types.ts";
+import {
+  isHeading,
+  isList,
+  isListItem,
+  isParagraph,
+} from "../ast/node-types.ts";
 import {
   isWithFirstChildText,
   WithFirstChildText,
 } from "../ast/with-first-child.ts";
 import { and } from "../fn.ts";
 import { isString } from "../strings/is-string.ts";
-import { only, sequence } from "../strings/regex.ts";
+import { only, optional, or, sequence } from "../strings/regex.ts";
 import { StringStartingWith } from "../strings/string-types.ts";
-import { startsWithA, TextTypeGuard } from "../strings/text-type-guard.ts";
+import {
+  isOnly,
+  isOnlyA,
+  startsWithA,
+  TextTypeGuard,
+} from "../strings/text-type-guard.ts";
 import {
   BoxAndTaskId,
   createBoxAndTaskIdRegex,
@@ -72,9 +91,16 @@ import {
 } from "./box.ts";
 import { DeleteOrWriteFile } from "./output-command.ts";
 import { ProjectId } from "./project-id.ts";
-import { createExtractTaskId, ExtractTaskId, TaskId } from "./task-id.ts";
+import {
+  createExtractTaskId,
+  createTaskIdRegex,
+  ExtractTaskId,
+  TaskId,
+} from "./task-id.ts";
 import { Task } from "./task.ts";
 import { TypeGuard } from "./type-guard.ts";
+import { createTaskIdPlaceholderRegex } from "./task-id-placeholder.ts";
+import { prop } from "../objects.ts";
 
 export type TasksById<PI extends ProjectId> = Record<TaskId<PI>, Task<PI>>;
 
@@ -158,6 +184,39 @@ export function extractSubHeadingsOf(
   ).filter(isHeading);
 }
 
+export function extractListItemsOf(
+  heading: Heading,
+  surroundingAst: Parent,
+): ListItem[] {
+  return extractAstBelowHeading(
+    heading,
+    surroundingAst,
+  )
+    .filter(isList)
+    .flatMap(prop("children"))
+    .filter(isListItem);
+}
+
+export function extractTaskIdsMentionedBelowHeading<PI extends ProjectId>(
+  projectId: PI,
+  heading: Heading,
+  surroundingAst: Parent,
+): TaskId<PI>[] {
+  const listItems: ListItem[] = extractListItemsOf(
+    heading,
+    surroundingAst,
+  );
+  const extractTaskId: ExtractTaskId<PI> = createExtractTaskId(projectId);
+  return listItems
+    .filter(isWithFirstChildText)
+    .map(prop("children"))
+    .filter((children) => children.length > 0)
+    .map(prop("0"))
+    .map(extractTaskId)
+    .filter(isString)
+    .filter(isOnly<TaskId<PI>>(createTaskIdRegex(projectId)));
+}
+
 /**
  * Extracts all nodes below the given heading, until the next heading on the
  * same or higher level.
@@ -169,11 +228,11 @@ export function extractSubHeadingsOf(
 export function extractAstBelowHeading(
   heading: Heading,
   surroundingAst: Parent,
-): Node[] {
+): RootContent[] {
   const headingIndex = surroundingAst.children.indexOf(heading);
-  const astBelowHeading: Node[] = [];
+  const astBelowHeading: RootContent[] = [];
   for (let i = headingIndex + 1; i < surroundingAst.children.length; i++) {
-    const node: Node = surroundingAst.children[i];
+    const node: RootContent = surroundingAst.children[i];
     if (isHeading(node)) {
       const subHeading: Heading = node;
       if (subHeading.depth <= heading.depth) {
@@ -208,44 +267,27 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
     return this.extractHeadingString(this.heading);
   }
 
-  get description(): string | undefined {
+  get description(): Promise<string | undefined> {
     const immediatelyFollowingParagraphString: string | undefined =
       extractImmediatelyFollowingParagraphString(
         this.heading,
         this.surroundingAst,
       );
     if (isString(immediatelyFollowingParagraphString)) {
-      return immediatelyFollowingParagraphString;
+      return Promise.resolve(immediatelyFollowingParagraphString);
     }
 
     const descriptionHeading = this.findSubHeading(
       only(sequence("Description")),
     );
     if (descriptionHeading === undefined) {
-      return undefined;
+      return Promise.resolve(undefined);
     }
-    const descriptionHeadingIndex = this.surroundingAst.children.indexOf(
+    const astBelowHeading: RootContent[] = extractAstBelowHeading(
       descriptionHeading,
-    );
-    const nextSibling: Node | undefined =
-      this.surroundingAst.children[descriptionHeadingIndex + 1];
-    return extractParagraphString(nextSibling);
-  }
-
-  private findSubHeading(
-    subHeadingRegex: RegExp,
-  ): WithFirstChildText<Heading> | undefined {
-    const subHeadingPredicate = (subHeading: WithFirstChildText<Heading>) =>
-      subHeadingRegex.test(this.extractHeadingString(subHeading));
-    const predicate = and(
-      isWithFirstChildText,
-      subHeadingPredicate,
-    ) as TypeGuard<WithFirstChildText<Heading>>;
-    return extractSubHeadingsOf(
-      this.heading,
       this.surroundingAst,
-    )
-      .find(predicate);
+    );
+    return astToMarkdown(astBelowHeading);
   }
 
   get done(): boolean {
@@ -253,6 +295,31 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
   }
 
   get doAfter(): TaskId<PI>[] {
+    const doAfterHeading = this.findSubHeading(
+      only(
+        sequence(
+          or(
+            sequence("Do after"),
+            sequence("Do ", this.id, " after"),
+            sequence(
+              "Do ",
+              createTaskIdPlaceholderRegex(this.projectId),
+              " after",
+            ),
+          ),
+          optional(":"),
+        ),
+      ),
+    );
+    if (doAfterHeading === undefined) {
+      return [];
+    }
+
+    return extractTaskIdsMentionedBelowHeading(
+      this.projectId,
+      doAfterHeading,
+      this.surroundingAst,
+    );
   }
 
   static create<PI extends ProjectId>(
@@ -282,7 +349,6 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
       return undefined;
     }
 
-    const checked = extractBoxChecked(text);
     const extractTaskId = createExtractTaskId(projectId);
     const taskId = extractTaskId(text);
     if (taskId === undefined) {
@@ -293,7 +359,23 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
       projectId,
       heading,
       surroundingAst,
-    );
+    ) as unknown as Task<PI>; // TODO
+  }
+
+  private findSubHeading(
+    subHeadingRegex: RegExp,
+  ): WithFirstChildText<Heading> | undefined {
+    const subHeadingPredicate = (subHeading: WithFirstChildText<Heading>) =>
+      subHeadingRegex.test(this.extractHeadingString(subHeading));
+    const predicate = and(
+      isWithFirstChildText,
+      subHeadingPredicate,
+    ) as TypeGuard<WithFirstChildText<Heading>>;
+    return extractSubHeadingsOf(
+      this.heading,
+      this.surroundingAst,
+    )
+      .find(predicate);
   }
 }
 
@@ -305,9 +387,9 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
  * @returns A Proxy that wraps the given output commands, so that we can access
  * them as if they were a {@link TasksById} model.
  */
-function wrapInProxy<PI extends ProjectId>(
+function _wrapInProxy<PI extends ProjectId>(
   projectId: PI,
   outputCommands: DeleteOrWriteFile[],
 ): TasksById<PI> {
-  return new Proxy() as TasksById<PI>;
+  return { projectId, outputCommands } as unknown as TasksById<PI>; // TODO
 }
