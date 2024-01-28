@@ -93,15 +93,22 @@ import { DeleteOrWriteFile } from "./output-command.ts";
 import { ProjectId } from "./project-id.ts";
 import {
   createExtractTaskId,
+  createIsTaskId,
   createTaskIdRegex,
   ExtractTaskId,
   TaskId,
 } from "./task-id.ts";
 import { Task } from "./task.ts";
-import { isBoolean, isTripleEqual, TypeGuard } from "./type-guard.ts";
+import {
+  isArrayOf,
+  isBoolean,
+  isTripleEqual,
+  TypeGuard,
+} from "./type-guard.ts";
 import { createTaskIdPlaceholderRegex } from "./task-id-placeholder.ts";
 import { prop } from "../objects.ts";
 import { createIsRecordWithProperty } from "./record.ts";
+import { not } from "../fn.ts";
 
 export type TasksById<PI extends ProjectId> = Record<TaskId<PI>, Task<PI>>;
 
@@ -251,14 +258,20 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
   private readonly extractHeadingString: (
     heading: WithFirstChildText<Heading>,
   ) => string;
+  private readonly isTaskId: TypeGuard<TaskId<PI>>;
+  private readonly isTask: TypeGuard<Task<PI>>;
   private constructor(
     readonly projectId: PI,
     readonly heading: WithFirstChildText<Heading>,
     readonly surroundingAst: Parent,
-    readonly getTaskLookuper: (taskId: TaskId<PI>) => Task<PI> | undefined,
+    readonly getTaskLookuper: () => (
+      taskId: TaskId<PI>,
+    ) => Task<PI> | undefined,
   ) {
     this.extractTaskId = createExtractTaskId(this.projectId);
     this.extractHeadingString = createExtractHeadingString(this.projectId);
+    this.isTaskId = createIsTaskId(this.projectId);
+    this.isTask = createIsTask(this.projectId);
   }
 
   get id(): Readonly<TaskId<PI>> {
@@ -383,24 +396,12 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
     if (this.done) {
       return false;
     }
-
     if (this.inProgress) {
       return false;
     }
-
-    const doAfter: TaskId<PI>[] = this.doAfter;
-    if (doAfter.length === 0) {
-      return true;
-    }
-
-    const tasks = doAfter
-      .map(this.getTaskLookuper)
-      .filter(createIsRecordWithProperty("done", isBoolean)) as Record<
-        "done",
-        boolean
-      >[];
-
-    return tasks
+    return this.doAfter
+      .map(this.getTaskLookuper())
+      .filter(this.isTask)
       .map(prop("done"))
       .every(isTripleEqual(true));
   }
@@ -409,22 +410,23 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
     if (this.done) {
       return false;
     }
-
-    const includes: TaskId<PI>[] = this.includes;
-    if (includes.length === 0) {
-      return false;
-    }
-
-    const tasks = includes
-      .map(this.getTaskLookuper)
-      .filter(createIsRecordWithProperty("done", isBoolean)) as Record<
-        "done",
-        boolean
-      >[];
-
-    return tasks
+    return this.includes
+      .map(this.getTaskLookuper())
+      .filter(this.isTask)
       .map(prop("done"))
       .some(isTripleEqual(true));
+  }
+
+  get blocks(): Readonly<TaskId<PI>[]> {
+    if (this.done) {
+      return [];
+    }
+    return this.doBefore
+      .map(this.getTaskLookuper())
+      .filter(this.isTask)
+      .filter(({ doAfter }) => doAfter.includes(this.id))
+      .filter(not(prop("done")))
+      .map(prop("id"));
   }
 
   static create<PI extends ProjectId>(
@@ -482,6 +484,23 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
     )
       .find(predicate);
   }
+}
+
+export function createIsTask<PI extends ProjectId>(
+  projectId: PI,
+): TypeGuard<Task<PI>> {
+  const isTaskId = createIsTaskId(projectId);
+  return and(
+    createIsRecordWithProperty("id", isTaskId),
+    createIsRecordWithProperty(
+      "doAfter",
+      isArrayOf(isTaskId),
+    ),
+    createIsRecordWithProperty(
+      "doBefore",
+      isArrayOf(isTaskId),
+    ),
+  ) as TypeGuard<Task<PI>>;
 }
 
 /**
