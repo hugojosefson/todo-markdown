@@ -322,6 +322,61 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
     );
   }
 
+  get doBefore(): TaskId<PI>[] {
+    const doBeforeHeading = this.findSubHeading(
+      only(
+        sequence(
+          or(
+            sequence("Do before"),
+            sequence("Do ", this.id, " before"),
+            sequence(
+              "Do ",
+              createTaskIdPlaceholderRegex(this.projectId),
+              " before",
+            ),
+          ),
+          optional(":"),
+        ),
+      ),
+    );
+    if (doBeforeHeading === undefined) {
+      return [];
+    }
+
+    return extractTaskIdsMentionedBelowHeading(
+      this.projectId,
+      doBeforeHeading,
+      this.surroundingAst,
+    );
+  }
+
+  get includes(): TaskId<PI>[] {
+    const includesHeading = this.findSubHeading(
+      only(
+        sequence(
+          or(
+            sequence("Includes"),
+            sequence(this.id, " includes"),
+            sequence(
+              createTaskIdPlaceholderRegex(this.projectId),
+              " includes",
+            ),
+          ),
+          optional(":"),
+        ),
+      ),
+    );
+    if (includesHeading === undefined) {
+      return [];
+    }
+
+    return extractTaskIdsMentionedBelowHeading(
+      this.projectId,
+      includesHeading,
+      this.surroundingAst,
+    );
+  }
+
   static create<PI extends ProjectId>(
     projectId: PI,
     heading: Heading,
