@@ -424,7 +424,17 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
     return this.doBefore
       .map(this.getTaskLookuper())
       .filter(this.isTask)
-      .filter(({ doAfter }) => doAfter.includes(this.id))
+      .filter(not(prop("done")))
+      .map(prop("id"));
+  }
+
+  get blockedBy(): Readonly<TaskId<PI>[]> {
+    if (this.done) {
+      return [];
+    }
+    return this.doAfter
+      .map(this.getTaskLookuper())
+      .filter(this.isTask)
       .filter(not(prop("done")))
       .map(prop("id"));
   }
