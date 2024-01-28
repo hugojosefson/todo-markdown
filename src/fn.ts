@@ -7,6 +7,31 @@ export function identity<T>(x: T): T {
   return x;
 }
 
+export function pipe<A, B>(
+  fnA: (args: A) => B,
+): (args: A) => B;
+export function pipe<A, B, C>(
+  fnA: (args: A) => B,
+  fnB: (args: B) => C,
+): (args: A) => C;
+export function pipe<A, B, C, D>(
+  fnA: (args: A) => B,
+  fnB: (args: B) => C,
+  fnC: (args: C) => D,
+): (args: A) => D;
+export function pipe<A, B, C, D, E>(
+  fnA: (args: A) => B,
+  fnB: (args: B) => C,
+  fnC: (args: C) => D,
+  fnD: (args: D) => E,
+): (args: A) => E;
+export function pipe<A, B, C, D, E, F>(
+  fnA: (args: A) => B,
+  fnB: (args: B) => C,
+  fnC: (args: C) => D,
+  fnD: (args: D) => E,
+  fnE: (args: E) => F,
+): (args: A) => F;
 /**
  * Compose functions from right to left. This function takes in a variable number of functions
  * and returns a new function that applies these functions from right to left.
@@ -154,3 +179,6 @@ export function isFunction<T extends (...args: unknown[]) => unknown>(
 export function always<T>(value: T): () => T {
   return () => value;
 }
+
+export type Getter<T> = () => T;
+export type Lookuper<K, V> = (key: K) => V;

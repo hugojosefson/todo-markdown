@@ -64,18 +64,19 @@ import {
   Text,
 } from "npm:@types/mdast";
 import { astToMarkdown } from "../ast/ast-to-markdown.ts";
-import { createExtractHeadingString } from "../ast/extract-first-top-level-heading.ts";
+import { createExtractString } from "../ast/extract-first-top-level-heading.ts";
 import {
   isHeading,
   isList,
   isListItem,
   isParagraph,
+  isParent,
 } from "../ast/node-types.ts";
 import {
   isWithFirstChildText,
   WithFirstChildText,
 } from "../ast/with-first-child.ts";
-import { and } from "../fn.ts";
+import { and,pipe, Getter, Lookuper } from "../fn.ts";
 import { isString } from "../strings/is-string.ts";
 import { only, optional, or, sequence } from "../strings/regex.ts";
 import { StringStartingWith } from "../strings/string-types.ts";
@@ -89,7 +90,7 @@ import {
   createBoxAndTaskIdRegex,
   extractBoxChecked,
 } from "./box.ts";
-import { DeleteOrWriteFile } from "./output-command.ts";
+import { DeleteOrWriteFile, isWriteFile } from "./output-command.ts";
 import { ProjectId } from "./project-id.ts";
 import {
   createExtractTaskId,
@@ -99,16 +100,14 @@ import {
   TaskId,
 } from "./task-id.ts";
 import { Task } from "./task.ts";
-import {
-  isArrayOf,
-  isBoolean,
-  isTripleEqual,
-  TypeGuard,
-} from "./type-guard.ts";
+import { isArrayOf, isTripleEqual, TypeGuard } from "./type-guard.ts";
 import { createTaskIdPlaceholderRegex } from "./task-id-placeholder.ts";
 import { prop } from "../objects.ts";
 import { createIsRecordWithProperty } from "./record.ts";
 import { not } from "../fn.ts";
+import { extractFirstTopLevelHeading } from "../ast/extract-first-top-level-heading.ts";
+import { asString } from "run_simple/src/fn.ts";
+import { Root } from "../../../../../../../home/hugo/.cache/deno/npm/registry.npmjs.org/mdast-util-find-and-replace/3.0.1/lib/index.d.ts";
 
 export type TasksById<PI extends ProjectId> = Record<TaskId<PI>, Task<PI>>;
 
@@ -127,36 +126,80 @@ export type TasksById<PI extends ProjectId> = Record<TaskId<PI>, Task<PI>>;
  * @returns A {@link TasksById} model, containing all tasks found in the given
  * abstract syntax tree.
  */
-export function _findTaskDefinitionsInAst<PI extends ProjectId>(
-  _projectId: PI,
-  _ast: Nodes,
+export function extractTasksInAst<PI extends ProjectId>(
+  projectId: PI,
+  ast: Nodes | RootContent[],
+  getTaskLookuper: Getter<TaskLookuper<PI>>,
 ): TasksById<PI> {
-  throw new Error("Not implemented");
+  if (!Array.isArray(ast) && !isParent(ast)) {
+    return {} as TasksById<PI>;
+  }
+
+  const headings: Heading[] = extractHighestLevelHeadings(ast);
+  const listItems: ListItem[] = headings.flatMap((heading) =>
+    extractListItemsOf(heading, ast)
+  );
+
+const toTaskEntry = (task: Task<PI>) => [task.id, task] as const;
+
+  return Object.fromEntries([
+    // extract tasks from headings
+    ...headings
+    .map((heading) => TaskBackedByHeadingAndSurroundingAst.create(
+      projectId,
+      heading,
+      ast,
+      getTaskLookuper,
+    ))
+    .filter(createIsTask(projectId))
+    .map(toTaskEntry),
+
+    // extract tasks from sub-headings
+    ...Object.entries(
+      headings
+    .map((heading) =>    extractAstBelowHeading(heading, ast)  )
+    .map((astBelowHeading) => extractTasksInAst(projectId, astBelowHeading, getTaskLookuper)  )
+    ),
+
+    // extract tasks from list items
+    ...listItems
+    .map(listItem => TaskBackedByListItemAndSurroundingAst.create(
+      projectId,
+      listItem,
+      ast,
+      getTaskLookuper,
+    ))
+    .map(toTaskEntry)
+  ]);
+
 }
 
 /**
- * Extracts a {@link Task} from the given {@link Heading}.
- *
- * @param projectId The {@link ProjectId} to expect in {@link TaskId}s.
- * @param heading The heading to extract a task from.
- * @param surroundingAst The nodes that follow the
- * given heading, until the next heading on the same level.
- * @returns The extracted task, or `undefined` if the given heading does not
- * define a task.
- * @see {@link transformHeading}
+ * Extracts all highest-level {@link Heading}s from the given abstract syntax
+ * tree. In a normal document, this would be all {@link Heading}s with a depth
+ * of 1. In the AST returned from {@link extractAstBelowHeading}, this would be
+ * all {@link Heading}s with a depth of the given heading + 1.
+ * @param ast The abstract syntax tree to extract highest-level headings from.
+ * @returns All highest-level {@link Heading}s from the given abstract syntax
+ * tree.
  */
-export function extractTaskFromHeading<PI extends ProjectId>(
-  projectId: PI,
-  heading: Heading,
-  surroundingAst: Parent,
-): Task<PI> | undefined {
-  const task: Task<PI> | undefined = TaskBackedByHeadingAndSurroundingAst
-    .create(
-      projectId,
-      heading,
-      surroundingAst,
-    );
-  return task;
+export function extractHighestLevelHeadings(
+  ast: Nodes | RootContent[],
+): Heading[] {
+  if (!Array.isArray(ast) && !isParent(ast)) {
+    return [];
+  }
+  const children: RootContent[] = Array.isArray(ast) ? ast : ast.children;
+  const headings = children.filter(isHeading) as Heading[];
+  const headingDepths: number[] = headings.map(prop("depth"));
+  if (headingDepths.length === 0) {
+    return [];
+  }
+  const minHeadingDepth: number = Math.min(...headingDepths);
+  return headings.filter(pipe(
+    prop("depth"),
+    isTripleEqual(minHeadingDepth)
+    ));
 }
 
 export function extractParagraphString(
@@ -172,19 +215,26 @@ export function extractParagraphString(
   return undefined;
 }
 
+// TODO: make this function accept Heading | ListItem. See README-ast.json for
+// an example of a ListItem that contains/is followed by, a paragraph, which we would like to
+// extract.
 export function extractImmediatelyFollowingParagraphString(
   heading: Heading,
-  surroundingAst: Parent,
+  surroundingAst: Nodes|RootContent[],
 ): string | undefined {
-  const headingIndex = surroundingAst.children.indexOf(heading);
-  const nextSibling: Node | undefined =
-    surroundingAst.children[headingIndex + 1];
+  if (!isParent(surroundingAst)) {
+    return undefined;
+  }
+  const parent: Parent = surroundingAst;
+
+  const headingIndex = parent.children.indexOf(heading);
+  const nextSibling: Node | undefined = parent.children[headingIndex + 1];
   return extractParagraphString(nextSibling);
 }
 
 export function extractSubHeadingsOf(
   heading: Heading,
-  surroundingAst: Parent,
+  surroundingAst: Nodes|RootContent[],
 ): Heading[] {
   return extractAstBelowHeading(
     heading,
@@ -194,7 +244,7 @@ export function extractSubHeadingsOf(
 
 export function extractListItemsOf(
   heading: Heading,
-  surroundingAst: Parent,
+  surroundingAst: Nodes|RootContent[],
 ): ListItem[] {
   return extractAstBelowHeading(
     heading,
@@ -208,7 +258,7 @@ export function extractListItemsOf(
 export function extractTaskIdsMentionedBelowHeading<PI extends ProjectId>(
   projectId: PI,
   heading: Heading,
-  surroundingAst: Parent,
+  surroundingAst: Nodes|RootContent[],
 ): TaskId<PI>[] {
   const listItems: ListItem[] = extractListItemsOf(
     heading,
@@ -235,12 +285,17 @@ export function extractTaskIdsMentionedBelowHeading<PI extends ProjectId>(
  */
 export function extractAstBelowHeading(
   heading: Heading,
-  surroundingAst: Parent,
+  surroundingAst: Nodes | RootContent[],
 ): RootContent[] {
-  const headingIndex = surroundingAst.children.indexOf(heading);
+  if (!Array.isArray(surroundingAst) && !isParent(surroundingAst)) {
+    return [];
+  }
+  const children: RootContent[] = Array.isArray(surroundingAst) ? surroundingAst : surroundingAst.children;
+
+  const headingIndex = children.indexOf(heading);
   const astBelowHeading: RootContent[] = [];
-  for (let i = headingIndex + 1; i < surroundingAst.children.length; i++) {
-    const node: RootContent = surroundingAst.children[i];
+  for (let i = headingIndex + 1; i < children.length; i++) {
+    const node: RootContent = children[i];
     if (isHeading(node)) {
       const subHeading: Heading = node;
       if (subHeading.depth <= heading.depth) {
@@ -252,25 +307,33 @@ export function extractAstBelowHeading(
   return astBelowHeading;
 }
 
+/**
+ * A function to look up a {@link Task} by its {@link TaskId}.
+ */
+export type TaskLookuper<PI extends ProjectId> = Lookuper<
+  TaskId<PI>,
+  Task<PI> | undefined
+>;
+
+/**
+ * Implementation of {@link Task} that is backed by a {@link Heading} and the
+ * surrounding abstract syntax tree.
+ */
 export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
   implements Task<PI> {
   private readonly extractTaskId: ExtractTaskId<PI>;
-  private readonly extractHeadingString: (
-    heading: WithFirstChildText<Heading>,
+  private readonly extractString: (
+    headingOrListItem: WithFirstChildText<Heading|ListItem>,
   ) => string;
-  private readonly isTaskId: TypeGuard<TaskId<PI>>;
   private readonly isTask: TypeGuard<Task<PI>>;
   private constructor(
-    readonly projectId: PI,
-    readonly heading: WithFirstChildText<Heading>,
-    readonly surroundingAst: Parent,
-    readonly getTaskLookuper: () => (
-      taskId: TaskId<PI>,
-    ) => Task<PI> | undefined,
+    private readonly projectId: PI,
+    private readonly heading: WithFirstChildText<Heading>,
+    private readonly surroundingAst: Nodes|RootContent[],
+    private readonly getTaskLookuper: Getter<TaskLookuper<PI>>,
   ) {
     this.extractTaskId = createExtractTaskId(this.projectId);
-    this.extractHeadingString = createExtractHeadingString(this.projectId);
-    this.isTaskId = createIsTaskId(this.projectId);
+    this.extractString = createExtractString(this.projectId);
     this.isTask = createIsTask(this.projectId);
   }
 
@@ -279,7 +342,7 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
   }
 
   get title(): string {
-    return this.extractHeadingString(this.heading);
+    return this.extractString(this.heading);
   }
 
   get description(): Promise<string | undefined> {
@@ -439,10 +502,24 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
       .map(prop("id"));
   }
 
+  /**
+   * Extracts a {@link Task} from the given {@link Heading}.
+   *
+   * @param projectId The {@link ProjectId} to expect in {@link TaskId}s.
+   * @param heading The heading to extract a task from.
+   * @param surroundingAst The nodes that follow the
+   * given heading, until the next heading on the same level.
+   * @param getTaskLookuper A function that returns a {@link TaskLookuper} for
+   * the given {@link ProjectId}.
+   * @returns The extracted task, or `undefined` if the given heading does not
+   * define a task.
+   * @see {@link transformHeading}
+   */
   static create<PI extends ProjectId>(
     projectId: PI,
     heading: Heading,
-    surroundingAst: Parent,
+    surroundingAst: Nodes|RootContent[],
+    getTaskLookuper: Getter<TaskLookuper<PI>>,
   ): Task<PI> | undefined {
     if (heading.children.length === 0) {
       // if heading has no children, there is no task
@@ -476,14 +553,21 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
       projectId,
       heading,
       surroundingAst,
-    ) as unknown as Task<PI>; // TODO
+      getTaskLookuper,
+    );
   }
 
+  /**
+   * Finds the first sub-heading that matches the given regular expression.
+   * @param subHeadingRegex The regular expression to match a sub-heading against.
+   * @returns The first sub-heading that matches the given regular expression,
+   * or `undefined` if no sub-heading matches the given regular expression.
+   */
   private findSubHeading(
     subHeadingRegex: RegExp,
   ): WithFirstChildText<Heading> | undefined {
     const subHeadingPredicate = (subHeading: WithFirstChildText<Heading>) =>
-      subHeadingRegex.test(this.extractHeadingString(subHeading));
+      subHeadingRegex.test(this.extractString(subHeading));
     const predicate = and(
       isWithFirstChildText,
       subHeadingPredicate,
@@ -496,6 +580,108 @@ export class TaskBackedByHeadingAndSurroundingAst<PI extends ProjectId>
   }
 }
 
+/**
+ * Implementation of {@link Task} that is backed by a {@link ListItem} and the
+ * surrounding abstract syntax tree.
+ */
+export class TaskBackedByListItemAndSurroundingAst<PI extends ProjectId>
+  implements Task<PI> {
+    private readonly extractTaskId: ExtractTaskId<PI>;
+    private readonly extractString: (
+      headingOrListItem: WithFirstChildText<Heading|ListItem>,
+    ) => string;
+    private readonly isTask: TypeGuard<Task<PI>>;
+    private constructor(
+      private readonly projectId: PI,
+      private readonly listItem: WithFirstChildText<ListItem>,
+      private readonly surroundingAst: Nodes|RootContent[],
+      private readonly getTaskLookuper: Getter<TaskLookuper<PI>>,
+    ) {
+      this.extractTaskId = createExtractTaskId(this.projectId);
+      this.extractString = createExtractString(this.projectId);
+      this.isTask = createIsTask(this.projectId);
+    }
+
+    get id(): Readonly<TaskId<PI>> {
+      return this.extractTaskId(this.listItem.children[0])!;
+    }
+
+    get title(): string {
+      return this.extractString(this.listItem);
+    }
+
+    static create<PI extends ProjectId>(
+      projectId: PI,
+      listItem: ListItem,
+      surroundingAst: Nodes | RootContent[],
+      getTaskLookuper: Getter<TaskLookuper<PI>>,
+    ): Task<PI> | undefined {
+      if (listItem.children.length === 0) {
+        // if list item has no children, there is no task
+        return undefined;
+      }
+
+      if (!isWithFirstChildText(listItem)) {
+        // if list item doesn't start with text, there is no task
+        return undefined;
+      }
+
+      const startsWithABoxAndTaskId: TextTypeGuard<
+        StringStartingWith<BoxAndTaskId<PI>>
+      > = startsWithA(
+        createBoxAndTaskIdRegex(projectId),
+      );
+
+      const text: Text = listItem.children[0];
+      if (!startsWithABoxAndTaskId(text)) {
+        // if list item doesn't have both box and proper task id, there is no task here
+        return undefined;
+      }
+
+      const extractTaskId = createExtractTaskId(projectId);
+      const taskId = extractTaskId(text);
+      if (taskId === undefined) {
+        // if task id is not valid, there is no task here
+        return undefined;
+      }
+      return new TaskBackedByListItemAndSurroundingAst(
+        projectId,
+        listItem,
+        surroundingAst,
+        getTaskLookuper,
+      );
+    }
+
+    get description(): Promise<string | undefined> {
+      const immediatelyFollowingParagraphString: string | undefined =
+        extractImmediatelyFollowingParagraphString(
+          this.listItem,
+          this.surroundingAst,
+        );
+      if (isString(immediatelyFollowingParagraphString)) {
+        return Promise.resolve(immediatelyFollowingParagraphString);
+      }
+
+      const descriptionHeading = this.findSubHeading(
+        only(sequence("Description")),
+      );
+      if (descriptionHeading === undefined) {
+        return Promise.resolve(undefined);
+      }
+      const astBelowHeading: RootContent[] = extractAstBelowHeading(
+        descriptionHeading,
+        this.surroundingAst,
+      );
+      return astToMarkdown(astBelowHeading);
+    }
+
+  }
+
+/**
+ * Creates a type guard for {@link Task}.
+ * @param projectId The {@link ProjectId} to expect in {@link TaskId}s.
+ * @returns A type guard for {@link Task}.
+ */
 export function createIsTask<PI extends ProjectId>(
   projectId: PI,
 ): TypeGuard<Task<PI>> {
@@ -521,9 +707,32 @@ export function createIsTask<PI extends ProjectId>(
  * @returns A Proxy that wraps the given output commands, so that we can access
  * them as if they were a {@link TasksById} model.
  */
-function _wrapInProxy<PI extends ProjectId>(
+export async function wrapInProxy<PI extends ProjectId>(
   projectId: PI,
   outputCommands: DeleteOrWriteFile[],
-): TasksById<PI> {
-  return { projectId, outputCommands } as unknown as TasksById<PI>; // TODO
+): Promise<TasksById<PI>> {
+  const tasksById: TasksById<PI> = {} as TasksById<PI>;
+  const taskLookuper: TaskLookuper<PI> = (taskId: TaskId<PI>) =>
+    tasksById[taskId];
+  extractTasoutputCommands.filter(isWriteFile)) {
+    const topLevelHeading = extractFirstTopLevelHeading(writeFile.ast);
+    if (topLevelHeading === undefined) {
+      continue;
+    }
+    const checked = extractBoxChecked(topLevelHeading);
+    if (checked === undefined) {
+      continue;
+    }
+    const task: Task<PI> | undefined = TaskBackedByHeadingAndSurroundingAst
+      .create(
+        projectId,
+        topLevelHeading,
+        writeFile.ast,
+        () => taskLookuper,
+      );
+    if (task !== undefined) {
+      tasksById[task.id] = task;
+    }
+  }
+  return tasksById;
 }

@@ -1,4 +1,4 @@
-import { Heading, Nodes } from "npm:@types/mdast";
+import { Heading, ListItem, Nodes } from "npm:@types/mdast";
 import { toString } from "npm:mdast-util-to-string";
 import { selectAll } from "npm:unist-util-select";
 import { and } from "../fn.ts";
@@ -34,12 +34,12 @@ export function extractFirstTopLevelHeadingString(
   return undefinedIfEmptyString(s);
 }
 
-export function createExtractHeadingString<PI extends ProjectId>(
+export function createExtractString<PI extends ProjectId>(
   projectId: PI,
-): (heading: Heading) => string {
+): (headingOrListItem: Heading | ListItem) => string {
   const boxAndTaskId = startWith(createBoxAndTaskIdRegex(projectId));
-  return (heading: Heading) =>
-    toString(heading)
+  return (headingOrListItem: Heading | ListItem) =>
+    toString(headingOrListItem)
       .replace(boxAndTaskId, "")
       .trim();
 }

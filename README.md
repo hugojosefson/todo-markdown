@@ -61,6 +61,25 @@ Use markdown docs, to keep track of todo items.
 ## [ ] TODO-10 Heading with task identifier, but no box
 ```
 
+### More AST examples
+
+I find it easier to understand the AST, by looking at the markdown input, and
+the AST side by side. See [README-ast.json](./README-ast.json).
+
+#### Do after
+
+- TODO-1
+- TODO-2
+
+#### Define task in `ListItem`
+
+- [ ] TODO-1
+- [ ] TODO-2
+  - This would be the `description` of `TODO-2`.
+  - Includes:
+    - TODO-3
+    - TODO-4
+
 ### List of things, that are not tasks
 
 - This is a normal list item, not a task.
