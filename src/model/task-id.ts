@@ -1,18 +1,20 @@
 import { extractA } from "../strings/extract-a.ts";
-import { StringContaining } from "../strings/string-types.ts";
+import {
+  isOnly,
+  StringContaining,
+} from "@hugojosefson/fns/string/string-type-guard";
+import { TypeGuard } from "@hugojosefson/fns/type-guard/type-guard";
+import { PROJECT_ID_REGEX, type ProjectId } from "./project-id.ts";
+import { capture, sequence } from "@hugojosefson/fns/string/regex";
+import { TASK_ID_NUMBER_REGEX, TaskIdNumber } from "./task-id-number.ts";
+import { Text } from "npm:@types/mdast";
+import { isString } from "@hugojosefson/fns/string/is-string";
+import { and } from "@hugojosefson/fns/fn/and";
 import {
   containsA,
-  isOnly,
   isOnlyA,
   TextTypeGuard,
 } from "../strings/text-type-guard.ts";
-import { TypeGuard } from "./type-guard.ts";
-import { PROJECT_ID_REGEX, type ProjectId } from "./project-id.ts";
-import { capture, sequence } from "../strings/regex.ts";
-import { TASK_ID_NUMBER_REGEX, TaskIdNumber } from "./task-id-number.ts";
-import { Text } from "npm:@types/mdast";
-import { isString } from "../strings/is-string.ts";
-import { and } from "../fn.ts";
 
 export function createTaskIdRegex<PI extends ProjectId = ProjectId>(
   projectId: PI | RegExp = PROJECT_ID_REGEX,

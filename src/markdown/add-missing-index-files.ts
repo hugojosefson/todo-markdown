@@ -5,7 +5,7 @@ import {
   isWriteFile,
   WriteFile,
 } from "../model/output-command.ts";
-import { sortUnique } from "../strings/sort-unique.ts";
+import { sortUnique } from "@hugojosefson/fns/string/sort-unique";
 
 /**
  * Adds missing index files to the output commands.

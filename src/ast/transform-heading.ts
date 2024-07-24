@@ -1,5 +1,5 @@
 import { Heading } from "npm:@types/mdast";
-import { groups } from "../strings/regex.ts";
+import { groups } from "@hugojosefson/fns/string/regex";
 import {
   Box,
   BOX_REGEX,
@@ -15,8 +15,9 @@ import {
   TaskIdPlaceholder,
 } from "../model/task-id-placeholder.ts";
 import { createTaskIdRegex, TaskId } from "../model/task-id.ts";
-import { StringStartingWith } from "../strings/string-types.ts";
+import { StringStartingWith } from "@hugojosefson/fns/string/string-type-guard";
 import { startsWithA, TextTypeGuard } from "../strings/text-type-guard.ts";
+
 import { transformNodeReplaceFirstChildTextValue } from "./transform-node-replace-first-child-text-value.ts";
 
 import { isWithFirstChildText } from "./with-first-child.ts";

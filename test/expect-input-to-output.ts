@@ -5,7 +5,8 @@ import { inputsToInputAsts } from "../src/ast/inputs-to-input-asts.ts";
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
 
 import { transformInputAstsToOutputCommands } from "../src/ast/transform-input-asts-to-output-commands.ts";
-import { not, or } from "../src/fn.ts";
+import { not } from "@hugojosefson/fns/fn/not";
+import { or } from "@hugojosefson/fns/fn/or";
 import { getMarkdownFilePathsInDirectory } from "../src/io/get-markdown-file-paths-in-directory.ts";
 import { readTextFilesToInputs } from "../src/io/read-text-files-to-inputs.ts";
 import {

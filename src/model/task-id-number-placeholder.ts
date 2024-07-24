@@ -1,4 +1,4 @@
-import { capture, or } from "../strings/regex.ts";
+import { capture, or } from "@hugojosefson/fns/string/regex";
 import { containsA } from "../strings/text-type-guard.ts";
 
 export const TASK_ID_NUMBER_PLACEHOLDER_REGEX = capture(

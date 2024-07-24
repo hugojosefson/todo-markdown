@@ -1,5 +1,5 @@
-import { sequence } from "../strings/regex.ts";
-import { StringStartingWith } from "../strings/string-types.ts";
+import { sequence } from "@hugojosefson/fns/string/regex";
+import { StringStartingWith } from "@hugojosefson/fns/string/string-type-guard";
 import {
   isOnlyA,
   startsWithA,

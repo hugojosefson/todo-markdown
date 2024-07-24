@@ -6,7 +6,7 @@ import {
   transformInputDirectoryToOutputCommands,
 } from "./ast/transform-input-directory-to-output-commands.ts";
 import { isProjectId } from "./model/project-id.ts";
-import { not } from "./fn.ts";
+import { not } from "@hugojosefson/fns/fn/not";
 import { readAllFromStdin } from "./io/read-all-from-stdin.ts";
 import {
   transformInputAstToMarkdown,

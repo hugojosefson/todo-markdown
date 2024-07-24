@@ -12,6 +12,7 @@
     "npm:regex-merge": "npm:regex-merge@2.0.0",
     "run_simple": "https://deno.land/x/run_simple@2.3.0/mod.ts",
     "run_simple/": "https://deno.land/x/run_simple@2.3.0/",
+    "@hugojosefson/fns": "jsr:@hugojosefson/fns@^2.0.1",
     "@std/assert": "jsr:@std/assert@^1.0.0",
     "@std/collections": "jsr:@std/collections@^1.0.5",
     "@std/expect": "jsr:@std/expect@^0.224.5",
