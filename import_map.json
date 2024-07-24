@@ -1,17 +1,17 @@
 {
   "imports": {
-    "npm:@types/mdast": "npm:@types/mdast@4.0.3",
+    "npm:@types/mdast": "npm:@types/mdast@4.0.4",
     "npm:mdast-util-gfm": "npm:mdast-util-gfm@3.0.0",
     "npm:mdast-util-to-markdown": "npm:mdast-util-to-markdown@2.1.0",
     "npm:mdast-util-to-string": "npm:mdast-util-to-string@4.0.0",
-    "npm:mdast-util-from-markdown": "npm:mdast-util-from-markdown@2.0.0",
+    "npm:mdast-util-from-markdown": "npm:mdast-util-from-markdown@2.0.1",
     "npm:micromark-extension-gfm": "npm:micromark-extension-gfm@3.0.0",
     "npm:p-filter": "npm:p-filter@4.1.0",
-    "npm:ramda": "npm:ramda@0.29.1",
+    "npm:ramda": "npm:ramda@0.30.1",
     "npm:unist-util-select": "npm:unist-util-select@5.1.0",
     "npm:regex-merge": "npm:regex-merge@2.0.0",
-    "run_simple": "https://deno.land/x/run_simple@2.2.0/mod.ts",
-    "run_simple/": "https://deno.land/x/run_simple@2.2.0/",
+    "run_simple": "https://deno.land/x/run_simple@2.3.0/mod.ts",
+    "run_simple/": "https://deno.land/x/run_simple@2.3.0/",
     "std/": "https://deno.land/std@0.210.0/"
   }
 }

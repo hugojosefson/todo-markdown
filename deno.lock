@@ -3,13 +3,16 @@
   "packages": {
     "specifiers": {
       "npm:@types/mdast@4.0.3": "npm:@types/mdast@4.0.3",
+      "npm:@types/mdast@4.0.4": "npm:@types/mdast@4.0.4",
       "npm:mdast-util-from-markdown@2.0.0": "npm:mdast-util-from-markdown@2.0.0",
+      "npm:mdast-util-from-markdown@2.0.1": "npm:mdast-util-from-markdown@2.0.1",
       "npm:mdast-util-gfm@3.0.0": "npm:mdast-util-gfm@3.0.0",
       "npm:mdast-util-to-markdown@2.1.0": "npm:mdast-util-to-markdown@2.1.0",
       "npm:mdast-util-to-string@4.0.0": "npm:mdast-util-to-string@4.0.0",
       "npm:micromark-extension-gfm@3.0.0": "npm:micromark-extension-gfm@3.0.0",
       "npm:p-filter@4.1.0": "npm:p-filter@4.1.0",
       "npm:ramda@0.29.1": "npm:ramda@0.29.1",
+      "npm:ramda@0.30.1": "npm:ramda@0.30.1",
       "npm:regex-merge@2.0.0": "npm:regex-merge@2.0.0",
       "npm:unist-util-select@5.1.0": "npm:unist-util-select@5.1.0"
     },
@@ -22,6 +25,12 @@
       },
       "@types/mdast@4.0.3": {
         "integrity": "sha512-LsjtqsyF+d2/yFOYaN22dHZI1Cpwkrj+g06G8+qtUKlhovPW89YhqSnfKtMbkgmEtYpH2gydRNULd6y8mciAFg==",
+        "dependencies": {
+          "@types/unist": "@types/unist@3.0.2"
+        }
+      },
+      "@types/mdast@4.0.4": {
+        "integrity": "sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==",
         "dependencies": {
           "@types/unist": "@types/unist@3.0.2"
         }
@@ -97,6 +106,23 @@
         "integrity": "sha512-n7MTOr/z+8NAX/wmhhDji8O3bRvPTV/U0oTCaZJkjhPSKTPhS3xufVhKGF8s1pJ7Ox4QgoIU7KHseh09S+9rTA==",
         "dependencies": {
           "@types/mdast": "@types/mdast@4.0.3",
+          "@types/unist": "@types/unist@3.0.2",
+          "decode-named-character-reference": "decode-named-character-reference@1.0.2",
+          "devlop": "devlop@1.1.0",
+          "mdast-util-to-string": "mdast-util-to-string@4.0.0",
+          "micromark": "micromark@4.0.0",
+          "micromark-util-decode-numeric-character-reference": "micromark-util-decode-numeric-character-reference@2.0.1",
+          "micromark-util-decode-string": "micromark-util-decode-string@2.0.0",
+          "micromark-util-normalize-identifier": "micromark-util-normalize-identifier@2.0.0",
+          "micromark-util-symbol": "micromark-util-symbol@2.0.0",
+          "micromark-util-types": "micromark-util-types@2.0.0",
+          "unist-util-stringify-position": "unist-util-stringify-position@4.0.0"
+        }
+      },
+      "mdast-util-from-markdown@2.0.1": {
+        "integrity": "sha512-aJEUyzZ6TzlsX2s5B4Of7lN7EQtAxvtradMMglCQDyaTFgse6CmtmdJ15ElnVRlCg1vpNyVtbem0PWzlNieZsA==",
+        "dependencies": {
+          "@types/mdast": "@types/mdast@4.0.4",
           "@types/unist": "@types/unist@3.0.2",
           "decode-named-character-reference": "decode-named-character-reference@1.0.2",
           "devlop": "devlop@1.1.0",
@@ -464,6 +490,10 @@
         "integrity": "sha512-OfxIeWzd4xdUNxlWhgFazxsA/nl3mS4/jGZI5n00uWOoSSFRhC1b6gl6xvmzUamgmqELraWp0J/qqVlXYPDPyA==",
         "dependencies": {}
       },
+      "ramda@0.30.1": {
+        "integrity": "sha512-tEF5I22zJnuclswcZMc8bDIrwRHRzf+NqVEmqg50ShAZMP7MWeR/RGDthfM/p+BlqvF2fXAzpn8i+SJcYD3alw==",
+        "dependencies": {}
+      },
       "regex-merge@2.0.0": {
         "integrity": "sha512-Jtv8gq8ciCfCUcwVhsBC/YrYPs4oF3wN1kZSsO3NOQbowzPa/x+8dXZ2gyvvxSGrdI9GjGSKhiEblZ9KyVTa3w==",
         "dependencies": {}
@@ -580,6 +610,10 @@
     "https://deno.land/x/run_simple@2.2.0/mod.ts": "3bd3206b7664491b73799856196a1081e8d4dbb4877de9d5883c149798906ae9",
     "https://deno.land/x/run_simple@2.2.0/src/fn.ts": "1faf24c00a2676c717f99c5e2d2ff9ccee6191fb09b94496522f9700af7acd15",
     "https://deno.land/x/run_simple@2.2.0/src/os.ts": "47820a9a43f99006ef8e6a0c4c353406cda1155e18b6ced50d0863c2a11863e9",
-    "https://deno.land/x/run_simple@2.2.0/src/run.ts": "dfcb9fb07a7884770f3277c8144cbc0c4202185607b37218207e884f13ff4159"
+    "https://deno.land/x/run_simple@2.2.0/src/run.ts": "dfcb9fb07a7884770f3277c8144cbc0c4202185607b37218207e884f13ff4159",
+    "https://deno.land/x/run_simple@2.3.0/mod.ts": "a8b8965264d093a0799db970379a746e5e336d74f10a1681250dfeb2c6077721",
+    "https://deno.land/x/run_simple@2.3.0/src/fn.ts": "8e5f2cf8d95b07dd6086d81bd188b2d82ebbcb8ae27799945a5560d0154c58ef",
+    "https://deno.land/x/run_simple@2.3.0/src/os.ts": "47820a9a43f99006ef8e6a0c4c353406cda1155e18b6ced50d0863c2a11863e9",
+    "https://deno.land/x/run_simple@2.3.0/src/run.ts": "95f3ae42d2b2e18cfdf4e11d01745bfa68e4ec38eff6f7c1890065bcf5db6c2d"
   }
 }
