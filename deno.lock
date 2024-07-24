@@ -2,6 +2,16 @@
   "version": "3",
   "packages": {
     "specifiers": {
+      "jsr:@std/assert@1.0.0-rc.2": "jsr:@std/assert@1.0.0-rc.2",
+      "jsr:@std/assert@^1.0.0": "jsr:@std/assert@1.0.0",
+      "jsr:@std/collections@^1.0.5": "jsr:@std/collections@1.0.5",
+      "jsr:@std/expect@^0.224.5": "jsr:@std/expect@0.224.5",
+      "jsr:@std/fs@^0.229.3": "jsr:@std/fs@0.229.3",
+      "jsr:@std/internal@^1.0.0": "jsr:@std/internal@1.0.1",
+      "jsr:@std/internal@^1.0.1": "jsr:@std/internal@1.0.1",
+      "jsr:@std/path@1.0.0-rc.1": "jsr:@std/path@1.0.0-rc.1",
+      "jsr:@std/path@^1.0.1": "jsr:@std/path@1.0.1",
+      "jsr:@std/testing@^0.225.3": "jsr:@std/testing@0.225.3",
       "npm:@types/mdast@4.0.3": "npm:@types/mdast@4.0.3",
       "npm:@types/mdast@4.0.4": "npm:@types/mdast@4.0.4",
       "npm:mdast-util-from-markdown@2.0.0": "npm:mdast-util-from-markdown@2.0.0",
@@ -15,6 +25,48 @@
       "npm:ramda@0.30.1": "npm:ramda@0.30.1",
       "npm:regex-merge@2.0.0": "npm:regex-merge@2.0.0",
       "npm:unist-util-select@5.1.0": "npm:unist-util-select@5.1.0"
+    },
+    "jsr": {
+      "@std/assert@1.0.0": {
+        "integrity": "0e4f6d873f7f35e2a1e6194ceee39686c996b9e5d134948e644d35d4c4df2008",
+        "dependencies": [
+          "jsr:@std/internal@^1.0.1"
+        ]
+      },
+      "@std/assert@1.0.0-rc.2": {
+        "integrity": "0484eab1d76b55fca1c3beaff485a274e67dd3b9f065edcbe70030dfc0b964d3",
+        "dependencies": [
+          "jsr:@std/internal@^1.0.0"
+        ]
+      },
+      "@std/collections@1.0.5": {
+        "integrity": "ab9eac23b57a0c0b89ba45134e61561f69f3d001f37235a248ed40be260c0c10"
+      },
+      "@std/expect@0.224.5": {
+        "integrity": "ae6e57ee6f23a2fd5ae130cb84448eef182354cb902e1a2a98d64c72ac3a5a1c",
+        "dependencies": [
+          "jsr:@std/assert@1.0.0-rc.2",
+          "jsr:@std/internal@^1.0.0"
+        ]
+      },
+      "@std/fs@0.229.3": {
+        "integrity": "783bca21f24da92e04c3893c9e79653227ab016c48e96b3078377ebd5222e6eb",
+        "dependencies": [
+          "jsr:@std/path@1.0.0-rc.1"
+        ]
+      },
+      "@std/internal@1.0.1": {
+        "integrity": "6f8c7544d06a11dd256c8d6ba54b11ed870aac6c5aeafff499892662c57673e6"
+      },
+      "@std/path@1.0.0-rc.1": {
+        "integrity": "b8c00ae2f19106a6bb7cbf1ab9be52aa70de1605daeb2dbdc4f87a7cbaf10ff6"
+      },
+      "@std/path@1.0.1": {
+        "integrity": "e061ff02c28481ca49e3a14981875c345e9fc7e973190672782cd0ac8af70428"
+      },
+      "@std/testing@0.225.3": {
+        "integrity": "348c24d0479d44ab3dbb4f26170f242e19f24051b45935d4a9e7ca0ab7e37780"
+      }
     },
     "npm": {
       "@types/debug@4.1.10": {

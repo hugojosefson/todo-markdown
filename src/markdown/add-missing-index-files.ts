@@ -1,5 +1,4 @@
-import { basename } from "std/path/basename.ts";
-import { dirname } from "std/path/dirname.ts";
+import { basename, dirname } from "@std/path";
 import { markdownToAst } from "../ast/markdown-to-ast.ts";
 import {
   DeleteOrWriteFile,

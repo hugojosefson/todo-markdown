@@ -1,6 +1,6 @@
 import { Break, Heading, Paragraph, PhrasingContent } from "npm:@types/mdast";
-import { dirname } from "std/path/dirname.ts";
-import { relative } from "std/path/relative.ts";
+import { dirname } from "@std/path/dirname";
+import { relative } from "@std/path/relative";
 import { intersperse } from "../../arrays.ts";
 import { extractBoxChecked } from "../../model/box.ts";
 import { WriteFile } from "../../model/output-command.ts";

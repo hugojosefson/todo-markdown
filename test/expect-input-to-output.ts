@@ -1,5 +1,5 @@
-import { assertEquals } from "std/assert/assert_equals.ts";
-import { sortBy } from "std/collections/sort_by.ts";
+import { assertEquals } from "@std/assert";
+import { sortBy } from "@std/collections";
 import { transformInputAstToMarkdown } from "../mod.ts";
 import { inputsToInputAsts } from "../src/ast/inputs-to-input-asts.ts";
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
