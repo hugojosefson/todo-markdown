@@ -1,4 +1,4 @@
-import { StringStartingWith } from "../strings/string-types.ts";
+import { StringStartingWith } from "@hugojosefson/fns/string/string-type-guard";
 import { startsWithA, TextTypeGuard } from "../strings/text-type-guard.ts";
 
 /**

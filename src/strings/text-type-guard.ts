@@ -1,8 +1,7 @@
 import { Text } from "npm:@types/mdast";
-import { TypeGuard } from "../model/type-guard.ts";
-import { isString } from "./is-string.ts";
-import { only, sequence, startWith } from "./regex.ts";
-import { StringContaining } from "./string-types.ts";
+import { isString } from "@hugojosefson/fns/string/is-string";
+import { only, sequence, startWith } from "@hugojosefson/fns/string/regex";
+import { StringContaining } from "@hugojosefson/fns/string/string-type-guard";
 
 /**
  * TextTypeGuard is a function that takes an argument `x` of type `string | Text`.
@@ -56,12 +55,6 @@ export const isOnlyA = <
   return matchesA(only(sequence(regex))) as TextTypeGuard<T, X, R>;
 };
 
-export const isOnly = <
-  T extends string,
->(value: RegExp | T): StringTypeGuard<T> => {
-  return matches(only(sequence(value))) as StringTypeGuard<T>;
-};
-
 /**
  * Returns a {@link TextTypeGuard} that checks if a string contains something that matches a regex.
  * @param regex the regex to match
@@ -84,14 +77,6 @@ export const containsA: <T extends string>(
   >;
 };
 
-export const contains: <T extends string>(
-  prefix: RegExp | T,
-) => StringTypeGuard<`${string}${T}${string}`> = <
-  T extends string,
->(prefix: RegExp | T): StringTypeGuard<`${string}${T}${string}`> => {
-  return matches(sequence(prefix)) as StringTypeGuard<`${string}${T}${string}`>;
-};
-
 /**
  * Returns a {@link TextTypeGuard} that checks if a string starts with something that matches a regex.
  * @param regex the regex to match
@@ -111,30 +96,6 @@ export const startsWithA = <
 >(regex: RegExp): TextTypeGuard<`${T}${string}`, X, R> => {
   return matchesA(startWith(regex)) as TextTypeGuard<`${T}${string}`, X, R>;
 };
-
-export const startsWith: <T extends string>(
-  prefix: RegExp | T,
-) => StringTypeGuard<`${T}${string}`> = <
-  T extends string,
->(prefix: RegExp | T): StringTypeGuard<`${T}${string}`> => {
-  return matches(startWith(sequence(prefix))) as StringTypeGuard<
-    `${T}${string}`
-  >;
-};
-
-export type StringTypeGuard<
-  T extends string,
-> = TypeGuard<T> & { regex: RegExp };
-
-export function matches<T extends string>(
-  regex: RegExp | T,
-): StringTypeGuard<T> {
-  const effectiveRegex = sequence(regex);
-  return Object.assign(
-    (x: unknown): boolean => isString(x) && effectiveRegex.test(x),
-    { regex: effectiveRegex },
-  ) as StringTypeGuard<T>;
-}
 
 export function matchesA<
   T extends string,

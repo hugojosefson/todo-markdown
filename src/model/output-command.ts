@@ -1,9 +1,9 @@
 import { Nodes } from "npm:@types/mdast";
 import { isNode } from "../ast/node-types.ts";
-import { and } from "../fn.ts";
-import { isString } from "../strings/is-string.ts";
-import { createIsRecordWithProperty } from "./record.ts";
-import { TypeGuard } from "./type-guard.ts";
+import { and } from "@hugojosefson/fns/fn/and";
+import { isString } from "@hugojosefson/fns/string/is-string";
+import { createIsRecordWithProperty } from "@hugojosefson/fns/object/is-record";
+import { TypeGuard } from "@hugojosefson/fns/type-guard/type-guard";
 
 /**
  * A command to delete a file.

@@ -1,6 +1,6 @@
 import { markdownToAst } from "../ast/markdown-to-ast.ts";
 import { DeleteOrWriteFile, isWriteFile } from "../model/output-command.ts";
-import { sortUnique } from "../strings/sort-unique.ts";
+import { sortUnique } from "@hugojosefson/fns/string/sort-unique";
 
 /**
  * Takes care of collisions between output paths.

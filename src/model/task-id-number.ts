@@ -1,4 +1,4 @@
-import { reduceToLargestNumber } from "../numbers.ts";
+import { reduceToLargestNumber } from "@hugojosefson/fns/array/reduce-to-largest-number";
 import { extractA } from "../strings/extract-a.ts";
 import {
   containsA,

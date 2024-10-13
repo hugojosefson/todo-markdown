@@ -1,5 +1,5 @@
 import { run } from "run_simple";
-import { global, groups, sequence } from "../strings/regex.ts";
+import { global, groups, sequence } from "@hugojosefson/fns/string/regex";
 import { BOX_REGEX } from "../model/box.ts";
 
 /**

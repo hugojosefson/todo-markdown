@@ -61,6 +61,25 @@ Use markdown docs, to keep track of todo items.
 ## [ ] TODO-10 Heading with task identifier, but no box
 ```
 
+### More AST examples
+
+I find it easier to understand the AST, by looking at the markdown input, and
+the AST side by side. See [README-ast.json](./README-ast.json).
+
+#### Do after
+
+- TODO-1
+- TODO-2
+
+#### Define task in `ListItem`
+
+- [ ] TODO-1
+- [ ] TODO-2
+  - This would be the `description` of `TODO-2`.
+  - Includes:
+    - TODO-3
+    - TODO-4
+
 ### List of things, that are not tasks
 
 - This is a normal list item, not a task.
@@ -155,7 +174,26 @@ Use markdown docs, to keep track of todo items.
 
 ### Task model
 
-See [src/model/task.ts](./src/model/task.ts).
+See also [src/model/task.ts](./src/model/task.ts).
+
+### Connection between task model and markdown
+
+#### How a task refers to its position in the markdown
+
+The task model is not a concrete thing, but a `Proxy` around the
+`DeleteOrWriteFiles[]` model.
+
+All read accesses to the task model, are converted to read accesses into the
+`DeleteOrWriteFiles[]` model. All write accesses to the task model, are
+converted to write accesses into the `DeleteOrWriteFiles[]` model.
+
+When accessing a property of the model, it returns a `Proxy` that knows what
+part of the `DeleteOrWriteFiles[]` model it refers to.
+
+Thus, after having made any changes to the task model, we need not convert
+anything, because all changes were really already made to the
+`DeleteOrWriteFiles[]` model. We can then simply convert the
+`DeleteOrWriteFiles[]` model to markdown.
 
 ### Where to find task identifiers
 

@@ -1,5 +1,5 @@
-import { describe, it } from "std/testing/bdd.ts";
-import { expect, Expected } from "std/expect/expect.ts";
+import { describe, it } from "@std/testing/bdd";
+import { expect, Expected } from "@std/expect/expect";
 import {
   expectInputDirectoryToOutputs,
   expectInputToOutput,

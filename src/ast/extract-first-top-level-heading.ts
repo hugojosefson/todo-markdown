@@ -1,11 +1,13 @@
-import { Heading, Nodes } from "npm:@types/mdast";
+import { Heading, ListItem, Nodes } from "npm:@types/mdast";
 import { toString } from "npm:mdast-util-to-string";
 import { selectAll } from "npm:unist-util-select";
-import { and } from "../fn.ts";
-import { startsWithABox } from "../model/box.ts";
-import { createIsRecordWithProperty } from "../model/record.ts";
-import { TypeGuard } from "../model/type-guard.ts";
-import { undefinedIfEmptyString } from "../strings/undefined-if-empty-string.ts";
+import { and } from "@hugojosefson/fns/fn/and";
+import { createBoxAndTaskIdRegex, startsWithABox } from "../model/box.ts";
+import { ProjectId } from "../model/project-id.ts";
+import { createIsRecordWithProperty } from "@hugojosefson/fns/object/is-record";
+import { TypeGuard } from "@hugojosefson/fns/type-guard/type-guard";
+import { startWith } from "@hugojosefson/fns/string/regex";
+import { undefinedIfEmptyString } from "@hugojosefson/fns/string/undefined-if-empty-string";
 import { isHeading } from "./node-types.ts";
 
 export type TopLevelHeading = Heading & { depth: 1 };
@@ -30,6 +32,16 @@ export function extractFirstTopLevelHeadingString(
     .trim();
 
   return undefinedIfEmptyString(s);
+}
+
+export function createExtractString<PI extends ProjectId>(
+  projectId: PI,
+): (headingOrListItem: Heading | ListItem) => string {
+  const boxAndTaskId = startWith(createBoxAndTaskIdRegex(projectId));
+  return (headingOrListItem: Heading | ListItem) =>
+    toString(headingOrListItem)
+      .replace(boxAndTaskId, "")
+      .trim();
 }
 
 /**

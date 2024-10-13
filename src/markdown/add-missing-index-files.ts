@@ -1,12 +1,11 @@
-import { basename } from "std/path/basename.ts";
-import { dirname } from "std/path/dirname.ts";
+import { basename, dirname } from "@std/path";
 import { markdownToAst } from "../ast/markdown-to-ast.ts";
 import {
   DeleteOrWriteFile,
   isWriteFile,
   WriteFile,
 } from "../model/output-command.ts";
-import { sortUnique } from "../strings/sort-unique.ts";
+import { sortUnique } from "@hugojosefson/fns/string/sort-unique";
 
 /**
  * Adds missing index files to the output commands.

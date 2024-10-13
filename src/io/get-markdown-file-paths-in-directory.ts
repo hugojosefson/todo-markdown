@@ -1,4 +1,4 @@
-import { walk, WalkEntry } from "std/fs/walk.ts";
+import { walk, WalkEntry } from "@std/fs/walk";
 
 /**
  * Returns the paths of all {@code .md} files in the given directory.
