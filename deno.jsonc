@@ -8,5 +8,25 @@
     "readme-ast-types": "grep type README-ast.json | awk -F '\"' '{print $4}' | sort -u",
     "deps": "./tools/upgrade-npm-deps-in-import-map.ts && git diff import_map.json"
   },
-  "importMap": "import_map.json"
+  "imports": {
+    "npm:@types/mdast": "npm:@types/mdast@4.0.4",
+    "npm:mdast-util-gfm": "npm:mdast-util-gfm@3.0.0",
+    "npm:mdast-util-to-markdown": "npm:mdast-util-to-markdown@^2.1.2",
+    "npm:mdast-util-to-string": "npm:mdast-util-to-string@4.0.0",
+    "npm:mdast-util-from-markdown": "npm:mdast-util-from-markdown@^2.0.2",
+    "npm:micromark-extension-gfm": "npm:micromark-extension-gfm@3.0.0",
+    "npm:p-filter": "npm:p-filter@4.1.0",
+    "npm:ramda": "npm:ramda@0.30.1",
+    "npm:unist-util-select": "npm:unist-util-select@5.1.0",
+    "npm:regex-merge": "npm:regex-merge@2.0.0",
+    "run_simple": "https://deno.land/x/run_simple@2.3.0/mod.ts",
+    "run_simple/": "https://deno.land/x/run_simple@2.3.0/",
+    "@hugojosefson/fns": "jsr:@hugojosefson/fns@^2.1.0",
+    "@std/assert": "jsr:@std/assert@^1.0.10",
+    "@std/collections": "jsr:@std/collections@^1.0.9",
+    "@std/expect": "jsr:@std/expect@^1.0.11",
+    "@std/fs": "jsr:@std/fs@^1.0.9",
+    "@std/path": "jsr:@std/path@^1.0.8",
+    "@std/testing": "jsr:@std/testing@^1.0.9"
+  }
 }
