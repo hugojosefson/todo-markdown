@@ -1,4 +1,4 @@
-import { isString } from "../strings/is-string.ts";
+import { isString } from "@hugojosefson/fns/string/is-string";
 
 import { EligibleParentNodes, WithFirstChildText } from "./with-first-child.ts";
 

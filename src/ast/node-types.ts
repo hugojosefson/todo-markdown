@@ -2,16 +2,18 @@ import {
   Heading,
   Html,
   Link,
+  List,
   ListItem,
   Node,
   Paragraph,
   Parent,
   Text,
 } from "npm:@types/mdast";
-import { isArrayOf, TypeGuard } from "../model/type-guard.ts";
-import { createIsRecordWithProperty } from "../model/record.ts";
-import { isString } from "../strings/is-string.ts";
-import { and } from "../fn.ts";
+import { isArrayOf } from "@hugojosefson/fns/array/is-array-of";
+import { TypeGuard } from "@hugojosefson/fns/type-guard/type-guard";
+import { createIsRecordWithProperty } from "@hugojosefson/fns/object/is-record";
+import { isString } from "@hugojosefson/fns/string/is-string";
+import { and } from "@hugojosefson/fns/fn/and";
 
 /**
  * Type-guard for {@link Node}.
@@ -158,6 +160,12 @@ export const isHtmlIndexEnd: TypeGuard<
  * @param node The node to check.
  */
 export const isHeading: TypeGuard<Heading> = createIsNodeOfType("heading");
+
+/**
+ * Type-guard for {@link List}.
+ * @param node The node to check.
+ */
+export const isList: TypeGuard<List> = createIsNodeOfType("list");
 
 /**
  * Type-guard for {@link ListItem}.

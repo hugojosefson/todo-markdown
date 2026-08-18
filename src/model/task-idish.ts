@@ -1,4 +1,4 @@
-import { or } from "../strings/regex.ts";
+import { or } from "@hugojosefson/fns/string/regex";
 import {
   containsA,
   isOnlyA,

@@ -1,7 +1,7 @@
-import { isString } from "../strings/is-string.ts";
-import { startsWith } from "../strings/text-type-guard.ts";
-import { createIsRecord } from "./record.ts";
-import { TypeGuard } from "./type-guard.ts";
+import { isString } from "@hugojosefson/fns/string/is-string";
+import { startsWith } from "@hugojosefson/fns/string/string-type-guard";
+import { createIsRecord } from "@hugojosefson/fns/object/is-record";
+import { TypeGuard } from "@hugojosefson/fns/type-guard/type-guard";
 
 /**
  * Record of absolute input file paths, and their Markdown source contents.

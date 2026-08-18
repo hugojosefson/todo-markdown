@@ -1,6 +1,6 @@
 import { Nodes } from "npm:@types/mdast";
-import { dirname } from "std/path/dirname.ts";
-import { relative } from "std/path/relative.ts";
+import { dirname } from "@std/path/dirname";
+import { relative } from "@std/path/relative";
 import {
   DeleteFile,
   DeleteOrWriteFile,

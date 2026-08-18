@@ -1,11 +1,11 @@
 import { Break, Heading, Paragraph, PhrasingContent } from "npm:@types/mdast";
-import { dirname } from "std/path/dirname.ts";
-import { relative } from "std/path/relative.ts";
-import { intersperse } from "../../arrays.ts";
+import { dirname } from "@std/path/dirname";
+import { relative } from "@std/path/relative";
+import { intersperse } from "@hugojosefson/fns/array/intersperse";
 import { extractBoxChecked } from "../../model/box.ts";
 import { WriteFile } from "../../model/output-command.ts";
-import { sequence } from "../../strings/regex.ts";
-import { startsWith } from "../../strings/text-type-guard.ts";
+import { sequence } from "@hugojosefson/fns/string/regex";
+import { startsWith } from "@hugojosefson/fns/string/string-type-guard";
 import { extractFirstTopLevelHeading } from "../extract-first-top-level-heading.ts";
 import { Children } from "./child.ts";
 import { indexEntryDirectoryToPhrasingContents } from "./index-entry-directory-to-phrasing-contents.ts";

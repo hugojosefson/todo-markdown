@@ -1,8 +1,8 @@
 import { Heading, ListItem, PhrasingContent } from "npm:@types/mdast";
 import { isHeading, isListItem, isText } from "../ast/node-types.ts";
 import { isWithFirstChildText } from "../ast/with-first-child.ts";
-import { capture, optional, sequence } from "../strings/regex.ts";
-import { StringStartingWith } from "../strings/string-types.ts";
+import { capture, optional, sequence } from "@hugojosefson/fns/string/regex";
+import { StringStartingWith } from "@hugojosefson/fns/string/string-type-guard";
 import {
   isOnlyA,
   startsWithA,

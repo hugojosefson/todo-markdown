@@ -15,7 +15,7 @@ export function markdownToAst(markdown: string): Nodes {
     extensions: [gfm()],
     mdastExtensions: [gfmFromMarkdown()],
   });
-  return removePosition(ast);
+  return removePosition(ast) as Nodes;
 }
 
 /**

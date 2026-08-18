@@ -1,5 +1,5 @@
 import { DeleteOrWriteFile } from "../model/output-command.ts";
-import { pipeAsync3 } from "../fn.ts";
+import { pipeAsync } from "@hugojosefson/fns/fn/pipe";
 import { getMarkdownFilePathsInDirectory } from "../io/get-markdown-file-paths-in-directory.ts";
 import { readTextFilesToInputs } from "../io/read-text-files-to-inputs.ts";
 import { ProjectId } from "../model/project-id.ts";
@@ -19,7 +19,7 @@ export async function transformInputDirectoryToOutputCommands<
   projectId: PI,
   directory: string,
 ): Promise<DeleteOrWriteFile[]> {
-  const inputAsts: InputAsts = await pipeAsync3(
+  const inputAsts: InputAsts = await pipeAsync(
     getMarkdownFilePathsInDirectory,
     readTextFilesToInputs,
     inputsToInputAsts,

@@ -7,7 +7,7 @@ import {
   TaskIdPlaceholder,
 } from "../model/task-id-placeholder.ts";
 import { createTaskIdRegex } from "../model/task-id.ts";
-import { StringStartingWith } from "../strings/string-types.ts";
+import { StringStartingWith } from "@hugojosefson/fns/string/string-type-guard";
 import { startsWithA, TextTypeGuard } from "../strings/text-type-guard.ts";
 import { transformNodeReplaceFirstChildParagraphTextValue } from "./transform-node-replace-first-child-paragraph-text-value.ts";
 import { transformNodeReplaceFirstChildTextValue } from "./transform-node-replace-first-child-text-value.ts";

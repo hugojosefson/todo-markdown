@@ -1,5 +1,5 @@
 import { DeleteOrWriteFile, isDeleteFile } from "../model/output-command.ts";
-import { swallow } from "../fn.ts";
+import { swallow } from "@hugojosefson/fns/fn/swallow";
 
 /**
  * Writes the given outputs to the file system.

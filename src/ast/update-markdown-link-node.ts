@@ -1,6 +1,6 @@
 import { Link } from "npm:@types/mdast";
 import { isText } from "./node-types.ts";
-import { sequence } from "../strings/regex.ts";
+import { sequence } from "@hugojosefson/fns/string/regex";
 import { updateLink } from "../markdown/update-link.ts";
 import {
   INPUT_PATH_FILENAME_REGEX,

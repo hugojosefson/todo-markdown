@@ -1,4 +1,4 @@
-import { walk, WalkEntry } from "std/fs/walk.ts";
+import { walk, WalkEntry } from "@std/fs/walk";
 import { Nodes } from "npm:@types/mdast";
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
 import { InputAsts } from "../src/model/input-asts.ts";

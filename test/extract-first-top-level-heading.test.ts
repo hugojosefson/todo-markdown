@@ -1,5 +1,5 @@
-import { assertEquals } from "std/assert/assert_equals.ts";
-import { describe, it } from "std/testing/bdd.ts";
+import { assertEquals } from "@std/assert";
+import { describe, it } from "@std/testing/bdd";
 import { extractFirstTopLevelHeadingString } from "../src/ast/extract-first-top-level-heading.ts";
 
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";

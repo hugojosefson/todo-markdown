@@ -4,7 +4,7 @@ import {
   TextTypeGuard,
 } from "../strings/text-type-guard.ts";
 import { PROJECT_ID_REGEX, ProjectId } from "./project-id.ts";
-import { sequence } from "../strings/regex.ts";
+import { sequence } from "@hugojosefson/fns/string/regex";
 import {
   TASK_ID_NUMBER_PLACEHOLDER_REGEX,
   TaskIdNumberPlaceholder,

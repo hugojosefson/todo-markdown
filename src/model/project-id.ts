@@ -1,13 +1,13 @@
-import { and } from "../fn.ts";
-import { isString } from "../strings/is-string.ts";
+import { and } from "@hugojosefson/fns/fn/and";
+import { isString } from "@hugojosefson/fns/string/is-string";
+import { TypeGuard } from "@hugojosefson/fns/type-guard/type-guard";
 import {
   containsA,
-  isOnly,
   isOnlyA,
   TextTypeGuard,
   TextTypeGuardContaining,
 } from "../strings/text-type-guard.ts";
-import { TypeGuard } from "./type-guard.ts";
+import { isOnly } from "@hugojosefson/fns/string/string-type-guard";
 
 /**
  * The ID of a project, which is a string of 2-5 uppercase letters.

@@ -1,5 +1,6 @@
 import pFilter from "npm:p-filter";
-import { notAsync, orAsync } from "../fn.ts";
+import { notAsync } from "@hugojosefson/fns/fn/not";
+import { orAsync } from "@hugojosefson/fns/fn/or";
 import { addMissingIndexFiles } from "../markdown/add-missing-index-files.ts";
 import { deconflictOutputCommands } from "../markdown/deconflict-output-commands.ts";
 import { updateLinksInOutputCommands } from "../markdown/update-links-in-output-commands.ts";

@@ -1,11 +1,11 @@
 import { Nodes } from "npm:@types/mdast";
 import { OutputCommand } from "../model/output-command.ts";
 import { ProjectId } from "../model/project-id.ts";
-import { sequence } from "../strings/regex.ts";
+import { sequence } from "@hugojosefson/fns/string/regex";
 import { astToMarkdown } from "./ast-to-markdown.ts";
 import { extractFirstTopLevelHeadingString } from "./extract-first-top-level-heading.ts";
 import { transformNode } from "./transform-node.ts";
-import { capture } from "../strings/regex.ts";
+import { capture } from "@hugojosefson/fns/string/regex";
 
 export async function transformInputAstToOutputCommands<
   PI extends ProjectId = ProjectId,

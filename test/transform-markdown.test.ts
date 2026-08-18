@@ -1,4 +1,4 @@
-import { describe, it } from "std/testing/bdd.ts";
+import { describe, it } from "@std/testing/bdd";
 import { selectAll } from "npm:unist-util-select";
 import { markdownToAst } from "../src/ast/markdown-to-ast.ts";
 import { Code } from "npm:@types/mdast";

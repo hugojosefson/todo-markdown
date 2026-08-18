@@ -1,6 +1,6 @@
-import { createIsRecordWithProperty } from "./record.ts";
+import { createIsRecordWithProperty } from "@hugojosefson/fns/object/is-record";
 import { isProjectId, ProjectId } from "./project-id.ts";
-import { TypeGuard } from "./type-guard.ts";
+import { TypeGuard } from "@hugojosefson/fns/type-guard/type-guard";
 
 /**
  * An object that has a {@link ProjectId}.
