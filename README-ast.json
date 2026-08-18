@@ -1767,7 +1767,7 @@
       "type": "code",
       "lang": "css",
       "meta": null,
-      "value": "listItem > paragraph text\nheading text"
+      "value": "listItem > paragraph text\n  heading text"
     },
     {
       "type": "heading",

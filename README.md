@@ -202,7 +202,7 @@ identifiers in the following places:
 
 ```css
 listItem > paragraph text
-heading text
+  heading text
 ```
 
 ### AST from this README
